@@ -16,6 +16,7 @@ public class Testcase {
 	public void testMybatisConnection () throws Exception {
 		SqlSession session = new SqlSessionFactoryBuilder().build(new FileInputStream("conf/SqlMapConfig.xml")).openSession();
 		System.out.println(session);
+		System.out.println("test");
 	}
 	
 	@Test
