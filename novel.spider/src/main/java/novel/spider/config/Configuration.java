@@ -5,6 +5,7 @@ public class Configuration {
 	public Configuration() {
 		this.size = DEFAULT_SIZE;
 		this.tryTimes = DEFAULT_TRY_TIMES;
+		System.out.println();
 	}
 	//下载的基址目录
 	private String path;
