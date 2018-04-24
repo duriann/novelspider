@@ -17,5 +17,5 @@ public interface NovelMapper {
 
     int updateByPrimaryKey(Novel record);
     
-    public void batchInsert(List<Novel> novels);
+    void batchInsert(List<Novel> novels);
 }

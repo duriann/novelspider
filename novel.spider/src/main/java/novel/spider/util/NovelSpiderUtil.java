@@ -31,8 +31,9 @@ public final class NovelSpiderUtil {
 	}
 
 	private NovelSpiderUtil() {
+		
 	}
-	
+
 	/**
 	 * 初始化爬取规则选择器文件
 	 * 
@@ -40,9 +41,10 @@ public final class NovelSpiderUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	private static void init() {
+		
 		SAXReader reader = new SAXReader();
 		try {
-			Document doc = reader.read(new File("conf/Spider-Rule.xml"));
+			Document doc = reader.read(NovelSpiderUtil.class.getClassLoader().getResourceAsStream("conf/Spider-Rule.xml"));
 			Element root = doc.getRootElement();
 			List<Element> sites = root.elements("site");
 			for (Element site : sites) {
@@ -64,6 +66,7 @@ public final class NovelSpiderUtil {
 	 * 拿到对应网站的解析规则
 	 */
 	public static Map<String, String> getContext(NovelSiteEnum novelSiteEnum) {
+		
 		return CONTEXT_MAP.get(novelSiteEnum);
 	}
 
