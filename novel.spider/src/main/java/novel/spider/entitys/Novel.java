@@ -10,6 +10,16 @@ import java.util.Date;
  */
 public class Novel implements Serializable {
 	private static final long serialVersionUID = 4834523404092493662L;
+	private long id;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	/** 书名 */
 	private String name;
 	/** 作者名 */
@@ -98,11 +108,22 @@ public class Novel implements Serializable {
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
 	}
-	@Override
-	public String toString() {
-		return "Novel [name=" + name + ", author=" + author + ", url=" + url + ", type=" + type + ", lastUpdateChapter="
-				+ lastUpdateChapter + ", lastUpdateChapterUrl=" + lastUpdateChapterUrl + ", lastUpdateTime="
-				+ lastUpdateTime + ", status=" + status + ", firstLetter=" + firstLetter + ", platformId=" + platformId
-				+ ", addTime=" + addTime + "]";
-	}
+
+    @Override
+    public String toString() {
+        return "Novel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", url='" + url + '\'' +
+                ", type='" + type + '\'' +
+                ", lastUpdateChapter='" + lastUpdateChapter + '\'' +
+                ", lastUpdateChapterUrl='" + lastUpdateChapterUrl + '\'' +
+                ", lastUpdateTime=" + lastUpdateTime +
+                ", status=" + status +
+                ", firstLetter=" + firstLetter +
+                ", platformId=" + platformId +
+                ", addTime=" + addTime +
+                '}';
+    }
 }

@@ -39,7 +39,7 @@
 	</bean>
 	<!-- 定义Mapper接口自动扫描 -->
 	<bean id="" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="novel.web.mapper" />
+		<property name="basePackage" value="novel.web.dao" />
 		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 </beans>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="novel.web.mapper.NovelMapper" >
+<mapper namespace="novel.web.dao.NovelDao" >
   <resultMap id="BaseResultMap" type="novel.spider.entitys.Novel" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
@@ -25,6 +25,20 @@
     from tbl_novel
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="getsNovelByKeyword" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_novel
+    where name like #{keyword} or author like #{keyword}
+  </select>
+  <select id="getsNovelByKeyword2" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_novel
+    where (name like #{keyword} or author like #{keyword}) and (platform_id = #{platformId})
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tbl_novel
     where id = #{id,jdbcType=BIGINT}

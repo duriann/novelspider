@@ -1,10 +1,11 @@
-package novel.web.mapper;
-
-import java.util.List;
+package novel.web.dao;
 
 import novel.spider.entitys.Novel;
 
-public interface NovelMapper {
+import java.util.List;
+import java.util.Map;
+
+public interface NovelDao {
 	public int deleteByPrimaryKey(Long id);
 
 	int insert(Novel record);
@@ -18,4 +19,6 @@ public interface NovelMapper {
     public int updateByPrimaryKey(Novel record);
     
     public void batchInsert(List<Novel> novels);
+    public List<Novel> getsNovelByKeyword(String keyword);
+    public List<Novel> getsNovelByKeyword2(Map<String, String> map);
 }

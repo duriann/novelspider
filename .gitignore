@@ -13,3 +13,5 @@ pom.properties
 /novel.web/target/classes
 /novel.spider/.settings/*.component
 /novel.spider/target/classes/conf
+.idea/libraries/*
+/novel.web/target/*
