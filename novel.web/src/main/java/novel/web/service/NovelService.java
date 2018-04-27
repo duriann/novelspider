@@ -3,6 +3,7 @@ package novel.web.service;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
+import novel.web.entitys.Page;
 
 import java.util.List;
 
@@ -22,11 +23,20 @@ public interface NovelService {
 	public List<Novel> getsNovelByKeyword(String keyword, int platformId);
 
     /**
+     * 根据关键词分页查找小说
+     * @param keyword
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    public Page<Novel> getNovelByPage(String keyword, int currentPage, int pageSize);
+    /**
      * 根据小说url查找所有章节
      * @param base64Url
      * @return
      */
 	public List<Chapter> getChapters(String base64Url);
+
 
     /**
      * 根据章节url返回章节详情

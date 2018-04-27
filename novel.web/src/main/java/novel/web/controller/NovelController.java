@@ -7,6 +7,7 @@ import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
 import novel.spider.util.NovelSpiderFactory;
 import novel.web.entitys.JSONResponse;
+import novel.web.entitys.Page;
 import novel.web.service.NovelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,10 +41,27 @@ public class NovelController {
         return JSONResponse.success(detail);
     }
 
+    /**
+     * 根据关键词查找小说
+     * @param keyword
+     * @return
+     */
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     @ResponseBody
     public JSONResponse search(String keyword) {
         List<Novel> novels = novelService.getsNovelByKeyword(keyword);
+        return JSONResponse.success(novels);
+    }
+
+    /**
+     * 根据关键词分页查找小说
+     * @param keyword
+     * @return
+     */
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResponse searchByPage(String keyword,int currentPage,int pageSize) {
+        Page<Novel> novels = novelService.getNovelByPage(keyword,currentPage,pageSize);
         return JSONResponse.success(novels);
     }
 

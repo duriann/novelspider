@@ -5,6 +5,7 @@ import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
 import novel.spider.util.NovelSpiderFactory;
 import novel.web.dao.NovelDao;
+import novel.web.entitys.Page;
 import novel.web.service.NovelService;
 import novel.web.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,16 @@ public class NovelServiceImpl implements NovelService {
 		return novelDao.getsNovelByKeyword2(map);
 	}
 
-	@Override
+    @Override
+    public Page<Novel> getNovelByPage(String keyword, int currentPage, int pageSize) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("keyword", "%" + keyword + "%");
+        map.put("currentPage",currentPage);
+        map.put("pageSize",pageSize);
+        return novelDao.getNovelByPage(map);
+    }
+
+    @Override
 	public List<Chapter> getChapters(String base64Url) {
         String srcUrl = Base64Util.decode(base64Url);
         List<Chapter> chapters = NovelSpiderFactory.getChapterSpider(srcUrl).getsChapter(srcUrl);

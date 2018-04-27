@@ -28,9 +28,10 @@
 
   <select id="getsNovelByKeyword" resultMap="BaseResultMap" parameterType="string">
     select
-    <include refid="Base_Column_List" />
+    id, name, author, url, type, last_update_chapter, last_update_chapter_url, last_update_time,
+    status, first_letter, platform_id, add_time
     from tbl_novel
-    where name like #{keyword} or author like #{keyword}
+    where name like #{keyword} or author like #{keyword} order by tbl_novel.name
   </select>
   <select id="getsNovelByKeyword2" resultMap="BaseResultMap" parameterType="map">
     select
@@ -38,6 +39,14 @@
     from tbl_novel
     where (name like #{keyword} or author like #{keyword}) and (platform_id = #{platformId})
   </select>
+
+    <select id="getNovelByPage" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List" />
+        from tbl_novel
+        where (name like #{keyword} or author like #{keyword}) ORDER  BY tbl_novel.name DESC
+        LIMIT ${(currentPage-1)*pageSize},${pageSize}
+    </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tbl_novel

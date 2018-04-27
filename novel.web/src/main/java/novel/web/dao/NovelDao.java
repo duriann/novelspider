@@ -1,6 +1,7 @@
 package novel.web.dao;
 
 import novel.spider.entitys.Novel;
+import novel.web.entitys.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,5 @@ public interface NovelDao {
     public void batchInsert(List<Novel> novels);
     public List<Novel> getsNovelByKeyword(String keyword);
     public List<Novel> getsNovelByKeyword2(Map<String, String> map);
+    public Page<Novel> getNovelByPage(Map<String,Object> map);
 }
