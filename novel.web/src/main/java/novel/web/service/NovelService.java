@@ -1,6 +1,7 @@
 package novel.web.service;
 
 import novel.spider.entitys.Chapter;
+import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
 
 import java.util.List;
@@ -26,4 +27,11 @@ public interface NovelService {
      * @return
      */
 	public List<Chapter> getChapters(String base64Url);
+
+    /**
+     * 根据章节url返回章节详情
+     * @param url
+     * @return
+     */
+	public ChapterDetail getChapterDetail(String url);
 }

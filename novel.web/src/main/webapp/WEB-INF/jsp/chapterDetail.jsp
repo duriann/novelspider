@@ -57,8 +57,8 @@
 						class="dropdown-toggle" data-toggle="dropdown">我的项目<b
 							class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="../jwsys/index.html">教务查询</a></li>
-							<li><a href="../ttsys/index.html">铁通查询</a></li>
+							<li><a href="#">教务查询</a></li>
+							<li><a href="#">铁通查询</a></li>
 							<li><a href="#">尔雅题库</a></li>
 						</ul></li>
 				</ul>
@@ -82,10 +82,10 @@
 		</div>
 	</div>
 	<div class="container">
-		<h3 style="text-align:center;">章节正文</h3>
+		<h3 style="text-align:center;">${chapterDetail.title}</h3>
 		<div class="content">
 			<c:if test="${isSuccess }">
-					${content.content }
+					${chapterDetail.content }
 			</c:if>
 			<c:if test="${!isSuccess }">
 				很抱歉，章节内容下载失败了，请您再试一次！	
@@ -93,18 +93,18 @@
 		</div>
 		<div style="text-align:center;">
 			<c:if test="${isSuccess }">
-				<c:if test="${empty content.prev }">
+				<c:if test="${empty chapterDetail.prev }">
 					<a class="btn btn-link" href="javascript:alert('哎呀，已经是第一章了！');"><span id="prev" >前一章（&lt;-）</span></a>
 				</c:if>
-				<c:if test="${not empty content.prev }">
-					<a class="btn btn-link" href="./chapter.do?base64Url=${content.prev }&chapterBase64Url=${chapterBase64Url}"><span id="prev"  >前一章（&lt;-）</span></a>
+				<c:if test="${not empty chapterDetail.prev }">
+					<a class="btn btn-link" href="./getChapterDetail?url=${chapterDetail.prev }&chapterBase64Url=${chapterBase64Url}"><span id="prev"  >前一章（&lt;-）</span></a>
 				</c:if>
-				<a href="./chapterList.do?base64Url=${chapterBase64Url }" target="_blank">章节列表</a>
-				<c:if test="${empty content.next }">
+				<a href="./getChapters?base64Url=${chapterBase64Url }" target="_blank">章节列表</a>
+				<c:if test="${empty chapterDetail.next }">
 					<a class="btn btn-link" href="javascript:alert('哎呀，已经是最后一章了！');"><span id="next"  >下一章(-&gt;)</span></a>
 				</c:if>
-				<c:if test="${not empty content.next }">
-					<a class="btn btn-link" href="./chapter.do?base64Url=${content.next }&chapterBase64Url=${chapterBase64Url}"><span id="next"  >下一章(-&gt;)</span></a>
+				<c:if test="${not empty chapterDetail.next }">
+					<a class="btn btn-link" href="./getChapterDetail?url=${chapterDetail.next }&chapterBase64Url=${chapterBase64Url}"><span id="next"  >下一章(-&gt;)</span></a>
 				</c:if>
 			</c:if>
 		</div>

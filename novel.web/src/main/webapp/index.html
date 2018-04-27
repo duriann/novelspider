@@ -7,14 +7,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-
+     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <title>小说搜搜-免费且无广告的小说阅读网</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
   </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" style="display:none;">
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="display:block;">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -35,8 +35,8 @@
 						class="dropdown-toggle" data-toggle="dropdown">我的项目<b
 							class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="../jwsys/index.html">教务查询</a></li>
-							<li><a href="../ttsys/index.html">铁通查询</a></li>
+							<li><a href="#">教务查询</a></li>
+							<li><a href="#">铁通查询</a></li>
 							<li><a href="#">尔雅题库</a></li>
 						</ul></li>
 				</ul>
@@ -47,7 +47,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="margin-top: 50px">
 					<div class="input-group">
 						<input type="text" id="keyword" class="form-control"  placeholder="可以输入书名，作者名，甚至可以是符合条件的URL...">
 						<span class="input-group-btn">
@@ -68,6 +68,7 @@
 					<td>作者</td>
 					<td>最新章节</td>
 					<td>状态</td>
+					<td>平台</td>
 				</tr>
 			</thead>
 			<tbody id="list">
@@ -97,75 +98,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.base64.js"></script>
+    <script src="js/index.js"></script>
 
-	<script>
-		$(function() {
-			$("#btnSearch").click(search);
-			$("#keyword").click(function(e) {
-				$("#keyword").select();
-			});
-			$("#keyword").keydown(function(e) {
-				if (e.keyCode == 13) {
-					search();
-				}
-			});
-		});
-		function search() {
-			var keyword = $("#keyword").val().trim();
-			if (!keyword) {
-				console.warn("没有输入关键词，不搜索");				
-				return;
-			}
-			if (keyword.indexOf("www") == 0) {
-				keyword = "http://" + keyword;	//协议补全
-			}
-			if (keyword.indexOf("http") == 0) {
-				console.log(keyword + "\t是一个网页，直接跳转");
-				searchByUrl(keyword);
-			} else {
-				console.log(keyword + "\t是普通关键词，去搜索");
-				searchByKeyword(keyword);
-			}
-		}
-		function searchByUrl(url) {
-			window.open("./chapterList.action?base64Url=" + $.base64.encode(url))
-		}
-		function searchByKeyword(keyword) {
-			$.ajax({
-				url:"../novel/search.action",
-				type:"post",
-				dataType:"json",
-				data:{
-					"keyword":keyword,
-				},
-				error:function(data) {
-					
-				},
-				success:function(data) {
-					if (data.status == 1) {
-						var $novels = data.data;
-						$("#list").html("");
-						$.each($novels, function(index, novel) {
-							$("#list").append(createNovelTr(index, novel));
-						});
-					} else if (data.status == 0) {
-						console.log(data.desc);
-					} else {
-						
-					}
-				}
-			});
-			function createNovelTr(index, novel) {
-				var trHtml = '<tr>'
-							+ '		<td>' + (index + 1) + '</td>'
-							+ '		<td><a href="./novel/getChapters.action?base64Url=' + $.base64.encode(novel.url) + '" target="_blank">' + novel.name + '</a></td>'
-							+ '		<td>' + novel.author + '</td>'
-							+ '		<td><a href="./chapterList.action?base64Url=' + novel.lastUpdateChapterUrl + '" target="_blank">' + novel.lastUpdateChapter + '</a></td>'
-							+ '		<td>' + ((novel.writingState == 1) ? "连载" : "完结") + '</td>'
-							+ '</tr>';
-				return $(trHtml);
-			}
-		}
-	</script>
 </body>
-</html
+</html>

@@ -14,8 +14,8 @@ import org.eclipse.jetty.server.Server;
  */
 public class QuickStartServer {
 
-    public static final int PORT = 8080;
-    public static final String CONTEXT = "/novel.web";
+    public static final int PORT = 9999;
+    public static final String CONTEXT = "/";
 
     public static void main(String[] args) throws Exception {
         // 启动Jetty

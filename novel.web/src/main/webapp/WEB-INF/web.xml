@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <display-name>novel.web</display-name>
   <welcome-file-list>
-      <welcome-file>search.html</welcome-file>
+      <welcome-file>index.html</welcome-file>
   </welcome-file-list>
   <servlet>
   	<servlet-name>SpringDispatcher</servlet-name>
@@ -13,8 +13,18 @@
   	</init-param>
   	<load-on-startup>1</load-on-startup>
   </servlet>
+
   <servlet-mapping>
   	<servlet-name>SpringDispatcher</servlet-name>
-  	<url-pattern>*.action</url-pattern>
+  	<url-pattern>/</url-pattern>
   </servlet-mapping>
+	<!--<servlet>
+		<servlet-name>default</servlet-name>
+		<servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+		<init-param>
+			<param-name>useFileMappedBuffer</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>-->
 </web-app>

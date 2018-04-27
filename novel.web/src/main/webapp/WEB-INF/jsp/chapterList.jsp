@@ -1,6 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
  <head>
@@ -14,7 +13,7 @@
     <title>章节列表-小说搜搜-免费且无广告的小说阅读网</title>
 
     <!-- Bootstrap core CSS -->
-     <link href="css/bootstrap.min.css" rel="stylesheet">
+     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <style>
     	.jumbotron {
     		padding-top:10px;
@@ -23,7 +22,7 @@
     </style>
   </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top" style="display:none;">
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="display:block;">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -82,7 +81,7 @@
 				<c:if test="${isSuccess }">
 					<c:forEach var="chapter" items="${chapters }" varStatus="status">
 						<c:if test="${status.index % 4 == 0}" var="testResult"><tr></c:if>
-							<td><a href="./chapter.do?base64Url=${chapter.url }&chapterBase64Url=${chapterBase64Url}" target="_blank">${chapter.text}</a></td>
+							<td><a href="./getChapterDetail?url=${chapter.url }&chapterBase64Url=${chapterBase64Url}" target="_blank">${chapter.title}</a></td>
 						<c:if test="${(status.index + 1) % 4 == 0 }"></tr></c:if>
 					</c:forEach>		
 				</c:if>
@@ -93,15 +92,16 @@
 						</td>
 					</tr>
 				</c:if>
+
 			</tbody>
 		</table>
 	</div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.base64.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/jquery.base64.js"></script>
 
 </body>
 </html>

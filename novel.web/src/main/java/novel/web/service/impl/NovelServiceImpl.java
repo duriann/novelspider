@@ -1,6 +1,7 @@
 package novel.web.service.impl;
 
 import novel.spider.entitys.Chapter;
+import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
 import novel.spider.util.NovelSpiderFactory;
 import novel.web.dao.NovelDao;
@@ -35,6 +36,14 @@ public class NovelServiceImpl implements NovelService {
         String srcUrl = Base64Util.decode(base64Url);
         List<Chapter> chapters = NovelSpiderFactory.getChapterSpider(srcUrl).getsChapter(srcUrl);
         return chapters;
+	}
+
+	@Override
+	public ChapterDetail getChapterDetail(String url) {
+        ChapterDetail chapterDetail = NovelSpiderFactory.getChapterDetailSpider(url).getChapterDetail(url);
+        //将AbstractChapterDetailSpider里替换的换行符换回来
+        chapterDetail.setContent(chapterDetail.getContent().replace(" ", "&nbsp;").replace(System.getProperty("line.separator"), "<br>").replace("\n", "<br>"));
+        return chapterDetail;
 	}
 
 }
