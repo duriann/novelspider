@@ -58,11 +58,14 @@ public class NovelController {
      * @param keyword
      * @return
      */
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/searchByPage", method = RequestMethod.POST)
     @ResponseBody
     public JSONResponse searchByPage(String keyword,int currentPage,int pageSize) {
-        Page<Novel> novels = novelService.getNovelByPage(keyword,currentPage,pageSize);
-        return JSONResponse.success(novels);
+        System.out.println("keyword = " + keyword);
+        System.out.println("currentPage = " + currentPage);
+        System.out.println("pageSize = " + pageSize);
+        Page<Novel> page = novelService.getNovelByPage(keyword,currentPage,pageSize);
+        return JSONResponse.success(page);
     }
 
     /**

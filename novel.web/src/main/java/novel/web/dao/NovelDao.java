@@ -22,5 +22,8 @@ public interface NovelDao {
     public void batchInsert(List<Novel> novels);
     public List<Novel> getsNovelByKeyword(String keyword);
     public List<Novel> getsNovelByKeyword2(Map<String, String> map);
-    public Page<Novel> getNovelByPage(Map<String,Object> map);
+    public List<Novel> getNovelByPage(Map<String,Object> map);
+
+    //获取总记录数
+    public int getNovelTotalCount(String keyword);
 }

@@ -42,7 +42,7 @@ public class Page<T> {
 
     //总页数
     public int getTotalPage() {
-        return totalCount/pageSize+1;
+        return totalCount/pageSize%2==0?totalCount/pageSize:totalCount/pageSize+1;
     }
 
 

@@ -48,6 +48,13 @@
         LIMIT ${(currentPage-1)*pageSize},${pageSize}
     </select>
 
+  <select id="getNovelTotalCount" parameterType="string" resultType="int" >
+    select
+    count(*)
+    from tbl_novel
+    where name like #{keyword} or author like #{keyword}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tbl_novel
     where id = #{id,jdbcType=BIGINT}

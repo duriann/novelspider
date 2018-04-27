@@ -66,16 +66,14 @@ public class Testcase {
 	@Test
 	public void testGetChapterDetail() {
 		IChapterDetailSpider spider = new DefaultChapterDetailSpider();
-		System.out.println(spider.getChapterDetail("https://www.xs.la/46_46679/3204958.html"));
+		System.out.println(spider.getChapterDetail("https://www.bxwx9.org/b/26/26363/index.html"));
 	}
 	
 	@Test
 	public void testGetChapterSpider(){
 		IChapterSpider spider = new BxwxChapterSpider();
 		List<Chapter> chapters2 = spider.getsChapter("https://www.bxwx9.org/b/6/6347/index.html");
-		System.out.println("chapters2.size():"+chapters2.size());
-		
-		for(int i = 0;i<chapters2.size();i++){
+		for(int i = chapters2.size()-1;i<chapters2.size();i++){
 			System.out.println("i:"+i+"--"+chapters2.get(i));
 		}
 		

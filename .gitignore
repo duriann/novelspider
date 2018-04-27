@@ -12,9 +12,17 @@ pom.properties
 
 /novel.spider/.settings/*.component
 
-.idea/libraries/*
+
 
 /novel.spider/target/
 /novel.web/target/
 
 /.idea
+
+
+/novel.web/*.iml
+/novel.spider/*.iml
+/novel.storage/*.iml
+
+/novel.web/.idea
+/novel.web/*.iml
