@@ -1,14 +1,15 @@
-$(function() {
+$(function () {
     $("#btnSearch").click(search);
-    $("#keyword").click(function(e) {
+    $("#keyword").click(function (e) {
         $("#keyword").select();
     });
-    $("#keyword").keydown(function(e) {
+    $("#keyword").keydown(function (e) {
         if (e.keyCode == 13) {
             search();
         }
     });
 });
+
 function search() {
     var keyword = $("#keyword").val().trim();
     if (!keyword) {
@@ -26,25 +27,27 @@ function search() {
         searchByKeyword(keyword);
     }
 }
+
 function searchByUrl(url) {
     window.open("./chapterList?base64Url=" + $.base64.encode(url))
 }
+
 function searchByKeyword(keyword) {
     $.ajax({
-        url:"/novel/search",
-        type:"post",
-        dataType:"json",
-        data:{
-            "keyword":keyword,
+        url: "./novel/search",
+        type: "post",
+        dataType: "json",
+        data: {
+            "keyword": keyword,
         },
-        error:function(data) {
+        error: function (data) {
 
         },
-        success:function(data) {
+        success: function (data) {
             if (data.status == 1) {
                 var $novels = data.data;
                 $("#list").html("");
-                $.each($novels, function(index, novel) {
+                $.each($novels, function (index, novel) {
                     $("#list").append(createNovelTr(index, novel));
                 });
             } else if (data.status == 0) {
@@ -54,6 +57,7 @@ function searchByKeyword(keyword) {
             }
         }
     });
+
     function createNovelTr(index, novel) {
         var trHtml = '<tr>'
             + '		<td>' + (index + 1) + '</td>'
@@ -61,10 +65,11 @@ function searchByKeyword(keyword) {
             + '		<td>' + novel.author + '</td>'
             + '		<td><a href="./chapterList?base64Url=' + novel.lastUpdateChapterUrl + '" target="_blank">' + novel.lastUpdateChapter + '</a></td>'
             + '		<td>' + ((novel.writingState == 1) ? "连载" : "完结") + '</td>'
-            + '	    <td>' +  getPlatform(novel.platformId) + '</td>'
+            + '	    <td>' + getPlatform(novel.platformId) + '</td>'
             + '</tr>';
         return $(trHtml);
     }
+
     function getPlatform(platformId) {
         if (platformId == 1) {
             return "顶点小说";
