@@ -1,5 +1,7 @@
 package novel.web.entitys;
 
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +42,10 @@ public class Page<T> {
         this.pageSize = pageSize;
     }
 
+
     //总页数
     public int getTotalPage() {
-        return totalCount/pageSize%2==0?totalCount/pageSize:totalCount/pageSize+1;
+        return totalCount%pageSize==0?totalCount/pageSize:totalCount/pageSize+1;
     }
 
 

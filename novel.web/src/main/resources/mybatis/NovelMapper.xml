@@ -44,7 +44,7 @@
         select
         <include refid="Base_Column_List" />
         from tbl_novel
-        where (name like #{keyword} or author like #{keyword}) ORDER  BY tbl_novel.name DESC
+        where (name like #{keyword} or author like #{keyword}) ORDER BY LENGTH(name)-LENGTH(#{keyword})
         LIMIT ${(currentPage-1)*pageSize},${pageSize}
     </select>
 

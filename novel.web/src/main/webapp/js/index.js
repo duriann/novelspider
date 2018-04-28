@@ -44,7 +44,7 @@ $(function () {
 });
 
 function search() {
-    var currentPage = 1,pageSize = 10;
+    var currentPage = Page.config.currentPage,pageSize =Page.config.pageSize;
     var keyword = $("#keyword").val().trim();
     if (!keyword) {
         console.warn("没有输入关键词，不搜索");
@@ -77,7 +77,7 @@ function searchByKeyword(keyword,currentPage,pageSize) {
             "pageSize":pageSize
         },
         error: function (data) {
-
+            console.log(data);
         },
         success: function (data) {
             if (data.status == 1) {
@@ -87,44 +87,14 @@ function searchByKeyword(keyword,currentPage,pageSize) {
                 $.each($novels, function (index, novel) {
                     $("#list").append(createNovelTr(index, novel));
                 });
-
                 $("#page").show();
-                var currentPage = data.data.currentPage;
-                var totalPage = data.data.totalPage;
-                $("#currentPage").html("第"+currentPage+"/"+totalPage);
-                if(currentPage==1){
-                    $("#previousPage").attr("disabled",true);
-                }else{
-                    $("#previousPage").attr("disabled",false);
-                    $("#previousPage").attr("value",currentPage-1);
-                }
-                if(currentPage==totalPage){
-                    $("#nextPage").attr("disabled",true);
-                }
-               // $("#previousPage").click(searchByKeyword(keyword,currentPage-1,pageSize));
-                $("#nextPage").attr("value",currentPage+1);
-                $("#nextPage").attr("keyword",keyword);
-                $("#nextPage").attr("pageSize",pageSize);
-
-
-                $("#previousPage").attr("keyword",keyword);
-                $("#previousPage").attr("pageSize",pageSize);
-
-                $("#lastPage").attr("value",totalPage);
-                $("#lastPage").attr("keyword",keyword);
-                $("#lastPage").attr("pageSize",pageSize);
-
-                $("#gotoPage").attr("keyword",keyword);
-                $("#gotoPage").attr("pageSize",pageSize);
-
-                $("#firstPage").attr("keyword",keyword);
-
-
-
+                Page.config.currentPage = data.data.currentPage;
+                Page.config.totalPage = data.data.totalPage;
+                Page.render.renderPage(keyword);
             } else if (data.status == 0) {
                 console.log(data.desc);
             } else {
-
+                console.log(data);
             }
         }
     });
