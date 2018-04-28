@@ -7,7 +7,7 @@
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://localhost:3306/db_novel?useUnicode=true&amp;characterEncoding=UTF-8" />
+				<property name="url" value="jdbc:mysql://localhost:3306/db_novel?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
 				<property name="username" value="root" />
 				<property name="password" value="000000" />
 			</dataSource>
@@ -15,6 +15,6 @@
 	</environments>
 	<!-- 指定映射文件的位置 -->
 	<mappers>
-		<mapper resource="novel/spider/entitys/NovelMapper.xml" />
+		<mapper resource="novel/storage/entitys/NovelMapper.xml" />
 	</mappers>
 </configuration> 

@@ -47,7 +47,7 @@ function search() {
     var currentPage = Page.config.currentPage,pageSize =Page.config.pageSize;
     var keyword = $("#keyword").val().trim();
     if (!keyword) {
-        console.warn("没有输入关键词，不搜索");
+        layer.alert("请输入小说名",{icon:0});
         return;
     }
     if (keyword.indexOf("www") == 0) {
@@ -104,8 +104,8 @@ function searchByKeyword(keyword,currentPage,pageSize) {
             + '		<td>' + (index + 1) + '</td>'
             + '		<td><a href="./novel/getChapters?base64Url=' + $.base64.encode(novel.url) + '" target="_blank">' + novel.name + '</a></td>'
             + '		<td>' + novel.author + '</td>'
-            + '		<td><a href="./novel/getChapterDetail?url=' + novel.lastUpdateChapterUrl + '" target="_blank">' + novel.lastUpdateChapter + '</a></td>'
-            + '		<td>' + ((novel.writingState == 1) ? "连载" : "完结") + '</td>'
+            + '		<td><a href="./novel/getChapterDetail?url=' + novel.lastUpdateChapterUrl + '&chapterBase64Url='+$.base64.encode(novel.url)+'" target="_blank">' + novel.lastUpdateChapter + '</a></td>'
+            + '		<td>' + ((novel.status == 1) ? "连载" : "完结") + '</td>'
             + '	    <td>' + getPlatform(novel.platformId) + '</td>'
             + '</tr>';
         return $(trHtml);

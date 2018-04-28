@@ -1,8 +1,8 @@
 package novel.storage.mapper;
 
-import java.util.List;
-
 import novel.spider.entitys.Novel;
+
+import java.util.List;
 
 public interface NovelMapper {
     int deleteByPrimaryKey(Integer id);
@@ -18,4 +18,6 @@ public interface NovelMapper {
     int updateByPrimaryKey(Novel record);
     
     void batchInsert(List<Novel> novels);
+
+    void batchUpdate(List<Novel> novels);
 }

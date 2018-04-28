@@ -1,19 +1,18 @@
 package novel.spider.impl.novel;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import novel.spider.NovelSiteEnum;
 import novel.spider.entitys.Novel;
 import novel.spider.impl.AbstractSpider;
 import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.NovelSpiderUtil;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 一个抽象的小说列表抓取，已经实现了解析tr元素的方法
@@ -87,8 +86,6 @@ public abstract class AbstractNovelSpider extends AbstractSpider implements INov
 	}
 	/**
 	 * 一个迭代器，专门用于对小说网站数据列表抓取
-	 * @author LiuKeFeng
-	 * @date   2016年10月16日
 	 */
 	private class NovelIterator implements Iterator<List<Novel>> {
 		private Integer maxTryTimes;

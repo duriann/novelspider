@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="novel.storage.mapper.NovelMapper" >
-  <resultMap id="BaseResultMap" type="novel.spider.entitys.Novel" >
+  <resultMap id="BaseResultMap" type="novel.storage.entitys.Novel" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="author" property="author" jdbcType="VARCHAR" />
@@ -29,7 +29,7 @@
     delete from tbl_novel
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="novel.spider.entitys.Novel" >
+  <insert id="insert" parameterType="novel.storage.entitys.Novel" >
     insert into tbl_novel (id, name, author, 
       url, type, last_update_chapter, 
       last_update_chapter_url, last_update_time, 
@@ -41,7 +41,7 @@
       #{status,jdbcType=INTEGER}, #{firstLetter,jdbcType=CHAR}, #{platformId,jdbcType=INTEGER}, 
       #{addTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="novel.spider.entitys.Novel" >
+  <insert id="insertSelective" parameterType="novel.storage.entitys.Novel" >
     insert into tbl_novel
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -120,7 +120,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="novel.spider.entitys.Novel" >
+  <update id="updateByPrimaryKeySelective" parameterType="novel.storage.entitys.Novel" >
     update tbl_novel
     <set >
       <if test="name != null" >
@@ -172,8 +172,20 @@
   		)
   	</foreach>
   </insert>
+
+    <!-- 批量更新 -->
+    <update id="batchUpdate" parameterType="java.util.List">
+
+        <foreach collection="list" index="index" item="item" separator=";">
+          update tbl_novel set
+            last_update_chapter = #{item.lastUpdateChapter},
+            last_update_chapter_url = #{item.lastUpdateChapterUrl}
+          where url = #{item.url}
+
+        </foreach>
+    </update>
   
-  <update id="updateByPrimaryKey" parameterType="novel.spider.entitys.Novel" >
+  <update id="updateByPrimaryKey" parameterType="novel.storage.entitys.Novel" >
     update tbl_novel
     set name = #{name,jdbcType=VARCHAR},
       author = #{author,jdbcType=VARCHAR},

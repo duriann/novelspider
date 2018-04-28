@@ -3,9 +3,6 @@ package novel.web.controller;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
-import novel.spider.interfaces.IChapterDetailSpider;
-import novel.spider.interfaces.IChapterSpider;
-import novel.spider.util.NovelSpiderFactory;
 import novel.web.entitys.JSONResponse;
 import novel.web.entitys.Page;
 import novel.web.service.NovelService;
@@ -24,22 +21,6 @@ public class NovelController {
 
     @Autowired
     NovelService novelService;
-
-    @RequestMapping(value = "/test/chapters", method = RequestMethod.GET)
-    @ResponseBody
-    public JSONResponse getsChapter(String url) {
-        IChapterSpider spider = NovelSpiderFactory.getChapterSpider(url);
-        List<Chapter> chapters = spider.getsChapter(url);
-        return JSONResponse.success(chapters);
-    }
-
-    @RequestMapping(value = "/test/chapterDetail", method = RequestMethod.GET)
-    @ResponseBody
-    public JSONResponse getChapterDetail2(String url) {
-        IChapterDetailSpider spider = NovelSpiderFactory.getChapterDetailSpider(url);
-        ChapterDetail detail = spider.getChapterDetail(url);
-        return JSONResponse.success(detail);
-    }
 
     /**
      * 根据关键词查找小说

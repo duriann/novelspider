@@ -5,7 +5,10 @@ package novel.storage;
  */
 public interface Processor {
 	/**
-	 * 一个处理方法
+	 * 一个插入处理方法
 	 */
-	public void process();
+
+    public void process(String action);
+
+
 }
