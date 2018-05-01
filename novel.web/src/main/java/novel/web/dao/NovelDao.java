@@ -22,8 +22,15 @@ public interface NovelDao {
     public void batchInsert(List<Novel> novels);
     public List<Novel> getsNovelByKeyword(String keyword);
     public List<Novel> getsNovelByKeyword2(Map<String, String> map);
+    //根据对应关键词分页
     public List<Novel> getNovelByPage(Map<String,Object> map);
+    //获取所有小说
+    public List<Novel> getAllNovelByPage(Map<String,Object> map);
 
-    //获取总记录数
+    //获取对应关键字总记录数
     public int getNovelTotalCount(String keyword);
+
+    //获取所有小说数量
+    public int getAllNovelTotalCount();
+
 }

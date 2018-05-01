@@ -44,4 +44,21 @@ public interface NovelService {
      * @return
      */
 	public ChapterDetail getChapterDetail(String url);
+
+	/**
+	 *  分页返回小说
+	 * @param page
+	 * @param limit
+	 * @return
+	 */
+	public Page<Novel> getAllNovelByPage(int page, int limit);
+
+    /**
+     * 根据小说id删除对应的小说
+     * @param id
+     * @return
+     */
+    public int deleteNovelById(long id);
+
+    public int updateNovelById(long id,String field,String value);
 }

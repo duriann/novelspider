@@ -11,6 +11,8 @@ import novel.web.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,5 +67,49 @@ public class NovelServiceImpl implements NovelService {
         chapterDetail.setContent(chapterDetail.getContent().replace(" ", "&nbsp;").replace(System.getProperty("line.separator"), "<br>").replace("\n", "<br>"));
         return chapterDetail;
     }
+
+
+    @Override
+    public Page<Novel> getAllNovelByPage(int page, int limit) {
+        Map<String, Object> map = new HashMap<>();
+
+
+        map.put("currentPage", page);
+        map.put("pageSize", limit);
+        List<Novel> novels = novelDao.getAllNovelByPage(map);
+        int totalCount = novelDao.getAllNovelTotalCount();
+        Page<Novel> pages = new Page<Novel>();
+        pages.setCurrentPage(page);
+        pages.setPageSize(limit);
+        pages.setPages(novels);
+        pages.setTotalCount(totalCount);
+        return pages;
+    }
+
+    @Override
+    public int updateNovelById(long id, String field, String value) {
+        Novel novel = new Novel();
+        try {
+            Class<? extends Novel> novelClass = novel.getClass();
+            Field f = novelClass.getDeclaredField(field);
+            StringBuilder sb = new StringBuilder();
+            //拼接set方法
+            sb.append("set");
+            sb.append(field.substring(0,1).toUpperCase());
+            sb.append(field.substring(1));
+            Method method = novelClass.getMethod(sb.toString(),f.getType());
+            method.invoke(novel,value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        novel.setId(id);
+        return novelDao.updateByPrimaryKeySelective(novel);
+    }
+
+    @Override
+    public int deleteNovelById(long id) {
+        return novelDao.deleteByPrimaryKey(id);
+    }
+
 
 }

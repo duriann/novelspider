@@ -21,8 +21,8 @@ public class NovelHttpGet extends HttpGet {
 
 	public void setDefaultParams(){
 		this.setConfig(RequestConfig.custom()
-				.setSocketTimeout(30000)
-				.setConnectTimeout(10000)
+				.setSocketTimeout(50000)
+				.setConnectTimeout(50000)
 				.setConnectionRequestTimeout(5000)
 				.build());
 	}

@@ -40,7 +40,7 @@ public class Testcase {
 	@Test
 	public void testBxwxProcess() throws FileNotFoundException {
 		Processor processor = new BxwxNovelStorageImpl();
-		processor.process(insert);
+		processor.process(insert,5);
 	}
 
     /**

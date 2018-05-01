@@ -48,11 +48,26 @@
         LIMIT ${(currentPage-1)*pageSize},${pageSize}
     </select>
 
+  <select id="getAllNovelByPage" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_novel
+    where 1=1 ORDER BY platform_id
+    LIMIT ${(currentPage-1)*pageSize},${pageSize}
+  </select>
+
+
   <select id="getNovelTotalCount" parameterType="string" resultType="int" >
     select
     count(*)
     from tbl_novel
     where name like #{keyword} or author like #{keyword}
+  </select>
+
+  <select id="getAllNovelTotalCount"  resultType="int" >
+    select
+    count(*)
+    from tbl_novel
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >

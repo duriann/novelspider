@@ -3,6 +3,10 @@ $(function () {
     $("#keyword").click(function (e) {
         $("#keyword").select();
     });
+
+    $("#about").click(function (e) {
+       layer.msg("为了毕设而存在。")
+    });
     $("#keyword").keydown(function (e) {
         if (e.keyCode == 13) {
             search();
@@ -30,7 +34,13 @@ $(function () {
     });
 
     $("#gotoPage").click(function () {
-        var gotopage_text =  $("#gotopage_text").val();
+        var gotopage_text =  $("#gotopage_text").val().trim();
+        layer.alert(gotopage_text);
+        if (!gotopage_text) {
+            layer.alert("请输入页码",{icon:0});
+            return;
+        }
+
         var pageSize = $("#gotoPage").attr("pageSize");
         var keyword = $("#gotoPage").attr("keyword");
         searchByKeyword(keyword,gotopage_text,pageSize);
@@ -83,14 +93,19 @@ function searchByKeyword(keyword,currentPage,pageSize) {
             if (data.status == 1) {
                 console.log(data);
                 var $novels = data.data.pages;
-                $("#list").html("");
-                $.each($novels, function (index, novel) {
-                    $("#list").append(createNovelTr(index, novel));
-                });
-                $("#page").show();
-                Page.config.currentPage = data.data.currentPage;
-                Page.config.totalPage = data.data.totalPage;
-                Page.render.renderPage(keyword);
+                if($novels&&$novels.length>0){
+                    $("#list").html("");
+                    $.each($novels, function (index, novel) {
+                        $("#list").append(createNovelTr(index, novel));
+                    });
+                    $("#page").show();
+                    Page.config.currentPage = data.data.currentPage;
+                    Page.config.totalPage = data.data.totalPage;
+                    Page.render.renderPage(keyword);
+                }else{
+                    layer.alert("没有查到对应的小说!",{icon:0});
+                }
+
             } else if (data.status == 0) {
                 console.log(data.desc);
             } else {

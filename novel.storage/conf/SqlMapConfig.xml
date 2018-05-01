@@ -10,6 +10,12 @@
 				<property name="url" value="jdbc:mysql://localhost:3306/db_novel?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
 				<property name="username" value="root" />
 				<property name="password" value="000000" />
+                <!--防止org.apache.ibatis.exceptions.PersistenceException-->
+				<property name="poolPingQuery" value="SELECT 1" />
+				<property name="poolPingEnabled" value="true" />
+                <!--防止Error accessing PooledConnection. Connection is invalid-->
+                <property name="poolMaximumActiveConnections" value="100"/>
+                <property name="poolMaximumIdleConnections" value="20"/>
 			</dataSource>
 		</environment>
 	</environments>

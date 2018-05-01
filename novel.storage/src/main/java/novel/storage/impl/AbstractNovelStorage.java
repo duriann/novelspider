@@ -25,10 +25,15 @@ public abstract class AbstractNovelStorage implements Processor {
 	}
 
 
-    /**
+	@Override
+	public void process(String action) {
+
+	}
+
+	/**
      * 根据action处理任务
      */
-	public void process(String action) {
+	public void process(String action,int maxTry) {
 		ExecutorService service = Executors.newFixedThreadPool(tasks.size());
 		List<Future<String>> futures = new ArrayList<>(tasks.size());
 		for (Entry<String, String> entry : tasks.entrySet()) {
@@ -41,19 +46,28 @@ public abstract class AbstractNovelStorage implements Processor {
 					Iterator<List<Novel>> iterator = spider.iterator(value, 10);
 					while (iterator.hasNext()) {
 						System.err.println("开始"+action+"[" + key + "] 的 URL:" + spider.next());
-						List<Novel> novels = iterator.next();
-						for (Novel novel : novels) {
-							novel.setFirstLetter(key.charAt(0));//设置小说的名字的首字母
+						int i=0;
+						try {
+							for (;i<maxTry;i++){
+								List<Novel> novels = iterator.next();
+								SqlSession session = sqlSessionFactory.openSession();
+								if (action.equalsIgnoreCase("batchInsert")){
+									for (Novel novel : novels) {
+										novel.setFirstLetter(key.charAt(0));//设置小说的名字的首字母
+									}
+									session.insert(action, novels);
+								}else if(action.equalsIgnoreCase("batchUpdate")){
+									session.update(action,novels);
+								}
+								session.commit();
+								session.close();
+								Thread.sleep(1_000);
+							}
+						}catch (Exception e){
+							e.printStackTrace();
+							System.out.println(key+"尝试了"+i+"/"+maxTry+"次都失败了~");
 						}
-						SqlSession session = sqlSessionFactory.openSession();
-						if (action.equalsIgnoreCase("batchInsert")){
-                            session.insert(action, novels);
-                        }else if(action.equalsIgnoreCase("batchUpdate")){
-						    session.update(action,novels);
-                        }
-						session.commit();
-						session.close();
-						Thread.sleep(1_000);
+
 					}
 					return key;
 				}
