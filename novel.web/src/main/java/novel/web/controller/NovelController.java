@@ -78,7 +78,7 @@ public class NovelController {
             e.printStackTrace();
         }
         ModelAndView view = new ModelAndView();
-        view.setViewName("chapterList");
+        view.setViewName("novel/chapterList");
         view.addObject("chapters", chapters);
         view.addObject("chapterBase64Url", base64Url);
         view.addObject("isSuccess", isSuccess);
@@ -104,7 +104,7 @@ public class NovelController {
         }
 
         ModelAndView view = new ModelAndView();
-        view.setViewName("chapterDetail");
+        view.setViewName("novel/chapterDetail");
         view.addObject("chapterDetail", chapterDetail);
         view.addObject("isSuccess", isSuccess);
         view.addObject("chapterBase64Url", chapterBase64Url);
