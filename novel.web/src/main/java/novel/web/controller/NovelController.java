@@ -4,7 +4,6 @@ import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
 import novel.web.entitys.JSONResponse;
-import novel.web.entitys.JSONResponse2;
 import novel.web.entitys.Page;
 import novel.web.service.NovelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +55,9 @@ public class NovelController {
      */
     @RequestMapping(value = "/getAllNovelByPage", method = RequestMethod.GET)
     @ResponseBody
-    public JSONResponse2 getAllNovelByPage(int page,int limit) {
+    public JSONResponse getAllNovelByPage(int page, int limit) {
         Page<Novel> pages = novelService.getAllNovelByPage(page,limit);
-        return JSONResponse2.success(pages.getPages(),pages.getTotalCount());
+        return JSONResponse.success(pages.getPages(),pages.getTotalCount());
     }
 
     /**
@@ -140,36 +139,6 @@ public class NovelController {
         return JSONResponse.success(null);
     }
 
-    @RequestMapping(value = "/admin")
-    public ModelAndView admin(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/index");
-        return view;
 
-    }
-
-    @RequestMapping(value = "/novelManager")
-    public ModelAndView novelManager(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/novel-manager");
-        return view;
-
-    }
-
-    @RequestMapping(value = "/userManager")
-    public ModelAndView userManager(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/user-manager");
-        return view;
-
-    }
-
-    @RequestMapping(value = "/home")
-    public ModelAndView home(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/home");
-        return view;
-
-    }
 
 }

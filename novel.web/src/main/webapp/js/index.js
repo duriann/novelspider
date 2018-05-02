@@ -35,7 +35,6 @@ $(function () {
 
     $("#gotoPage").click(function () {
         var gotopage_text =  $("#gotopage_text").val().trim();
-        layer.alert(gotopage_text);
         if (!gotopage_text) {
             layer.alert("请输入页码",{icon:0});
             return;
@@ -90,7 +89,7 @@ function searchByKeyword(keyword,currentPage,pageSize) {
             console.log(data);
         },
         success: function (data) {
-            if (data.status == 1) {
+            if (data.code == 0) {
                 console.log(data);
                 var $novels = data.data.pages;
                 if($novels&&$novels.length>0){
@@ -106,7 +105,7 @@ function searchByKeyword(keyword,currentPage,pageSize) {
                     layer.alert("没有查到对应的小说!",{icon:0});
                 }
 
-            } else if (data.status == 0) {
+            } else if (data.code == 1) {
                 console.log(data.desc);
             } else {
                 console.log(data);

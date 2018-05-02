@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="novel.web.dao.UserDao" >
+  <resultMap id="BaseResultMap" type="novel.web.entitys.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="password" property="author" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, password
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <select id="selectByUser" parameterType="novel.web.entitys.User" resultType="int">
+        SELECT count(*)
+        from tbl_user
+        where name = #{name} and password = #{password}
+    </select>
+  <select id="getAllUserTotalCount"  resultType="int" >
+    select
+    count(*)
+    from tbl_user
+  </select>
+    <insert id="insert" parameterType="novel.web.entitys.User" >
+        insert into tbl_user (id, name, password)
+        values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+    </insert>
+    <insert id="insertSelective" parameterType="novel.web.entitys.User" >
+        insert into tbl_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+
+        </trim>
+    </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="novel.web.entitys.User" >
+    update tbl_user
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        author = #{password,jdbcType=VARCHAR},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="novel.web.entitys.User" >
+    update tbl_user
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from tbl_user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+</mapper>
