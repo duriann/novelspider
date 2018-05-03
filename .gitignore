@@ -1,3 +1,4 @@
+/.idea
 /Servers
 /.recommenders
 /.metadata
@@ -17,7 +18,7 @@ pom.properties
 /novel.spider/target/
 /novel.web/target/
 
-/.idea
+
 
 
 /novel.web/*.iml
@@ -26,3 +27,7 @@ pom.properties
 
 /novel.web/.idea
 /novel.web/*.iml
+/ThinkingJava
+/PictureSpider
+/MyUtils
+/DailyPractice
