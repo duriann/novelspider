@@ -13,33 +13,24 @@
                 var totalPage = comm.config.totalPage;
                 var pageSize = comm.config.pageSize;
                 $("#currentPage").html("第"+currentPage+"/"+totalPage);
-
                 currentPage==1? $("#previousPage").attr("disabled",true): $("#previousPage").attr("disabled",false);
                 currentPage==totalPage?$("#nextPage").attr("disabled",true): $("#nextPage").attr("disabled",false);
-
                 $("#nextPage").attr("value",currentPage+1);
                 $("#nextPage").attr("keyword",keyword);
                 $("#nextPage").attr("pageSize",pageSize);
-
                 $("#previousPage").attr("value",currentPage-1);
                 $("#previousPage").attr("keyword",keyword);
                 $("#previousPage").attr("pageSize",pageSize);
-
-
                 $("#lastPage").attr("value",totalPage);
                 $("#lastPage").attr("keyword",keyword);
                 $("#lastPage").attr("pageSize",pageSize);
-
                 $("#gotoPage").attr("keyword",keyword);
                 $("#gotoPage").attr("pageSize",pageSize);
-
                 $("#firstPage").attr("keyword",keyword);
-
             }
         }
 
     }
-
     var api = new Object();
     api.config = comm.config;
     api.render = comm.render;

@@ -1,6 +1,6 @@
 package novel.web.interceptor;
 
-import novel.web.Constants;
+import novel.web.constants.Constants;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

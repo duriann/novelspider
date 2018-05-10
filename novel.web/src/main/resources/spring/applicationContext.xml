@@ -43,7 +43,7 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <!-- 拦截所有URL中包含/user/的请求 -->
+            <!-- 拦截所有URL中包含/admin/的请求 -->
             <mvc:mapping path="/admin/**"/>
             <mvc:exclude-mapping path="/admin/toLogin"/>
             <mvc:exclude-mapping path="/admin/login"/>

@@ -1,7 +1,7 @@
 package novel.web.controller;
 
 import com.alibaba.fastjson.JSON;
-import novel.web.Constants;
+import novel.web.constants.Constants;
 import novel.web.entitys.JSONResponse;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
