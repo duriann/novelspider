@@ -74,7 +74,6 @@
               var data = obj.data;
               if(obj.event === 'del'){
                   layer.confirm('真的删除么', function(index){
-
                       $.ajax({
                           url: "/novel/deleteNovelById",
                           type: "post",
@@ -90,11 +89,8 @@
                              console.log("成功:"+da);
                           }
                       });
-
-
                   });
               }
-
           });
           //监听单元格编辑
           table.on('edit(demo)', function(obj){

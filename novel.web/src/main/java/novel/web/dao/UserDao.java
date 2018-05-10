@@ -3,6 +3,7 @@ package novel.web.dao;
 import novel.web.entitys.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
     public int deleteByPrimaryKey(Long id);
@@ -19,4 +20,8 @@ public interface UserDao {
     public void batchInsert(List<User> Users);
 
     public int selectByUser(User user);
+
+    List<User> getAllUserByPage(Map<String, Object> map);
+
+    int getAllUserTotalCount();
 }

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="novel.web.entitys.User" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="password" property="author" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, password
@@ -21,6 +21,13 @@
         SELECT count(*)
         from tbl_user
         where name = #{name} and password = #{password}
+    </select>
+    <select id="getAllUserByPage" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List" />
+        from tbl_user
+        where 1=1 ORDER BY id
+        LIMIT ${(currentPage-1)*pageSize},${pageSize}
     </select>
   <select id="getAllUserTotalCount"  resultType="int" >
     select
@@ -65,7 +72,7 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="password != null" >
-        author = #{password,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
       </if>
 
     </set>

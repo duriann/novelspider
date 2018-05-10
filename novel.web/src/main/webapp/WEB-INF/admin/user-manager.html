@@ -15,23 +15,14 @@
   
   <body>
 
-  <table  class="layui-table" lay-data="{width: 'full', height:'full', url:'/novel/getAllNovelByPage',limit:30,currentPage:1,page:true, id:'idTest'}" lay-filter="demo">
+  <table  class="layui-table" lay-data="{width: 'full', height:'full', url:'/admin/getAllUser',limit:30,currentPage:1,page:true, id:'idTest'}" lay-filter="demo">
       <thead>
       <tr>
           <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
           <th lay-data="{field:'id', width:80, sort: true, fixed: true}">ID</th>
-          <th lay-data="{field:'name', width:100, edit: 'text'}">小说名</th>
-          <th lay-data="{field:'author', width:80, edit: 'text'}">作者</th>
+          <th lay-data="{field:'name', width:100, edit: 'text'}">用户名</th>
+          <th lay-data="{field:'password', width:80, edit: 'text'}">密码</th>
 
-          <th lay-data="{field:'url', width:200, edit: 'text'}">小说url</th>
-          <th lay-data="{field:'lastUpdateChapter', width:150, edit: 'text'}">最后更新章节</th>
-          <th lay-data="{field:'lastUpdateChapterUrl', width:200, edit: 'text'}">最后章节更新url</th>
-          <th lay-data="{field:'type', width:100, edit: 'text'}">小说类型</th>
-          <th lay-data="{field:'addTime', width:135, sort: true,templet:'#addTime'}">添加时间</th>
-          <th lay-data="{field:'lastUpdateTime', width:135, sort: true,templet:'#updateTime'}">更新时间</th>
-          <th lay-data="{field:'status', width:80}">状态</th>
-          <th lay-data="{field:'firstLetter', width:80}">首字母</th>
-          <th lay-data="{field:'platformId', width:70}">平台id</th>
           <th lay-data="{fixed:'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
       </tr>
       </thead>
