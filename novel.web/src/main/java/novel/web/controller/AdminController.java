@@ -3,6 +3,7 @@ package novel.web.controller;
 import com.alibaba.fastjson.JSON;
 import novel.web.constants.Constants;
 import novel.web.entitys.JSONResponse;
+import novel.web.entitys.Page;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,4 +83,16 @@ public class AdminController {
         return JSONResponse.error("登录失败");
     }
 
+    /**
+     *
+     * @param page 页码
+     * @param limit 每页显示条数
+     * @return
+     */
+    @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
+    @ResponseBody
+    public JSONResponse getAllUserByPage(int page, int limit) {
+        Page<User> pages = userService.getAllUser(page,limit);
+        return JSONResponse.success(pages.getPages(),pages.getTotalCount());
+    }
 }

@@ -72,8 +72,6 @@ public class NovelServiceImpl implements NovelService {
     @Override
     public Page<Novel> getAllNovelByPage(int page, int limit) {
         Map<String, Object> map = new HashMap<>();
-
-
         map.put("currentPage", page);
         map.put("pageSize", limit);
         List<Novel> novels = novelDao.getAllNovelByPage(map);
