@@ -29,6 +29,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(User user) {
+    }
+
+    @Override
+    public User getUserById(long id) {
+        return userDao.selectByPrimaryKey(id);
+    }
+
+    @Override
     public Page<User> getAllUser(int page, int limit) {
         Map<String, Object> map = new HashMap<>();
         map.put("currentPage", page);
@@ -41,5 +50,10 @@ public class UserServiceImpl implements UserService {
         pages.setPages(users);
         pages.setTotalCount(totalCount);
         return pages;
+    }
+
+    @Override
+    public void update(User user) {
+       userDao.updateByPrimaryKey(user);
     }
 }

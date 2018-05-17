@@ -12,7 +12,7 @@
       <title>首页</title>
     
   </head>
-  
+
   <body>
 
   <table  class="layui-table" lay-data="{width: 'full', height:'full', url:'/admin/getAllUser',limit:30,currentPage:1,page:true, id:'idTest'}" lay-filter="demo">
@@ -33,9 +33,7 @@
 	  <button class="layui-btn" data-type="isAll">验证是否全选</button>
   </div>-->
   <script type="text/html" id="barDemo">
-      <!--
-            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-      -->
+      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
   <script id="addTime" type="text/html">
@@ -63,11 +61,12 @@
           //监听工具条
           table.on('tool(demo)', function(obj){
               var data = obj.data;
+              console.log("obj.event:"+obj.event);
               if(obj.event === 'del'){
                   layer.confirm('真的删除么', function(index){
 
                       $.ajax({
-                          url: "/novel/deleteNovelById",
+                          url: "/admin/deleteUserById",
                           type: "post",
                           data: {
                               "id":data.id
@@ -84,7 +83,44 @@
 
 
                   });
+
+              }else if(obj.event === "edit"){
+                 layer.open({
+                     title: "修改用户",
+                     content:"<div class='layui-form'><input type='hidden' value="+data.id+">用户名:<input type='text' required  lay-verify='required' class=\"layui-input\" value="+data.name+"></br>" +
+                     "密码:<input type='text' required  lay-verify='required' class=\"layui-input\" value="+data.password+"></div>",
+                     btn:['更新'],
+                     yes:function (index,layero) {
+                         var input = $(layero).find("input");
+                         var param = {
+                             id:input[0].value,
+                             name :input[1].value,
+                             password :input[2].value
+                         }
+                         //console.log("JSON.stringify(param):"+JSON.stringify(param));
+                         $.ajax({
+                             url:"/admin/updateUser",
+                             type:"post",
+                             data:{
+                                 param:JSON.stringify(param)
+                             },
+                             error:function () {
+                                 layer.alert("更新失败。");
+                             },
+                             success:function (d) {
+                                 layer.alert("更新成功。")
+                                 layer.close(index);
+                                 window.location.reload();
+                             }
+                         });
+
+                     }
+
+
+                 });
+
               }
+
 
           });
           //监听单元格编辑
@@ -93,7 +129,7 @@
                   ,data = obj.data //得到所在行所有键值
                   ,field = obj.field; //得到字段
               $.ajax({
-                  url: "/novel/updateNovelById",
+                  url: "/novel/updateUser",
                   type: "post",
                   data: {
                       "id":data.id,
@@ -101,7 +137,7 @@
                       "value":value
                   },
                   error: function (da) {
-                      layer.alert("删除失败",{icon:0});
+                      layer.alert("更新失败",{icon:0});
                   },
                   success: function (da) {
                       layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);

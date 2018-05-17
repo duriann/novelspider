@@ -23,5 +23,6 @@ public interface UserDao {
 
     List<User> getAllUserByPage(Map<String, Object> map);
 
+    void deleteUserById(long id);
     int getAllUserTotalCount();
 }
