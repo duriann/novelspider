@@ -72,8 +72,8 @@ public final class NovelSpiderUtil {
 
 	/**
 	 * 
-	 * @param rootPath要合并的文件目录
-	 * @param mergeToFile要合并到哪个文件里
+	 * @param rootPath 要合并的文件目录
+	 * @param mergeToFile 要合并到哪个文件里
 	 *            2018年4月11日下午10:39:23
 	 */
 	public static void mergeMultiFile(String rootPath, String mergeToFile) {

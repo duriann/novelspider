@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        Object user = request.getSession().getAttribute(Constants.CURRENT_USER);
+        Object user = request.getSession().getAttribute(Constants.Sys_USER );
         if (user==null){
             response.sendRedirect("/admin/toLogin");
             return false;

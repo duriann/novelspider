@@ -22,6 +22,7 @@ public class AdminController {
     UserService userService;
     @RequestMapping(value = "/index")
     public ModelAndView admin(){
+
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/index");
         return view;
@@ -75,7 +76,7 @@ public class AdminController {
         admin.setPassword((String) obj.get("password"));
         int status = userService.check(admin);
         if(status==1){
-            request.getSession().setAttribute(Constants.CURRENT_USER,admin);
+            request.getSession().setAttribute(Constants.Sys_USER,admin);
             return JSONResponse.success(admin,0);
         }
         return JSONResponse.error("登录失败");
