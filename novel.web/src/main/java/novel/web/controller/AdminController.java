@@ -28,7 +28,7 @@ public class AdminController {
 
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/admin");
-        User user = (User)request.getSession().getAttribute(Constants);
+        User user = (User)request.getSession().getAttribute(Constants.Sys_USER);
         if(user!=null){
             view.addObject("user",user);
         }
@@ -79,7 +79,7 @@ public class AdminController {
     public JSONResponse login(HttpServletRequest request, HttpServletResponse response,@RequestBody String param){
         Map obj = (Map)JSON.parse(param);
         User admin = new User();
-
+        admin.setRealName((String)obj.get("username"));
         String md5Name = DigestUtils.md5Hex((String) obj.get("username"));
         String md5Pwd = DigestUtils.md5Hex((String) obj.get("password")+(String) obj.get("username"));
         admin.setName(md5Name);
@@ -114,9 +114,9 @@ public class AdminController {
     public ModelAndView logout(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
         view.setViewName("/admin/admin");
-        Object user = request.getSession().getAttribute(Constants.CURRENT_USER);
+        Object user = request.getSession().getAttribute(Constants.Sys_USER);
         if (user!=null){
-            request.getSession().removeAttribute(Constants.CURRENT_USER);
+            request.getSession().removeAttribute(Constants.Sys_USER);
             return view;
         }
         return null;

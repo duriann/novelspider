@@ -4,6 +4,15 @@ public class User {
     private long id;
     private String name;
     private String password;
+    private String realName;
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
 
     public User(long id, String name, String password) {
         this.id = id;
