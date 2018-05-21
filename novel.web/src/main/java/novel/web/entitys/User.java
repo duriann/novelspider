@@ -12,6 +12,11 @@ public class User {
     }
     public User(){}
 
+    public User(String cname, String cpwd) {
+        this.name = cname;
+        this.password = cpwd;
+    }
+
     public long getId() {
         return id;
     }

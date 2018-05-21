@@ -9,7 +9,7 @@
 
     <title>首页</title>
 	
-	<link rel="stylesheet" href="../../lib/common/lib/layui/css/layui.css">
+	<link rel="stylesheet" href="../../lib/layui/css/layui.css">
 	<link rel="stylesheet" href="../../lib/common/css/sccl.css">
     
   </head>
@@ -42,7 +42,6 @@
 				<div class="layui-form-item">
 					<div class="pull-left login-remember">
 						<label>记住帐号？</label>
-
 						<input type="checkbox" name="rememberMe" value="true" lay-skin="switch" title="记住帐号"><div class="layui-unselect layui-form-switch"><i></i></div>
 					</div>
 					<div class="pull-right">
@@ -64,8 +63,8 @@
             <img id="valiCode" src="/manage/validatecode?v=636150612041789540" alt="验证码" />
         </div>
     </script>
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../lib/common/lib/layui/layui.js"></script>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/layui/layui.js"></script>
     <script>
         layui.use(['layer', 'form'], function () {
             var layer = layui.layer,
@@ -82,6 +81,7 @@
                 }
             });
             form.on('submit(login)', function (data) {
+                console.log(data.field);
                 $.ajax({
                     url: "/admin/login",
                     type: "post",

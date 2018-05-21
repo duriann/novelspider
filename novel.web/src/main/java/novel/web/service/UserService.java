@@ -6,6 +6,12 @@ import novel.web.entitys.User;
 public interface UserService {
 
     int save(User user);
+
+    /**
+     *
+     * @param user
+     * @return 1:登录成功
+     */
     int check(User user);
     void delete(User user);
     User getUserById(long id);
