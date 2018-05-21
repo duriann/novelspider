@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        Object user = request.getSession().getAttribute(Constants.CURRENT_USER);
+        Object user = request.getSession().getAttribute(Constants.Sys_USER );
         if (user==null){
             String cname = "";
             String cpwd = "";

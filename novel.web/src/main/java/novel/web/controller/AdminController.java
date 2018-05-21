@@ -25,6 +25,7 @@ public class AdminController {
     UserService userService;
     @RequestMapping(value = "/index")
     public ModelAndView admin(HttpServletRequest request){
+
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/admin");
         User user = (User)request.getSession().getAttribute(Constants);
@@ -86,7 +87,7 @@ public class AdminController {
         int check = userService.check(admin);
         int status = check;
         if(status==1){
-            request.getSession().setAttribute(Constants.CURRENT_USER,admin);
+            request.getSession().setAttribute(Constants.Sys_USER,admin);
             String isRemember = obj.get("rememberMe")==null?"false":(String) obj.get("rememberMe");
             if (isRemember.equalsIgnoreCase("true")){
                 Cookie cname = new Cookie("username", md5Name);
