@@ -1,12 +1,16 @@
 package novel.spider.junit;
 
 
+import java.io.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.sf.json.JSON;
+import net.sf.json.xml.XMLSerializer;
+import novel.spider.util.FileUtil;
 import org.junit.Test;
 
 import novel.spider.NovelSiteEnum;
@@ -24,6 +28,15 @@ import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.NovelSpiderUtil;
 
 public class Testcase {
+
+
+	@Test
+	public void testXML2Json() throws Exception {
+		XMLSerializer serializer = new XMLSerializer();
+		String xml = FileUtil.file2String("conf/Spider-Rule.xml");
+		JSON read = serializer.read(xml);
+		System.out.println("read = " + read);
+	}
 	
 	//测试瞎说爬虫能抓下一页小说
 	@Test

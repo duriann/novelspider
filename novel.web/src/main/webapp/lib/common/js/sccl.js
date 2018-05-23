@@ -398,13 +398,13 @@ $(function(){
 					{"id":"3","name":"小说管理","parentId":"1","url":"","icon":"&#xe604;","order":"1","isHeader":"0","childMenus":[
 						{"id":"4","name":"小说管理","parentId":"3","url":"/admin/novelManager","icon":"","order":"1","isHeader":"0","childMenus":""},
 						{"id":"5","name":"用户管理","parentId":"3","url":"/admin/userManager","icon":"","order":"1","isHeader":"0","childMenus":""}
-					]}/*,
-					{"id":"6","name":"订单管理","parentId":"1","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
-						{"id":"7","name":"已付款","parentId":"6","url":"home3.html","icon":"","order":"1","isHeader":"0","childMenus":""},
-						{"id":"8","name":"未付款","parentId":"6","url":"home4.html","icon":"","order":"1","isHeader":"0","childMenus":""}
-					]}*/
-				]}
-				];
+					]},
+					{"id":"6","name":"爬虫管理","parentId":"1","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
+						{"id":"7","name":"爬虫规则管理","parentId":"6","url":"/admin/spiderManager","icon":"","order":"1","isHeader":"0","childMenus":""},
+						{"id":"8","name":"暂无","parentId":"6","url":"home.html","icon":"","order":"1","isHeader":"0","childMenus":""}
+					]}
+					]
+				}];
 	initMenu(menu,$(".side-menu"));
 	$(".side-menu > li").addClass("menu-item");
 	

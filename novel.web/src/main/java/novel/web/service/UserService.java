@@ -12,7 +12,7 @@ public interface UserService {
      * @param user
      * @return 1:登录成功
      */
-    int check(User user);
+    User check(User user);
     void delete(User user);
     User getUserById(long id);
     Page<User> getAllUser(int page, int limit);

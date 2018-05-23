@@ -23,9 +23,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int check(User check) {
-        int status = userDao.selectByUser(check);
-        return status;
+    public User check(User check) {
+        User user = userDao.selectByUser(check);
+        return user;
     }
 
     @Override
@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
         map.put("currentPage", page);
         map.put("pageSize", limit);
         List<User> users = userDao.getAllUserByPage(map);
+        System.out.println("users = " + users);
         int totalCount = userDao.getAllUserTotalCount();
         Page<User> pages = new Page<User>();
         pages.setCurrentPage(page);

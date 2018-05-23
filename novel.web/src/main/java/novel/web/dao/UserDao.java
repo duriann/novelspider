@@ -19,7 +19,7 @@ public interface UserDao {
 
     public void batchInsert(List<User> Users);
 
-    public int selectByUser(User user);
+    public User selectByUser(User user);
 
     List<User> getAllUserByPage(Map<String, Object> map);
 

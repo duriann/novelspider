@@ -18,6 +18,7 @@ public class JSONResponse {
         JSONResponse response = new JSONResponse();
         response.setCode(0);
         response.setData(data);
+        response.setMsg("");
         return response;
     }
     public static JSONResponse error(String msg) {

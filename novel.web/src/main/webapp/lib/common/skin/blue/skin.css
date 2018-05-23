@@ -5,7 +5,7 @@
 /* 左侧菜单 */
 .side-menu .menu-item a{border-bottom: 0px solid #393d49;}
 .side-menu .menu-item:hover > a, .side-menu .menu-item.active > a{border-left-color: #1E9FFF;}
-.side-menu .menu-header{border-bottom: 1px solid #2b2e37;} 
+.side-menu .menu-header{border-bottom: 1px solid #2b2e37;}
 .side-menu .menu-item .label{background: #1E9FFF;}
 .layout-side-arrow:hover{background-color:#1E9FFF;}
 /*菜单收缩*/

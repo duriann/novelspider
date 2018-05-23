@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 /**
  * 管理员登录拦截器
@@ -21,10 +22,10 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         Object user = request.getSession().getAttribute(Constants.Sys_USER );
         if (user==null){
-            String cname = "";
-            String cpwd = "";
             Cookie[] cookies = request.getCookies();
-            if (cookies.length>0){
+            if (cookies.length>0&&hasCookie(cookies,"username")&&hasCookie(cookies,"password")){
+                String cname = "";
+                String cpwd = "";
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals("username")){
                         cname = cookie.getValue();
@@ -33,14 +34,20 @@ public class LoginInterceptor implements HandlerInterceptor {
                         cpwd = cookie.getValue();
                     }
                 }
-            }
-            int check = userService.check(new User(cname,cpwd));
-            if (check==1){
-                return true;
-            }else{
+                User cookieUser = new User(cname,cpwd);
+                User check = userService.check(cookieUser);
+                if (check!=null){
+                    request.getSession().setAttribute(Constants.Sys_USER,check);
+                    return true;
+                }else{
+                    response.sendRedirect("/admin/toLogin");
+                    return false;
+                }
+            }else {
                 response.sendRedirect("/admin/toLogin");
                 return false;
             }
+
         }
         return true;
     }
@@ -53,5 +60,20 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
 
+    }
+
+    /**
+     * 判断是否存在cookie
+     * @param cookies
+     * @param key
+     * @return
+     */
+    private boolean hasCookie(Cookie[] cookies,String key){
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equalsIgnoreCase(key)){
+                return true;
+            }
+        }
+        return false;
     }
 }

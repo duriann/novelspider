@@ -60,6 +60,14 @@ public class AdminController {
 
     }
 
+    @RequestMapping(value = "/spiderManager")
+    public ModelAndView spiderManager(){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/spiderRule-manager");
+        return view;
+    }
+
+
     @RequestMapping(value = "/home")
     public ModelAndView home(){
         ModelAndView view = new ModelAndView();
@@ -84,9 +92,9 @@ public class AdminController {
         String md5Pwd = DigestUtils.md5Hex((String) obj.get("password")+(String) obj.get("username"));
         admin.setName(md5Name);
         admin.setPassword(md5Pwd);
-        int check = userService.check(admin);
-        int status = check;
-        if(status==1){
+        User check = userService.check(admin);
+
+        if(check!=null){
             request.getSession().setAttribute(Constants.Sys_USER,admin);
             String isRemember = obj.get("rememberMe")==null?"false":(String) obj.get("rememberMe");
             if (isRemember.equalsIgnoreCase("true")){
@@ -110,20 +118,16 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    @ResponseBody
-    public ModelAndView logout(HttpServletRequest request){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("/admin/admin");
+    public String logout(HttpServletRequest request){
         Object user = request.getSession().getAttribute(Constants.Sys_USER);
         if (user!=null){
             request.getSession().removeAttribute(Constants.Sys_USER);
-            return view;
         }
-        return null;
+        return "redirect:/index.html";
     }
 
     /**
-     *
+     * 分页获取所有用户
      * @param page 页码
      * @param limit 每页显示条数
      * @return
