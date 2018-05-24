@@ -18,7 +18,7 @@ public class FileUtil {
      * @throws Exception
      */
     public static String file2String(String src) throws Exception {
-        InputStream inputStream = FileUtil.class.getClassLoader().getResourceAsStream(src );
+        InputStream inputStream = FileUtil.class.getClassLoader().getResourceAsStream(src);
         //此处需要设置一下编码 不然前台显示会乱码
         BufferedReader bReader = new BufferedReader(new InputStreamReader(inputStream,"utf-8"));//new一个BufferedReader对象，将文件内容读取到缓存
         StringBuilder sb = new StringBuilder();//定义一个字符串缓存，将字符串存放缓存中

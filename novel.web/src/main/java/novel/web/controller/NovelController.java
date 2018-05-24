@@ -71,7 +71,8 @@ public class NovelController {
         List<Chapter> chapters = null;
         boolean isSuccess = false;
         try {
-            chapters = novelService.getChapters(base64Url);
+            List<Chapter> chapters1 = novelService.getChapters(base64Url);
+            chapters = chapters1;
             isSuccess = true;
         } catch (Exception e) {
             e.printStackTrace();

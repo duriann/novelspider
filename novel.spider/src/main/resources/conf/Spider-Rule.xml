@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sites>
 	
-	<site>
+	<site id="1">
 		<title>笔下文学</title>
 		<charset>utf-8</charset>
 		<url>https://www.bxwx9.org</url>
@@ -15,7 +15,7 @@
 		<novel-nextpage-selector>#pagelink .next</novel-nextpage-selector>
 	</site>
 	
-	<site>
+	<site id="2">
 		<title>看书中</title>
 		<charset>GBK</charset>
 		<url>http://www.kanshuzhong.com</url>
@@ -28,7 +28,7 @@
 		<novel-nextpage-selector>#pagelink .next</novel-nextpage-selector>
 	</site>
 	
-	<site>
+	<site id="3">
 		<title>顶点小说</title>
 		<charset>GBK</charset>
 		<url>http://www.23wx.cc/</url>
@@ -40,7 +40,7 @@
 		<novel-selector>.grid tr</novel-selector>
 	</site>
 	
-	<site>
+	<site id="4">
 		<title>笔趣阁</title>
 		<charset>UTF-8</charset>
 		<url>http://www.xs.la</url>
