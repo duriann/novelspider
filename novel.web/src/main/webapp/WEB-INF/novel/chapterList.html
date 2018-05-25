@@ -37,7 +37,7 @@
                 <li><a href="../../">主页</a></li>
                 <li><a href="#">关于</a></li>
                 <li><a href="#">联系我</a></li>
-                <li class="dropdown"><a href="javascript:void(0);"
+                <!--<li class="dropdown"><a href="javascript:void(0);"
                                         class="dropdown-toggle" data-toggle="dropdown">我的项目<b
                         class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -45,7 +45,7 @@
                         <li><a href="../ttsys/index.html">铁通查询</a></li>
                         <li><a href="#">尔雅题库</a></li>
                     </ul>
-                </li>
+                </li>-->
             </ul>
         </div>
         <!--/.navbar-collapse -->
@@ -76,22 +76,21 @@
         </tr>
         </thead>
         <tbody>
-        <!-- 每四章换一列 -->
-        <#if isSuccess??>
-            <#list  chapters as chapter >
-                <#if chapter_index % 4 == 0><tr></#if>
-                <td><a href="./getChapterDetail?url=${chapter.url }&chapterBase64Url=${chapterBase64Url}"
-                       target="_blank">${chapter.title}</a></td>
-                <#if (chapter_index + 1) % 4 == 0 ></tr></#if>
-            </#list>
-        <#else>
-            <tr>
-                <td colspan="4" style="text-align:center;">
-                    很抱歉，章节列表下载失败，您可以再试一次！
-                </td>
-            </tr>
-        </#if>
-
+            <!-- 每四章换一列 -->
+            <#if isSuccess??>
+                <#list chapters as chapter>
+                    <#if chapter_index % 4 == 0><tr></#if>
+                    <td><a href="./getChapterDetail?url=${chapter.url }&chapterBase64Url=${chapterBase64Url}"
+                           target="_blank">${chapter.title}</a></td>
+                    <#if (chapter_index + 1) % 4 == 0 ></tr></#if>
+                </#list>
+            <#else>
+                <tr>
+                    <td colspan="4" style="text-align:center;">
+                        很抱歉，章节列表下载失败，您可以再试一次！
+                    </td>
+                </tr>
+            </#if>
         </tbody>
     </table>
 </div>

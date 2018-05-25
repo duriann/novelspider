@@ -1,34 +1,20 @@
 package novel.spider.util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import novel.spider.NovelSiteEnum;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import novel.spider.NovelSiteEnum;
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public final class NovelSpiderUtil {
 	private static final Map<NovelSiteEnum, Map<String, String>> CONTEXT_MAP = new HashMap<>();
-	static {
+	/*static {
 		init();
-	}
+	}*/
 
 	private NovelSpiderUtil() {
 		
@@ -44,7 +30,8 @@ public final class NovelSpiderUtil {
 		
 		SAXReader reader = new SAXReader();
 		try {
-			Document doc = reader.read(NovelSpiderUtil.class.getClassLoader().getResourceAsStream("conf/Spider-Rule.xml"));
+			//Document doc = reader.read(NovelSpiderUtil.class.getClassLoader().getResourceAsStream("conf/Spider-Rule.xml"));
+			Document doc = reader.read(NovelSpiderUtil.class.getClassLoader().getResource("conf/Spider-Rule.xml"));
 			Element root = doc.getRootElement();
 			List<Element> sites = root.elements("site");
 			for (Element site : sites) {
@@ -66,7 +53,7 @@ public final class NovelSpiderUtil {
 	 * 拿到对应网站的解析规则
 	 */
 	public static Map<String, String> getContext(NovelSiteEnum novelSiteEnum) {
-		
+		init();
 		return CONTEXT_MAP.get(novelSiteEnum);
 	}
 

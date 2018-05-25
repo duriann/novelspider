@@ -23,58 +23,6 @@ import java.util.Map;
 public class AdminController {
     @Autowired
     UserService userService;
-    @RequestMapping(value = "/index")
-    public ModelAndView admin(HttpServletRequest request){
-
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/admin");
-        User user = (User)request.getSession().getAttribute(Constants.Sys_USER);
-        if(user!=null){
-            view.addObject("user",user);
-        }
-        return view;
-
-    }
-
-    @RequestMapping(value = "/toLogin")
-    public ModelAndView toLogin(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/login");
-        return view;
-
-    }
-
-    @RequestMapping(value = "/novelManager")
-    public ModelAndView novelManager(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/novel-manager");
-        return view;
-
-    }
-
-    @RequestMapping(value = "/userManager")
-    public ModelAndView userManager(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/user-manager");
-        return view;
-
-    }
-
-    @RequestMapping(value = "/spiderManager")
-    public ModelAndView spiderManager(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/spiderRule-manager");
-        return view;
-    }
-
-
-    @RequestMapping(value = "/home")
-    public ModelAndView home(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/home");
-        return view;
-
-    }
 
     /**
      * 登录
@@ -118,12 +66,14 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    public String logout(HttpServletRequest request){
+    public ModelAndView logout(HttpServletRequest request){
+        ModelAndView view = new ModelAndView();
         Object user = request.getSession().getAttribute(Constants.Sys_USER);
         if (user!=null){
             request.getSession().removeAttribute(Constants.Sys_USER);
         }
-        return "redirect:/index.html";
+        view.setViewName("index");
+        return view;
     }
 
     /**

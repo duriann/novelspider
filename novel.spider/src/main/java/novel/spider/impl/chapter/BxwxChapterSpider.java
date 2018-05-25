@@ -1,10 +1,10 @@
 package novel.spider.impl.chapter;
 
+import novel.spider.entitys.Chapter;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import novel.spider.entitys.Chapter;
 
 /**
  * 笔下文学专用，因为笔下文学章节标题没有按照自然顺序排序，需要过滤一下
@@ -14,6 +14,7 @@ import novel.spider.entitys.Chapter;
 public class BxwxChapterSpider extends AbstractChapterSpider {
 	public List<Chapter> getsChapter(String url) {
 		List<Chapter> chapters = super.getsChapter(url);
+        System.out.println("BxwxChapterSpider 中获取的chapters = " + chapters);
 		Collections.sort(chapters, new Comparator<Chapter>() {
 			@Override
 			public int compare(Chapter o1, Chapter o2) {

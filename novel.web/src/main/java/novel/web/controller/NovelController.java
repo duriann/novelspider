@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -71,8 +73,7 @@ public class NovelController {
         List<Chapter> chapters = null;
         boolean isSuccess = false;
         try {
-            List<Chapter> chapters1 = novelService.getChapters(base64Url);
-            chapters = chapters1;
+            chapters = novelService.getChapters(base64Url);
             isSuccess = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +94,7 @@ public class NovelController {
      * @return
      */
     @RequestMapping("getChapterDetail")
-    public ModelAndView getChapterDetail(String url, String chapterBase64Url) {
+    public ModelAndView getChapterDetail(HttpServletResponse response, String url, String chapterBase64Url) {
         boolean isSuccess = false;
         ChapterDetail chapterDetail = null;
         try {

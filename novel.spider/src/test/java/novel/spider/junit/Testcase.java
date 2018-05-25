@@ -1,18 +1,8 @@
 package novel.spider.junit;
 
 
-import java.io.*;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import net.sf.json.JSON;
 import net.sf.json.xml.XMLSerializer;
-import novel.spider.util.FileUtil;
-import org.junit.Test;
-
 import novel.spider.NovelSiteEnum;
 import novel.spider.config.Configuration;
 import novel.spider.entitys.Chapter;
@@ -25,7 +15,15 @@ import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
 import novel.spider.interfaces.INovelDownload;
 import novel.spider.interfaces.INovelSpider;
+import novel.spider.util.FileUtil;
 import novel.spider.util.NovelSpiderUtil;
+import org.junit.Test;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class Testcase {
 
@@ -86,7 +84,7 @@ public class Testcase {
 	public void testGetChapterSpider(){
 		IChapterSpider spider = new BxwxChapterSpider();
 		List<Chapter> chapters2 = spider.getsChapter("https://www.bxwx9.org/b/6/6347/index.html");
-		for(int i = chapters2.size()-1;i<chapters2.size();i++){
+		for(int i = 0;i<chapters2.size();i++){
 			System.out.println("i:"+i+"--"+chapters2.get(i));
 		}
 		
