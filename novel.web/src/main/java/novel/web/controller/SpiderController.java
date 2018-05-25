@@ -25,6 +25,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -54,8 +55,6 @@ public class SpiderController {
 
     }
 
-
-
     /**
      * 修改网站爬取规则
      * @return
@@ -79,12 +78,11 @@ public class SpiderController {
             site.getElementsByTagName("chapter-detail-next-selector").item(0).setTextContent(object.getString("chapter-detail-next-selector"));
             site.getElementsByTagName("novel-selector").item(0).setTextContent(object.getString("novel-selector"));
             site.getElementsByTagName("novel-nextpage-selector").item(0).setTextContent(object.getString("novel-nextpage-selector"));
-            System.out.println("charset = " + site.getElementsByTagName("charset").item(0).getTextContent());
             // 保存
             TransformerFactory factory = TransformerFactory.newInstance();
             Transformer former = factory.newTransformer();
             former.transform(new DOMSource(xml), new StreamResult(
-                    parse(getClass().getClassLoader().getResourceAsStream("conf/Spider-Rule.xml"))));
+                  new File(getClass().getClassLoader().getResource("conf/Spider-Rule.xml").getFile())));
         }catch (Exception e){
             e.printStackTrace();
             return JSONResponse.error("更新规则失败!");
@@ -114,7 +112,6 @@ public class SpiderController {
         } catch (XPathExpressionException e) {
             System.out.println(e.getMessage());
         }
-
         return result;
     }
 }

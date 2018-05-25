@@ -135,9 +135,10 @@
                                  if(data.code==1){
                                      layer.alert("更新失败。");
                                  }else{
-                                     layer.alert("更新成功。");
-                                     layer.close(index);
-                                     //window.location.reload();
+                                     layer.alert("更新成功。",function (index) {
+                                         layer.close(index);
+                                         window.location.reload();
+                                     });
                                  }
 
                              }
