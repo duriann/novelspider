@@ -16,6 +16,7 @@ import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -24,9 +25,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
+import java.util.UUID;
 
 /**
  * @author pineapple
@@ -90,15 +90,77 @@ public class SpiderController {
        return JSONResponse.success("更新成功");
 
     }
-    //inputStream转outputStream
-    private ByteArrayOutputStream parse(InputStream in) throws Exception
-    {
-        ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-        int ch;
-        while ((ch = in.read()) != -1) {
-            swapStream.write(ch);
+    /**
+     * 新增网站爬取规则
+     * @return
+     */
+    @RequestMapping(value = "/addSpiderRule")
+    @ResponseBody
+    public JSONResponse addSpiderRule(@RequestParam("param")String param){
+        JSONObject object = JSONObject.fromObject(param);
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document xml = db.parse(SpiderController.class.getClassLoader().getResourceAsStream("conf/Spider-Rule.xml"));
+            //获取根节点 sites
+            Element root = xml.getDocumentElement();
+            //创建site节点
+            Element site = xml.createElement("site");
+            //设置site节点属性
+            site.setAttribute("id", UUID.randomUUID().toString().replace("-",""));
+
+            Element title = xml.createElement("title");
+            title.setTextContent(object.getString("title"));
+            site.appendChild(title);
+            Element charset = xml.createElement("charset");
+            charset.setTextContent(object.getString("charset"));
+            site.appendChild(charset);
+            Element url = xml.createElement("url");
+            url.setTextContent(object.getString("url"));
+            site.appendChild(url);
+            Element chapterListSelector = xml.createElement("chapter-list-selector");
+            chapterListSelector.setTextContent(object.getString("chapter-list-selector"));
+
+            site.appendChild(chapterListSelector);
+            Element chapterDetailTitleSelector = xml.createElement("chapter-detail-title-selector");
+            chapterDetailTitleSelector.setTextContent(object.getString("chapter-detail-title-selector"));
+
+            site.appendChild(chapterDetailTitleSelector);
+            Element chapterDetailContentSelector = xml.createElement("chapter-detail-content-selector");
+            chapterDetailContentSelector.setTextContent(object.getString("chapter-detail-content-selector"));
+
+            site.appendChild(chapterDetailContentSelector);
+            Element chapterDetailPrevSelector = xml.createElement("chapter-detail-prev-selector");
+            chapterDetailPrevSelector.setTextContent(object.getString("chapter-detail-prev-selector"));
+
+            site.appendChild(chapterDetailPrevSelector);
+            Element chapterDetailNextSelector = xml.createElement("chapter-detail-next-selector");
+            chapterDetailNextSelector.setTextContent(object.getString("chapter-detail-next-selector"));
+
+            site.appendChild(chapterDetailNextSelector);
+            Element novelSelector = xml.createElement("novel-selector");
+            novelSelector.setTextContent(object.getString("novel-selector"));
+
+            site.appendChild(novelSelector);
+            Element novelNextpageSelector = xml.createElement("novel-nextpage-selector");
+            novelNextpageSelector.setTextContent(object.getString("novel-nextpage-selector"));
+
+            site.appendChild(novelNextpageSelector);
+
+            //将site节点保存到sites节点中
+            root.appendChild(site);
+            // 保存
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer former = factory.newTransformer();
+            //设置换行回车
+            former.setOutputProperty(OutputKeys.INDENT, "yes");
+            former.transform(new DOMSource(xml), new StreamResult(
+                    new File(getClass().getClassLoader().getResource("conf/Spider-Rule.xml").getFile())));
+        }catch (Exception e){
+            e.printStackTrace();
+            return JSONResponse.error("新增规则失败!");
         }
-        return swapStream;
+        return JSONResponse.success("");
     }
     // 根据xpath定位节点信息
     private static Node selectSingleNode(String express, Element source) {

@@ -14,7 +14,11 @@
   </head>
 
   <body>
-
+  <div class="layui-btn-group">
+      <button class="layui-btn layui-btn-sm" onclick="addSpiderRule()">
+          新增
+      </button>
+  </div>
   <table  class="layui-table" lay-data="{width: 'full', height:'full', url:'/admin/getAllSpiderRule',limit:30,currentPage:1,page:false, id:'idTest'}" lay-filter="demo">
       <thead>
       <tr>
@@ -41,7 +45,6 @@
 	  <button class="layui-btn" data-type="isAll">验证是否全选</button>
   </div>-->
   <script type="text/html" id="barDemo">
-      <a class="layui-btn layui-btn-xs" lay-event="add">新增</a>
       <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
       <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
   </script>
@@ -64,6 +67,62 @@
   <script src="../../lib/layui/layui.js" charset="utf-8"></script>
   <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
   <script>
+      function addSpiderRule() {
+          layer.open({
+              title: "新增规则",
+              area: 'auto',
+              content:"<div class='layui-form'>" +
+              "网站名称:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>" +
+              "编码选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>" +
+              "网址选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
+              "章节列表选择器:<input type='text' required  lay-verify='required' class=\"layui-input\"></br>"+
+              "章节标题选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
+              "章节详情选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
+              "上一章选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
+              "下一章选择器:<input type='text' required  lay-verify='required' class=\"layui-input\"></br>"+
+              "小说选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
+              "下一页小说选择器:<input type='text' required  lay-verify='required' class=\"layui-input\"></br></div>",
+              btn:['保存'],
+              yes:function (index,layero) {
+                  var input = $(layero).find("input");
+                  var param = {
+                      title:input[0].value,
+                      charset :input[1].value,
+                      url :input[2].value,
+                      "chapter-detail-title-selector" :input[4].value,
+                      "chapter-list-selector" :input[3].value,
+                      "chapter-detail-content-selector" :input[5].value,
+                      "chapter-detail-prev-selector" :input[6].value,
+                      "chapter-detail-next-selector" :input[7].value,
+                      "novel-selector" :input[8].value,
+                      "novel-nextpage-selector" :input[9].value
+                  }
+                  //console.log("JSON.stringify(param):"+JSON.stringify(param));
+                  $.ajax({
+                      url:"/admin/addSpiderRule",
+                      type:"post",
+                      data:{
+                          param:JSON.stringify(param)
+                      },
+                      error:function () {
+                          layer.alert("保存失败。");
+                      },
+                      success:function (data) {
+                          if(data.code==1){
+                              layer.alert("保存失败。");
+                          }else{
+                              layer.alert("添加成功。",function (index) {
+                                  layer.close(index);
+                                  window.location.reload();
+                              });
+                          }
+
+                      }
+                  });
+
+              }
+          });
+      }
       layui.use('table', function(){
           var table = layui.table;
 
@@ -75,7 +134,7 @@
                   layer.confirm('真的删除么', function(index){
 
                       $.ajax({
-                          url: "/admin/deleteUserById",
+                          url: "/admin/deleteSpiderRule",
                           type: "post",
                           data: {
                               "id":data.id
@@ -149,60 +208,7 @@
                  });
 
               }else if(obj.event === "add"){
-                  layer.open({
-                      title: "新增规则",
-                      area: 'auto',
-                      content:"<div class='layui-form'><input type='hidden' value="+data.id+">" +
-                      "网站名称:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>" +
-                      "编码选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>" +
-                      "网址选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
-                      "章节列表选择器:<input type='text' required  lay-verify='required' class=\"layui-input\"></br>"+
-                      "章节标题选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
-                      "章节详情选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
-                      "上一章选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
-                      "下一章选择器:<input type='text' required  lay-verify='required' class=\"layui-input\"></br>"+
-                      "小说选择器:<input type='text' required  lay-verify='required' class=\"layui-input\" ></br>"+
-                      "下一页小说选择器:<input type='text' required  lay-verify='required' class=\"layui-input\"></br></div>",
-                      btn:['保存'],
-                      yes:function (index,layero) {
-                          var input = $(layero).find("input");
-                          var param = {
-                              id:input[0].value,
-                              charset :input[1].value,
-                              url :input[2].value,
-                              "chapter-detail-title-selector" :input[4].value,
-                              "chapter-list-selector" :input[3].value,
-                              "chapter-detail-content-selector" :input[5].value,
-                              "chapter-detail-prev-selector" :input[6].value,
-                              "chapter-detail-next-selector" :input[7].value,
-                              "novel-selector" :input[8].value,
-                              "novel-nextpage-selector" :input[9].value
-                          }
-                          //console.log("JSON.stringify(param):"+JSON.stringify(param));
-                          $.ajax({
-                              url:"/admin/addSpiderRule",
-                              type:"post",
-                              data:{
-                                  param:JSON.stringify(param)
-                              },
-                              error:function () {
-                                  layer.alert("更新失败。");
-                              },
-                              success:function (data) {
-                                  if(data.code==1){
-                                      layer.alert("更新失败。");
-                                  }else{
-                                      layer.alert("更新成功。",function (index) {
-                                          layer.close(index);
-                                          window.location.reload();
-                                      });
-                                  }
 
-                              }
-                          });
-
-                      }
-                  });
               }
 
 
