@@ -1,5 +1,5 @@
 package novel.web.constants;
 
 public final class Constants {
-    public static final String Sys_USER = "admin";
+    public static final String CURRENT_USER = "user";
 }

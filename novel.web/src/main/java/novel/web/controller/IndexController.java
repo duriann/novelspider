@@ -2,10 +2,12 @@ package novel.web.controller;
 
 import novel.web.constants.Constants;
 import novel.web.entitys.User;
+import novel.web.utils.Base64Util;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -21,6 +23,19 @@ public class IndexController {
     @RequestMapping(value = "/")
     public ModelAndView index(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
+        Cookie[] cookies = request.getCookies();
+        if (cookies!=null && cookies.length>0){
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("lastReadChapterDetailUrl")){
+                    view.addObject("lastReadChapterDetailUrl",cookie.getValue());
+                }
+                if(cookie.getName().equals("lastReadChapterTitle")){
+                    view.addObject("lastReadChapterTitle",cookie.getValue());
+                }
+            }
+        }
+        //为了freemarker能调用base64util加密方法
+        view.addObject("Base64Util", new Base64Util());
         view.setViewName("index");
         return view;
     }
@@ -34,7 +49,7 @@ public class IndexController {
     public ModelAndView admin(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/admin");
-        User user = (User)request.getSession().getAttribute(Constants.Sys_USER);
+        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
         if(user!=null){
             view.addObject("user",user);
         }

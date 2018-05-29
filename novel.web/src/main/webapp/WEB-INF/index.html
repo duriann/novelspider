@@ -56,6 +56,17 @@
 							<button class="btn btn-default" type="button" id="btnSearch">小说搜搜</button>
 						</span>
                 </div>
+                <div class="input-group" style="padding-top: 20px">
+                    <span >
+                        <#if lastReadChapterTitle??>
+                            <#assign chaptertitle=Base64Util.decode(lastReadChapterTitle)>
+                             您上一次阅读到,${chaptertitle}
+                        </#if>
+                        <#if lastReadChapterDetailUrl??>
+                            <a href="/novel/getChapterDetail?url=${lastReadChapterDetailUrl}">继续阅读</a>
+                        </#if>
+						</span>
+                </div>
             </div>
         </div>
     </div>
@@ -74,7 +85,6 @@
         </thead>
         <tbody id="list">
         </tbody>
-        <tfoot>
             <tr id="page" style="display: none">
                 <td colspan="5">
                     <div class="btn-group" style="float: right;">

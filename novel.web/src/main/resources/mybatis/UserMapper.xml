@@ -6,9 +6,11 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="real_name" property="realName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="last_read_chapter_detail_url" property="lastReadChapterDetailUrl" jdbcType="VARCHAR" />
+    <result column="last_read_chapter_detail_title" property="lastReadChapterTitle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, real_name, name, password
+    id, real_name, name, password,last_read_chapter_detail_url,last_read_chapter_detail_title
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

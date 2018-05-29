@@ -3,9 +3,13 @@ package novel.web.controller;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
+import novel.web.constants.Constants;
 import novel.web.entitys.JSONResponse;
 import novel.web.entitys.Page;
+import novel.web.entitys.User;
 import novel.web.service.NovelService;
+import novel.web.service.UserService;
+import novel.web.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -24,6 +29,8 @@ public class NovelController {
     @Autowired
     NovelService novelService;
 
+    @Autowired
+    UserService userService;
     /**
      * 根据关键词查找小说
      * @param keyword
@@ -83,6 +90,8 @@ public class NovelController {
         view.addObject("chapters", chapters);
         view.addObject("chapterBase64Url", base64Url);
         view.addObject("isSuccess", isSuccess);
+        //为了freemarker能调用base64util加密方法
+        view.addObject("Base64Util", new Base64Util());
         return view;
     }
 
@@ -94,11 +103,30 @@ public class NovelController {
      * @return
      */
     @RequestMapping("getChapterDetail")
-    public ModelAndView getChapterDetail(HttpServletResponse response, String url, String chapterBase64Url) {
+    public ModelAndView getChapterDetail(HttpServletRequest request,HttpServletResponse response, String url, String chapterBase64Url) {
         boolean isSuccess = false;
         ChapterDetail chapterDetail = null;
+        //将前台传来的章节详情url解码
+        url = Base64Util.decode(url);
         try {
             chapterDetail = novelService.getChapterDetail(url);
+            chapterDetail.setPrev(Base64Util.encode(chapterDetail.getPrev()));
+            chapterDetail.setNext(Base64Util.encode(chapterDetail.getNext()));
+            Cookie lastReadChapterDetailUrl = new Cookie("lastReadChapterDetailUrl", Base64Util.encode(url));
+            lastReadChapterDetailUrl.setPath("/");
+            //设置cookie为一年
+            lastReadChapterDetailUrl.setMaxAge(12*30*24*3600);
+            Cookie lastReadChapterTitle = new Cookie("lastReadChapterTitle",Base64Util.encode(chapterDetail.getTitle()));
+            lastReadChapterTitle.setPath("/");
+            lastReadChapterTitle.setMaxAge(12*30*24*3600);
+            User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
+            if (user!=null){
+                user.setLastReadChapterDetailUrl(url);
+                user.setLastReadChapterTitle(chapterDetail.getTitle());
+                userService.update(user);
+            }
+            response.addCookie(lastReadChapterDetailUrl);
+            response.addCookie(lastReadChapterTitle);
             isSuccess = true;
         } catch (Exception e) {
             e.printStackTrace();

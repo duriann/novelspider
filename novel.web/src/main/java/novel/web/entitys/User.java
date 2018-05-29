@@ -5,13 +5,21 @@ public class User {
     private String name;
     private String password;
     private String realName;
-
+    private String lastReadChapterDetailUrl;
     public String getRealName() {
         return realName;
     }
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public String getLastReadChapterDetailUrl() {
+        return lastReadChapterDetailUrl;
+    }
+
+    public void setLastReadChapterDetailUrl(String lastReadChapterDetailUrl) {
+        this.lastReadChapterDetailUrl = lastReadChapterDetailUrl;
     }
 
     public User(long id, String name, String password) {
@@ -42,6 +50,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", realName='" + realName + '\'' +
+                ", lastReadChapterDetailUrl='" + lastReadChapterDetailUrl + '\'' +
                 '}';
     }
 
@@ -59,5 +68,15 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    private String lastReadChapterTitle;
+
+    public String getLastReadChapterTitle() {
+        return lastReadChapterTitle;
+    }
+
+    public void setLastReadChapterTitle(String lastReadChapterTitle) {
+        this.lastReadChapterTitle = lastReadChapterTitle;
     }
 }

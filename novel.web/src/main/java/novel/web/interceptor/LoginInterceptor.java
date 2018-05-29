@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 /**
  * 管理员登录拦截器
@@ -20,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        Object user = request.getSession().getAttribute(Constants.Sys_USER );
+        Object user = request.getSession().getAttribute(Constants.CURRENT_USER );
         if (user==null){
             Cookie[] cookies = request.getCookies();
             if (cookies.length>0&&hasCookie(cookies,"username")&&hasCookie(cookies,"password")){
@@ -37,7 +36,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 User cookieUser = new User(cname,cpwd);
                 User check = userService.check(cookieUser);
                 if (check!=null){
-                    request.getSession().setAttribute(Constants.Sys_USER,check);
+                    request.getSession().setAttribute(Constants.CURRENT_USER,check);
                     return true;
                 }else{
                     response.sendRedirect("/admin/toLogin");

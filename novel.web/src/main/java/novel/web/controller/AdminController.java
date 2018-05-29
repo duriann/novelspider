@@ -34,16 +34,16 @@ public class AdminController {
     @ResponseBody
     public JSONResponse login(HttpServletRequest request, HttpServletResponse response,@RequestBody String param){
         Map obj = (Map)JSON.parse(param);
-        User admin = new User();
-        admin.setRealName((String)obj.get("username"));
+        User user = new User();
+        user.setRealName((String)obj.get("username"));
         String md5Name = DigestUtils.md5Hex((String) obj.get("username"));
         String md5Pwd = DigestUtils.md5Hex((String) obj.get("password")+(String) obj.get("username"));
-        admin.setName(md5Name);
-        admin.setPassword(md5Pwd);
-        User check = userService.check(admin);
+        user.setName(md5Name);
+        user.setPassword(md5Pwd);
+        User check = userService.check(user);
 
         if(check!=null){
-            request.getSession().setAttribute(Constants.Sys_USER,admin);
+            request.getSession().setAttribute(Constants.CURRENT_USER,user);
             String isRemember = obj.get("rememberMe")==null?"false":(String) obj.get("rememberMe");
             if (isRemember.equalsIgnoreCase("true")){
                 Cookie cname = new Cookie("username", md5Name);
@@ -55,7 +55,7 @@ public class AdminController {
                 response.addCookie(cname);
                 response.addCookie(cpwd);
             }
-            return JSONResponse.success(admin,0);
+            return JSONResponse.success(user,0);
         }
         return JSONResponse.error("登录失败");
     }
@@ -68,9 +68,9 @@ public class AdminController {
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
     public ModelAndView logout(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
-        Object user = request.getSession().getAttribute(Constants.Sys_USER);
+        Object user = request.getSession().getAttribute(Constants.CURRENT_USER);
         if (user!=null){
-            request.getSession().removeAttribute(Constants.Sys_USER);
+            request.getSession().removeAttribute(Constants.CURRENT_USER);
         }
         view.setViewName("index");
         return view;

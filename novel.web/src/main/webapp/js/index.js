@@ -118,7 +118,7 @@ function searchByKeyword(keyword,currentPage,pageSize) {
             + '		<td>' + (index + 1) + '</td>'
             + '		<td><a href="./novel/getChapters?base64Url=' + $.base64.encode(novel.url) + '" target="_blank">' + novel.name + '</a></td>'
             + '		<td>' + novel.author + '</td>'
-            + '		<td><a href="./novel/getChapterDetail?url=' + novel.lastUpdateChapterUrl + '&chapterBase64Url='+$.base64.encode(novel.url)+'" target="_blank">' + novel.lastUpdateChapter + '</a></td>'
+            + '		<td><a href="./novel/getChapterDetail?url=' + $.base64.encode(novel.lastUpdateChapterUrl) + '&chapterBase64Url='+$.base64.encode(novel.url)+'" target="_blank">' + novel.lastUpdateChapter + '</a></td>'
             + '		<td>' + ((novel.status == 1) ? "连载" : "完结") + '</td>'
             + '	    <td>' + getPlatform(novel.platformId) + '</td>'
             + '</tr>';

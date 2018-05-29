@@ -80,7 +80,8 @@
             <#if isSuccess??>
                 <#list chapters as chapter>
                     <#if chapter_index % 4 == 0><tr></#if>
-                    <td><a href="./getChapterDetail?url=${chapter.url }&chapterBase64Url=${chapterBase64Url}"
+                    <#assign chapterurl=Base64Util.encode(chapter.url)>
+                    <td><a href="./getChapterDetail?url=${chapterurl}&chapterBase64Url=${chapterBase64Url}"
                            target="_blank">${chapter.title}</a></td>
                     <#if (chapter_index + 1) % 4 == 0 ></tr></#if>
                 </#list>
