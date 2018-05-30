@@ -2,11 +2,15 @@ package novel.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import novel.web.Annotation.Auth;
 import novel.web.constants.Constants;
 import novel.web.entitys.JSONResponse;
 import novel.web.entitys.Page;
+import novel.web.entitys.Token;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
+import novel.web.utils.RedisTokenManager;
+import novel.web.utils.RedisUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,8 +26,13 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
+    @Autowired
+    private RedisTokenManager tokenManager;
+
+    @Autowired
+    private RedisUtil redisUtil;
     /**
      * 登录
      * @param request
@@ -41,19 +50,15 @@ public class AdminController {
         user.setName(md5Name);
         user.setPassword(md5Pwd);
         User check = userService.check(user);
-
         if(check!=null){
             request.getSession().setAttribute(Constants.CURRENT_USER,user);
             String isRemember = obj.get("rememberMe")==null?"false":(String) obj.get("rememberMe");
             if (isRemember.equalsIgnoreCase("true")){
-                Cookie cname = new Cookie("username", md5Name);
-                Cookie cpwd = new Cookie("password",md5Pwd);
-                cname.setPath("/");
-                cpwd.setPath("/");
-                cname.setMaxAge(3600);
-                cpwd.setMaxAge(3600);
-                response.addCookie(cname);
-                response.addCookie(cpwd);
+                Token token = tokenManager.createToken(check.getId());
+                Cookie tk = new Cookie("token", token.getToken());
+                tk.setPath("/");
+                tk.setMaxAge(Constants.COOKIE_EXPIRES_HOUR);
+                response.addCookie(tk);
             }
             return JSONResponse.success(user,0);
         }
@@ -66,11 +71,28 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    public ModelAndView logout(HttpServletRequest request){
+    @Auth
+    public ModelAndView logout(HttpServletRequest request,HttpServletResponse response){
         ModelAndView view = new ModelAndView();
-        Object user = request.getSession().getAttribute(Constants.CURRENT_USER);
+        User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
         if (user!=null){
             request.getSession().removeAttribute(Constants.CURRENT_USER);
+            redisUtil.del(user.getId()+"");
+            Cookie[] cookies = request.getCookies();
+            if (null==cookies) {
+                System.out.println("没有cookie==============");
+            } else {
+                for(Cookie cookie : cookies){
+                    if(cookie.getName().equals("token")){
+                        cookie.setValue(null);
+                        cookie.setMaxAge(0);// 立即销毁cookie
+                        cookie.setPath("/");
+                        System.out.println("被删除的cookie名字为:"+cookie.getName());
+                        response.addCookie(cookie);
+                        break;
+                    }
+                }
+            }
         }
         view.setViewName("index");
         return view;
@@ -84,6 +106,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
     @ResponseBody
+    @Auth
     public JSONResponse getAllUserByPage(int page, int limit) {
         Page<User> pages = userService.getAllUser(page,limit);
         return JSONResponse.success(pages.getPages(),pages.getTotalCount());
@@ -96,6 +119,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/deleteUserById",method = RequestMethod.POST)
     @ResponseBody
+    @Auth
     public JSONResponse deleteUserById(@RequestParam("id")long id){
         User user = userService.getUserById(id);
         if (user!=null){
@@ -113,6 +137,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
     @ResponseBody
+    @Auth
     public JSONResponse updateUser(@RequestParam("param")String param){
         System.out.println("param = " + param);
         JSONObject obj = JSONObject.parseObject(param);

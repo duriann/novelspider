@@ -50,6 +50,14 @@ $(function () {
         searchByKeyword(keyword,1,10);
     });
 
+    /*头部下拉框移入移出*/
+    $(document).on("mouseenter",".header-bar-nav",function(){
+        $(this).addClass("open");
+    });
+    $(document).on("mouseleave",".header-bar-nav",function(){
+        $(this).removeClass("open");
+    });
+
 });
 
 function search() {
@@ -138,4 +146,5 @@ function searchByKeyword(keyword,currentPage,pageSize) {
             return "为知";
         }
     }
+
 }

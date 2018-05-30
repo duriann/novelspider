@@ -25,25 +25,8 @@
 	<mvc:annotation-driven />
 
     <mvc:default-servlet-handler/>
-	<!-- 视图解析器 -->
-   <!-- <bean id="htmlviewResolver"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="novel.web.utils.HtmlResourceView"/>
-        <property name="order" value="0" />
-        <property name="prefix" value="/WEB-INF/"/>
-        <property name="suffix" value=".html" />
-        <property name="contentType" value="text/html;charset=UTF-8"></property>
-    </bean>
-
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="order" value="1" />
-        <property name="prefix" value="/WEB-INF/" />
-		<property name="suffix" value=".jsp" />
-	</bean>-->
-
     <!-- 配置freeMarker视图解析器 -->
-    <bean
-            class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="viewClass"
                   value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
         <property name="contentType" value="text/html; charset=utf-8" />
@@ -58,16 +41,14 @@
         <!-- 编码格式 -->
         <property name="defaultEncoding" value="utf-8" />
     </bean>
-
-
-
+    <!--配置登录拦截器-->
     <mvc:interceptors>
         <mvc:interceptor>
             <!-- 拦截所有URL中包含/admin/的请求 -->
             <mvc:mapping path="/admin/**"/>
             <mvc:exclude-mapping path="/admin/toLogin"/>
             <mvc:exclude-mapping path="/admin/login"/>
-            <bean class="novel.web.interceptor.LoginInterceptor"></bean>
+            <bean class="novel.web.interceptor.AuthInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>
