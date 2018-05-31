@@ -11,6 +11,8 @@ import novel.web.entitys.User;
 import novel.web.service.NovelService;
 import novel.web.service.UserService;
 import novel.web.utils.Base64Util;
+import novel.web.utils.CookieUtil;
+import novel.web.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("novel")
@@ -32,6 +35,9 @@ public class NovelController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    RedisUtil redisUtil;
     /**
      * 根据关键词查找小说
      * @param keyword
@@ -118,21 +124,27 @@ public class NovelController {
             chapterDetail = novelService.getChapterDetail(url);
             chapterDetail.setPrev(Base64Util.encode(chapterDetail.getPrev()));
             chapterDetail.setNext(Base64Util.encode(chapterDetail.getNext()));
-            Cookie lastReadChapterDetailUrl = new Cookie("lastReadChapterDetailUrl", Base64Util.encode(url));
-            lastReadChapterDetailUrl.setPath("/");
-            //设置cookie为一年
-            lastReadChapterDetailUrl.setMaxAge(12*30*24*3600);
-            Cookie lastReadChapterTitle = new Cookie("lastReadChapterTitle",Base64Util.encode(chapterDetail.getTitle()));
-            lastReadChapterTitle.setPath("/");
-            lastReadChapterTitle.setMaxAge(12*30*24*3600);
+            Cookie rc = CookieUtil.getCookie(request.getCookies(),"rc");
+            String readToken = "";
+            if (null==rc){
+                readToken = UUID.randomUUID().toString().replace("-","");
+                //客户端存储一个cookie用来跟redis比较
+                Cookie readCookie = new Cookie("rc",readToken);
+                readCookie.setPath("/");
+                readCookie.setMaxAge(Constants.DEFAULT_EXPIRES_HOUR);
+                response.addCookie(readCookie);
+            }else{
+                readToken = rc.getValue();
+            }
+            //将章节阅读记录存在redis中
+            redisUtil.lSet(readToken, Base64Util.encode(url),Constants.DEFAULT_EXPIRES_HOUR);
+            redisUtil.lSet(readToken,Base64Util.encode(chapterDetail.getTitle()),Constants.DEFAULT_EXPIRES_HOUR);
             User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
             if (user!=null){
                 user.setLastReadChapterDetailUrl(url);
                 user.setLastReadChapterTitle(chapterDetail.getTitle());
                 userService.update(user);
             }
-            response.addCookie(lastReadChapterDetailUrl);
-            response.addCookie(lastReadChapterTitle);
             isSuccess = true;
         } catch (Exception e) {
             e.printStackTrace();

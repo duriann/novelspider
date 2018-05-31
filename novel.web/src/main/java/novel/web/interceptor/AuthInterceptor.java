@@ -5,6 +5,7 @@ import novel.web.constants.Constants;
 import novel.web.entitys.Token;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
+import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -37,15 +38,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
             //从cookie中得到token
-            String authorization = "";
-            Cookie[] cookies = request.getCookies();
-            if (cookies.length>0&&cookies!=null){
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName().equals("token")){
-                        authorization = cookie.getValue();
-                    }
-                }
-            }
+            String authorization = CookieUtil.getCookieValue(request.getCookies(),"token");
            if (authorization==""||"".equals(authorization)||authorization==null){
                 response.sendRedirect("/admin/toLogin");
                 return false;
@@ -78,18 +71,4 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     }
 
-    /**
-     * 判断是否存在cookie
-     * @param cookies
-     * @param key
-     * @return
-     */
-    private boolean hasCookie(Cookie[] cookies,String key){
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equalsIgnoreCase(key)){
-                return true;
-            }
-        }
-        return false;
-    }
 }

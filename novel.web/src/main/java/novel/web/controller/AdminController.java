@@ -9,6 +9,7 @@ import novel.web.entitys.Page;
 import novel.web.entitys.Token;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
+import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisTokenManager;
 import novel.web.utils.RedisUtil;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -57,7 +58,7 @@ public class AdminController {
                 Token token = tokenManager.createToken(check.getId());
                 Cookie tk = new Cookie("token", token.getToken());
                 tk.setPath("/");
-                tk.setMaxAge(Constants.COOKIE_EXPIRES_HOUR);
+                tk.setMaxAge(Constants.DEFAULT_EXPIRES_HOUR);
                 response.addCookie(tk);
             }
             return JSONResponse.success(user,0);
@@ -79,19 +80,15 @@ public class AdminController {
             request.getSession().removeAttribute(Constants.CURRENT_USER);
             redisUtil.del(user.getId()+"");
             Cookie[] cookies = request.getCookies();
-            if (null==cookies) {
-                System.out.println("没有cookie==============");
-            } else {
-                for(Cookie cookie : cookies){
-                    if(cookie.getName().equals("token")){
-                        cookie.setValue(null);
-                        cookie.setMaxAge(0);// 立即销毁cookie
-                        cookie.setPath("/");
-                        System.out.println("被删除的cookie名字为:"+cookie.getName());
-                        response.addCookie(cookie);
-                        break;
+            if (CookieUtil.isNotEmptyCookie(cookies)){
+                Cookie token = CookieUtil.getCookie(cookies,"token");
+                    if (null!=token){
+                        token.setValue(null);
+                        token.setMaxAge(0);// 立即销毁cookie
+                        token.setPath("/");
+                        response.addCookie(token);
                     }
-                }
+
             }
         }
         view.setViewName("index");

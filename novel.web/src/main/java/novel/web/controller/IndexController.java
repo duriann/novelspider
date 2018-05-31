@@ -6,7 +6,9 @@ import novel.web.entitys.Token;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
 import novel.web.utils.Base64Util;
+import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisTokenManager;
+import novel.web.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 首页控制器
@@ -24,6 +27,8 @@ public class IndexController {
     private RedisTokenManager manager;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisUtil redisUtil;
     /**
      * 首页
      * @param request
@@ -34,20 +39,20 @@ public class IndexController {
     public ModelAndView index(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
         Cookie[] cookies = request.getCookies();
-        String token = "";
-        if (cookies!=null && cookies.length>0){
-            for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("lastReadChapterDetailUrl")){
-                    view.addObject("lastReadChapterDetailUrl",cookie.getValue());
-                }
-                if(cookie.getName().equals("lastReadChapterTitle")){
-                    view.addObject("lastReadChapterTitle",cookie.getValue());
-                }
-                if (cookie.getName().equals("token")){
-                    token = cookie.getValue();
+        if (CookieUtil.isNotEmptyCookie(cookies)){
+            //获取客户端的readCookie
+            Cookie readCookie = CookieUtil.getCookie(cookies,"rc");
+            if (readCookie!=null){
+                String readToken = readCookie.getValue();
+                //从redis中获取对应token数据
+                List<Object> list = redisUtil.lGet(readToken, 0, redisUtil.lGetListSize(readToken));
+                if(!list.isEmpty()){
+                    view.addObject("lastReadChapterDetailUrl",list.get(0));
+                    view.addObject("lastReadChapterTitle",list.get(1));
                 }
             }
         }
+        String token = CookieUtil.getCookieValue(cookies,"token");
         Token model = manager.getToken(token);
         if(manager.checkToken(model)){
             User user = userService.getUserById(model.getUser_id());
@@ -56,7 +61,6 @@ public class IndexController {
                 view.addObject("user",user);
             }
         }
-
         //为了freemarker能调用base64util加密方法
         view.addObject("Base64Util", new Base64Util());
         view.setViewName("index");
