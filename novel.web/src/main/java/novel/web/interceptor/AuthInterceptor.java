@@ -3,6 +3,8 @@ package novel.web.interceptor;
 import novel.web.Annotation.Auth;
 import novel.web.constants.Constants;
 import novel.web.entitys.Token;
+import novel.web.entitys.User;
+import novel.web.service.UserService;
 import novel.web.utils.RedisTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -20,6 +22,8 @@ import java.lang.reflect.Method;
 public class AuthInterceptor implements HandlerInterceptor {
     @Autowired
     private RedisTokenManager manager;
+    @Autowired
+    private UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("Auth拦截器...");
@@ -43,21 +47,23 @@ public class AuthInterceptor implements HandlerInterceptor {
                 }
             }
            if (authorization==""||"".equals(authorization)||authorization==null){
+                response.sendRedirect("/admin/toLogin");
                 return false;
            }
             //验证token
             Token model = manager.getToken(authorization);
             if (manager.checkToken(model)) {
                 //如果token验证成功，将token对应的用户id存在request中，便于之后注入
-                //request.setAttribute(Constants.CURRENT_USER_ID, model.getUser_id());
+                User current_user = userService.getUserById(model.getUser_id());
+                request.getSession().setAttribute(Constants.CURRENT_USER,current_user);
                 return true;
             }
             //如果验证token失败，并且方法注明了Authorization，返回401错误
             if (method.getAnnotation(Auth.class) != null) {
+                System.out.println("method.getAnnotation(Auth.class) = " + method.getAnnotation(Auth.class));
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
             }
-            response.sendRedirect("/admin/toLogin");
         }
         return true;
     }

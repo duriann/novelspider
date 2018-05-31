@@ -30,6 +30,7 @@ public class IndexController {
      * @return
      */
     @RequestMapping(value = "/")
+    @Auth
     public ModelAndView index(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
         Cookie[] cookies = request.getCookies();
@@ -82,6 +83,7 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/admin/toLogin")
+    @Auth
     public ModelAndView toLogin(){
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/login");
@@ -90,6 +92,7 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/admin/novelManager")
+    @Auth
     public ModelAndView novelManager(){
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/novel-manager");
@@ -98,6 +101,7 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/admin/userManager")
+    @Auth
     public ModelAndView userManager(){
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/user-manager");
@@ -106,6 +110,7 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/admin/spiderManager")
+    @Auth
     public ModelAndView spiderManager(){
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/spiderRule-manager");
@@ -114,6 +119,7 @@ public class IndexController {
 
 
     @RequestMapping(value = "/admin/home")
+    @Auth
     public ModelAndView home(){
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/home");
