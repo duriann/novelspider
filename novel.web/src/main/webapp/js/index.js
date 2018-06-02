@@ -21,6 +21,7 @@ $(function () {
                 dataType : "json",
                 data : {"keyword":$("#keyword").val()},
                 success: function( data ) {
+                    console.log(data);
                     response( $.map( data.data, function( item ) {
                         return {
                             value: item

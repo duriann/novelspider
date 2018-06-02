@@ -198,8 +198,18 @@ public class NovelController {
     @ResponseBody
     @Auth
     public JSONResponse searchLikeByKey (@RequestParam("keyword") String keyword){
-        List<String> names = novelService.searchLikeByKey(keyword);
-        return JSONResponse.success(names);
+        List<Object> objects =  redisUtil.lGet(keyword, 0, redisUtil.lGetListSize(keyword));
+        if (objects==null||objects.size()==0){
+            List<String> names = novelService.searchLikeByKey(keyword);
+            if (names!=null&&names.size()>0){
+                redisUtil.lSet(keyword,names,Constants.DEFAULT_EXPIRES_HOUR);
+                return JSONResponse.success(names);
+            }
+            return JSONResponse.error("no novel!");
+        }
+        //真坑,这个objects返回的是[[xxx,xxx]]
+        return JSONResponse.success(objects.get(0));
+
     }
 
 
