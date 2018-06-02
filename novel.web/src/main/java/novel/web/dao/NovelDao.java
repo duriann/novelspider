@@ -1,7 +1,6 @@
 package novel.web.dao;
 
 import novel.spider.entitys.Novel;
-import novel.web.entitys.Page;
 
 import java.util.List;
 import java.util.Map;
@@ -33,4 +32,5 @@ public interface NovelDao {
     //获取所有小说数量
     public int getAllNovelTotalCount();
 
+    public List<String> searchLikeByKey(String key);
 }

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -188,7 +189,18 @@ public class NovelController {
         novelService.updateNovelById(id, field, value);
         return JSONResponse.success(null);
     }
-
+    /**
+     * 根据关键词搜索相似小说或者作者对应的小说
+     * @param keyword:关键词
+     * @return
+     */
+    @RequestMapping(value = "/searchLikeByKey",method = RequestMethod.POST)
+    @ResponseBody
+    @Auth
+    public JSONResponse searchLikeByKey (@RequestParam("keyword") String keyword){
+        List<String> names = novelService.searchLikeByKey(keyword);
+        return JSONResponse.success(names);
+    }
 
 
 }

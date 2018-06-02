@@ -12,6 +12,25 @@ $(function () {
             search();
         }
     });
+    $("#keyword").autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+            $.ajax({
+                url : "./novel/searchLikeByKey",
+                type : "post",
+                dataType : "json",
+                data : {"keyword":$("#keyword").val()},
+                success: function( data ) {
+                    response( $.map( data.data, function( item ) {
+                        return {
+                            value: item
+                        }
+                    }));
+                }
+            });
+        }
+    });
+
     $("#nextPage").click(function () {
         var nextPage = $("#nextPage").val();
         var pageSize = $("#nextPage").attr("pageSize");

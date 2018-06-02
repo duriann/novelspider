@@ -105,6 +105,12 @@ public class NovelServiceImpl implements NovelService {
     }
 
     @Override
+    public List<String> searchLikeByKey(String keyword) {
+        keyword = "%" + keyword + "%";
+        return novelDao.searchLikeByKey(keyword);
+    }
+
+    @Override
     public int deleteNovelById(long id) {
         return novelDao.deleteByPrimaryKey(id);
     }

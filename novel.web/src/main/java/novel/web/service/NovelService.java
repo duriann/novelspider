@@ -61,4 +61,6 @@ public interface NovelService {
     public int deleteNovelById(long id);
 
     public int updateNovelById(long id,String field,String value);
+
+    public List<String> searchLikeByKey(String keyword);
 }
