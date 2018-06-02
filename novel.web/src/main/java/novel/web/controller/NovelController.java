@@ -138,6 +138,7 @@ public class NovelController {
                 readToken = rc.getValue();
             }
             //将章节阅读记录存在redis中
+            redisUtil.del(readToken);
             redisUtil.lSet(readToken, Base64Util.encode(url),Constants.DEFAULT_EXPIRES_HOUR);
             redisUtil.lSet(readToken,Base64Util.encode(chapterDetail.getTitle()),Constants.DEFAULT_EXPIRES_HOUR);
             User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
