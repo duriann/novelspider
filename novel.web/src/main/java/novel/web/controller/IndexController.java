@@ -1,6 +1,6 @@
 package novel.web.controller;
 
-import novel.web.Annotation.Auth;
+import novel.web.annotation.Auth;
 import novel.web.constants.Constants;
 import novel.web.entitys.Token;
 import novel.web.entitys.User;

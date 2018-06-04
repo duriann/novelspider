@@ -2,7 +2,7 @@ package novel.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import novel.web.Annotation.Auth;
+import novel.web.annotation.Auth;
 import novel.web.constants.Constants;
 import novel.web.entitys.JSONResponse;
 import novel.web.entitys.Page;

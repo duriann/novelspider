@@ -19,6 +19,9 @@
     id, name, author, url, type, last_update_chapter, last_update_chapter_url, last_update_time, 
     status, first_letter, platform_id, add_time
   </sql>
+    <select id="selectUrl" resultType="string">
+        select url from tbl_novel
+    </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

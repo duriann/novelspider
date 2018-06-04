@@ -1,6 +1,6 @@
 package novel.web.interceptor;
 
-import novel.web.Annotation.Auth;
+import novel.web.annotation.Auth;
 import novel.web.constants.Constants;
 import novel.web.entitys.Token;
 import novel.web.entitys.User;
@@ -12,7 +12,6 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;

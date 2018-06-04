@@ -30,7 +30,7 @@ public class Testcase {
 	@Test
 	public void testKanShuZhongProcess() throws Exception {
 		Processor processor = new KanShuZhongNovelStorageImpl();
-		processor.process(insert);
+		processor.process(insert,5);
 	}
 
     /**

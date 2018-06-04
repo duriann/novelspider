@@ -3,7 +3,7 @@ package novel.web.controller;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
-import novel.web.Annotation.Auth;
+import novel.web.annotation.Auth;
 import novel.web.constants.Constants;
 import novel.web.entitys.JSONResponse;
 import novel.web.entitys.Page;

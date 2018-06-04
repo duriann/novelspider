@@ -20,17 +20,20 @@ import java.util.concurrent.Future;
 public abstract class AbstractNovelStorage implements Processor {
 	protected SqlSessionFactory sqlSessionFactory;
 	protected Map<String, String> tasks = new TreeMap<>();
+	private static List<String> list;
+	private static HashSet<String> urls ;
 	public AbstractNovelStorage() throws FileNotFoundException {
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(new FileInputStream("conf/SqlMapConfig.xml"));
+        list = sqlSessionFactory.openSession(true).selectList("selectUrl");
+        urls = new HashSet<>(list);
 	}
 
+    @Override
+    public void process(String action) {
 
-	@Override
-	public void process(String action) {
+    }
 
-	}
-
-	/**
+    /**
      * 根据action处理任务
      */
 	public void process(String action,int maxTry) {
@@ -53,10 +56,18 @@ public abstract class AbstractNovelStorage implements Processor {
 								SqlSession session = sqlSessionFactory.openSession();
 								if (action.equalsIgnoreCase("batchInsert")){
 									for (Novel novel : novels) {
+									    if (urls.contains(novel.getUrl())){
+									        novels.remove(novel);
+                                        }
 										novel.setFirstLetter(key.charAt(0));//设置小说的名字的首字母
 									}
 									session.insert(action, novels);
 								}else if(action.equalsIgnoreCase("batchUpdate")){
+                                    for (Novel novel : novels) {
+                                        if (!urls.contains(novel.getUrl())){
+                                            novels.remove(novel);
+                                        }
+                                    }
 									session.update(action,novels);
 								}
 								session.commit();

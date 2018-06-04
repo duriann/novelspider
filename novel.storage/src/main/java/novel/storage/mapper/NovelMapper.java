@@ -20,4 +20,6 @@ public interface NovelMapper {
     void batchInsert(List<Novel> novels);
 
     void batchUpdate(List<Novel> novels);
+
+    List<String> selectUrl();
 }

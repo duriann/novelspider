@@ -5,7 +5,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.xml.XMLSerializer;
 import novel.spider.util.FileUtil;
-import novel.web.Annotation.Auth;
+import novel.web.annotation.Auth;
 import novel.web.entitys.JSONResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
