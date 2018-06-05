@@ -55,20 +55,29 @@ public abstract class AbstractNovelStorage implements Processor {
 								List<Novel> novels = iterator.next();
 								SqlSession session = sqlSessionFactory.openSession();
 								if (action.equalsIgnoreCase("batchInsert")){
-									for (Novel novel : novels) {
-									    if (urls.contains(novel.getUrl())){
-									        novels.remove(novel);
+									for (int n=novels.size()-1;n>=0;n--) {
+										Novel item = novels.get(n);
+									    if (urls.contains(item.getUrl())){
+									        novels.remove(item);
                                         }
-										novel.setFirstLetter(key.charAt(0));//设置小说的名字的首字母
+										item.setFirstLetter(key.charAt(0));//设置小说的名字的首字母
 									}
-									session.insert(action, novels);
+                                    System.out.println("novels = " + novels.size());
+									if(novels.size()>0){
+                                        session.insert(action, novels);
+                                    }
 								}else if(action.equalsIgnoreCase("batchUpdate")){
-                                    for (Novel novel : novels) {
-                                        if (!urls.contains(novel.getUrl())){
-                                            novels.remove(novel);
+                                    for (int n=novels.size()-1;n>=0;n--) {
+                                        Novel item = novels.get(n);
+                                        if (!urls.contains(item.getUrl())){
+                                            novels.remove(item);
                                         }
                                     }
-									session.update(action,novels);
+                                    System.out.println("novels = " + novels.size());
+                                    if(novels.size()>0){
+                                        session.update(action,novels);
+                                    }
+
 								}
 								session.commit();
 								session.close();

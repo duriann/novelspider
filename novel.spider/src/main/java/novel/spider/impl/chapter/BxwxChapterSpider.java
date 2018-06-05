@@ -14,7 +14,6 @@ import java.util.List;
 public class BxwxChapterSpider extends AbstractChapterSpider {
 	public List<Chapter> getsChapter(String url) {
 		List<Chapter> chapters = super.getsChapter(url);
-        System.out.println("BxwxChapterSpider 中获取的chapters = " + chapters);
 		Collections.sort(chapters, new Comparator<Chapter>() {
 			@Override
 			public int compare(Chapter o1, Chapter o2) {

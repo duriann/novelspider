@@ -60,7 +60,7 @@ public class Testcase {
     @Test
     public void updateKanShuZhongProcess() throws FileNotFoundException {
         Processor processor = new KanShuZhongNovelStorageImpl();
-        processor.process(update);
+        processor.process(update,5);
     }
 
 }
