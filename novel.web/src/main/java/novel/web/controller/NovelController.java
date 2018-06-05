@@ -3,6 +3,10 @@ package novel.web.controller;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
+import novel.spider.impl.download.NovelDownload;
+import novel.spider.interfaces.INovelDownload;
+import novel.spider.util.DownloadConfigContext;
+import novel.spider.util.FileUtil;
 import novel.web.annotation.Auth;
 import novel.web.constants.Constants;
 import novel.web.entitys.JSONResponse;
@@ -14,6 +18,10 @@ import novel.web.utils.Base64Util;
 import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +32,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,6 +49,21 @@ public class NovelController {
 
     @Autowired
     RedisUtil redisUtil;
+
+    @RequestMapping(value = "/download")
+    public ResponseEntity<byte[]> download(@RequestParam("base64Url") String base64Url ) throws UnsupportedEncodingException {
+        String url = Base64Util.decode(base64Url);
+        INovelDownload novelDownload = new NovelDownload();
+        novelDownload.download(url, DownloadConfigContext.configuration);
+        File file=new File(DownloadConfigContext.configuration.getPath());
+        HttpHeaders headers = new HttpHeaders();
+        String fileName=new String("你好.xlsx".getBytes("UTF-8"),"iso-8859-1");//为了解决中文名称乱码问题
+        headers.setContentDispositionFormData("attachment", fileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        return new ResponseEntity<byte[]>(FileUtil.toByteArray(file),
+                headers, HttpStatus.CREATED);
+    }
+
     /**
      * 根据关键词查找小说
      * @param keyword

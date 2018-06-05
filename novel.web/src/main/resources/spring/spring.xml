@@ -21,6 +21,8 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 	<!-- 开启包自动扫描 -->
 	<context:component-scan base-package="novel.web" />
+    <!-- 加载文件 -->
+    <context:property-placeholder location="classpath:/conf/download.properties" />
 	<!-- 配置HandlerMapping -->
 	<mvc:annotation-driven />
 
@@ -32,6 +34,12 @@
         <property name="contentType" value="text/html; charset=utf-8" />
         <property name="suffix" value=".html" />
         <property name="order" value="0" />
+    </bean>
+
+    <bean id="configuration" class="novel.spider.config.Configuration">
+        <property name="path" value="${path}"></property>
+        <property name="tryTimes" value="${tryTimes}"></property>
+        <property name="size" value="${size}"></property>
     </bean>
     <!-- FreeMarker模板路径 -->
     <bean id="freemarkerConfig"
