@@ -3,6 +3,11 @@
   <groupId>novel</groupId>
   <artifactId>novel.spider</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+    <parent>
+        <artifactId>spider</artifactId>
+        <groupId>spider</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
   <dependencies>
   	<dependency>
   		<groupId>org.jsoup</groupId>
@@ -13,11 +18,6 @@
 	    <groupId>org.apache.httpcomponents</groupId>
 	    <artifactId>httpclient</artifactId>
 	    <version>4.5.2</version>
-	</dependency>
-	<dependency>
-		<groupId>dom4j</groupId>
-		<artifactId>dom4j</artifactId>
-		<version>1.6.1</version>
 	</dependency>
 
       <!--json-lib 此项目中用来将xml转换成json-->
@@ -34,17 +34,6 @@
           <version>1.2.5</version>
       </dependency>
 
-
-	<dependency>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-		<version>4.12</version>
-	</dependency>
-	<dependency>
-		<groupId>org.apache.commons</groupId>
-		<artifactId>commons-lang3</artifactId>
-		<version>3.4</version>
-	</dependency>
   </dependencies>
     <build>
         <plugins>

@@ -29,6 +29,9 @@ $(function () {
                     }));
                 }
             });
+        },
+        select: function( event, ui ) {
+            searchByKeyword(ui.item.label,Page.config.currentPage,Page.config.pageSize);
         }
     });
 

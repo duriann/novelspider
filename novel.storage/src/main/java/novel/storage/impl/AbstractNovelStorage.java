@@ -7,7 +7,8 @@ import novel.storage.Processor;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -17,8 +18,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+
+
 public abstract class AbstractNovelStorage implements Processor {
-	protected SqlSessionFactory sqlSessionFactory;
+    private static final Logger logger = LogManager.getLogger(AbstractNovelStorage.class.getName());
+
+    protected SqlSessionFactory sqlSessionFactory;
 	protected Map<String, String> tasks = new TreeMap<>();
 	private static List<String> list;
 	private static HashSet<String> urls ;
@@ -48,7 +53,7 @@ public abstract class AbstractNovelStorage implements Processor {
 					INovelSpider spider = NovelSpiderFactory.getNovelSpider(value);
 					Iterator<List<Novel>> iterator = spider.iterator(value, 10);
 					while (iterator.hasNext()) {
-						System.err.println("开始"+action+"[" + key + "] 的 URL:" + spider.next());
+						logger.info("开始"+action+"[" + key + "] 的 URL:" + spider.next());
 						int i=0;
 						try {
 							for (;i<maxTry;i++){
@@ -76,7 +81,7 @@ public abstract class AbstractNovelStorage implements Processor {
 							}
 						}catch (Exception e){
 							e.printStackTrace();
-							System.out.println(key+"尝试了"+i+"/"+maxTry+"次都失败了~");
+							logger.error(key+"尝试了"+i+"/"+maxTry+"次都失败了~");
 						}
 
 					}
@@ -88,7 +93,7 @@ public abstract class AbstractNovelStorage implements Processor {
 		service.shutdown();
 		for (Future<String> future : futures) {
 			try {
-				System.out.println(""+action+"[" + future.get() + "]结束！");
+				logger.info(""+action+"[" + future.get() + "]结束！");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

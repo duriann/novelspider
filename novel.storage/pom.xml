@@ -3,22 +3,18 @@
   <groupId>novel</groupId>
   <artifactId>novel.storage</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+    <parent>
+        <artifactId>spider</artifactId>
+        <groupId>spider</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
   <dependencies>
-  	<dependency>
-  		<groupId>mysql</groupId>
-  		<artifactId>mysql-connector-java</artifactId>
-  		<version>5.1.31</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.mybatis</groupId>
-  		<artifactId>mybatis</artifactId>
-  		<version>3.2.5</version>
-  	</dependency>
   	<dependency>
   		<groupId>novel</groupId>
   		<artifactId>novel.spider</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
+
   </dependencies>
 	<build>
 		<plugins>
