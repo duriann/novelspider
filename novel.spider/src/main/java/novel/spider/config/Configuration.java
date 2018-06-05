@@ -1,11 +1,12 @@
 package novel.spider.config;
 
 public class Configuration {
-	private static final int DEFAULT_SIZE = 100;
+/*	private static final int DEFAULT_SIZE = 100;
+    private static final int DEFAULT_TRY_TIMES = 10;*/
+    private int tryTimes;
 	public Configuration() {
-		this.size = DEFAULT_SIZE;
-		this.tryTimes = DEFAULT_TRY_TIMES;
-		System.out.println();
+//		this.size = DEFAULT_SIZE;
+//		this.tryTimes = DEFAULT_TRY_TIMES;
 	}
 	//下载的基址目录
 	private String path;
@@ -30,9 +31,7 @@ public class Configuration {
 	public void setSize(int size) {
 		this.size = size;
 	}
-	private static final int DEFAULT_TRY_TIMES = 10;
-	
-	private int tryTimes;
+
 	public int getTryTimes() {
 		return tryTimes;
 	}
