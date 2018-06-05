@@ -22,7 +22,7 @@
 	<!-- 开启包自动扫描 -->
 	<context:component-scan base-package="novel.web" />
     <!-- 加载文件 -->
-    <context:property-placeholder location="classpath:/conf/download.properties" />
+    <context:property-placeholder location="classpath:/conf/download.properties" ignore-unresolvable="true"/>
 	<!-- 配置HandlerMapping -->
 	<mvc:annotation-driven />
 
@@ -36,10 +36,14 @@
         <property name="order" value="0" />
     </bean>
 
-    <bean id="configuration" class="novel.spider.config.Configuration">
-        <property name="path" value="${path}"></property>
+    <bean id="config" class="novel.spider.config.Configuration">
+        <property name="path" value="${downloadpath}"></property>
         <property name="tryTimes" value="${tryTimes}"></property>
         <property name="size" value="${size}"></property>
+    </bean>
+
+    <bean id="configContext" class="novel.spider.util.DownloadConfigContext">
+        <property name="configuration" ref="config"/>
     </bean>
     <!-- FreeMarker模板路径 -->
     <bean id="freemarkerConfig"

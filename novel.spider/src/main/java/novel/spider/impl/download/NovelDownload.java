@@ -2,11 +2,7 @@ package novel.spider.impl.download;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -21,6 +17,10 @@ import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
 import novel.spider.interfaces.INovelDownload;
 import novel.spider.util.NovelSpiderFactory;
+import novel.spider.util.NovelSpiderUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.spi.LoggerFactoryBinder;
 
 /**
  * 如何实现多线程下载任意网站的小说
@@ -30,6 +30,7 @@ import novel.spider.util.NovelSpiderFactory;
  * 
  */
 public class NovelDownload implements INovelDownload {
+	private static Logger log = LoggerFactory.getLogger(NovelDownload.class.getName());
 
 	@Override
 	public String download(String url,Configuration config) {
@@ -55,15 +56,18 @@ public class NovelDownload implements INovelDownload {
 		ExecutorService service = Executors.newFixedThreadPool(threadSize);
 		Set<String> keySet = downloadTask.keySet();
 		List<Future<String>> tasks = new ArrayList<>();
-		String savePath = config.getPath()+"/"+NovelSiteEnum.getEnumByUrl(url).getUrl();
+		log.info("config.getPath:"+config.getPath());
+		String configpath = config.getPath();
+		String savePath = config.getPath()+ File.separator+NovelSiteEnum.getEnumByUrl(url).getUrl();
 		new File(savePath).mkdirs();
+		log.info("创建文件夹:"+savePath);
 		for (String key : keySet) {
 			tasks.add(service.submit(new Callable<String>() {
 				
 				@Override
 				public String call() throws Exception {
 					int tryTimes = config.getTryTimes();
-					try(PrintWriter pw = new PrintWriter(new File(savePath+"/"+key+".txt"))){
+					try(PrintWriter pw = new PrintWriter(new File(savePath+File.separator+key+".txt"))){
 						for(Chapter chapter:downloadTask.get(key)){
 							//拿到章节详情爬虫
 							IChapterDetailSpider chapterDetailSpider = NovelSpiderFactory.getChapterDetailSpider(chapter.getUrl());
@@ -77,7 +81,7 @@ public class NovelDownload implements INovelDownload {
 								} catch (Exception e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
-									System.out.println("尝试下载第:"+i+1+"/"+tryTimes+"次失败了!");
+									log.error("尝试下载第:"+i+1+"/"+tryTimes+"次失败了!");
 								}
 							}
 							
@@ -92,12 +96,14 @@ public class NovelDownload implements INovelDownload {
 		service.shutdown();
 		for (Future<String> future : tasks) {
 			try {
-				System.out.println(future.get()+"下载完了");
+				log.info(future.get()+"下载完了");
 			} catch (InterruptedException | ExecutionException e) {
 				e.printStackTrace();
 			}
 		}
-		return "";
+		String mergeFileName = UUID.randomUUID().toString().replace("-","");
+		NovelSpiderUtil.mergeMultiFile(savePath,savePath+File.separator+ mergeFileName);
+		return savePath+File.separator+ mergeFileName;
 	}
 
 }

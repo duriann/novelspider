@@ -33,6 +33,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
@@ -50,16 +51,22 @@ public class NovelController {
     @Autowired
     RedisUtil redisUtil;
 
+    /**
+     * 下载小说
+     * @param base64Url
+     * @param name
+     * @return
+     * @throws IOException
+     */
     @RequestMapping(value = "/download")
-    public ResponseEntity<byte[]> download(@RequestParam("base64Url") String base64Url ) throws UnsupportedEncodingException {
+    public ResponseEntity<byte[]> download(@RequestParam("base64Url") String base64Url ,String name) throws IOException {
         String url = Base64Util.decode(base64Url);
         INovelDownload novelDownload = new NovelDownload();
-        novelDownload.download(url, DownloadConfigContext.configuration);
-        File file=new File(DownloadConfigContext.configuration.getPath());
+        String localsavepath = novelDownload.download(url, DownloadConfigContext.configuration);
+        File file=new File(localsavepath);
         HttpHeaders headers = new HttpHeaders();
-        String fileName=new String("你好.xlsx".getBytes("UTF-8"),"iso-8859-1");//为了解决中文名称乱码问题
-        headers.setContentDispositionFormData("attachment", fileName);
-        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", new String(name.getBytes("utf-8"),"iso-8859-1"));
+        headers.setContentType(MediaType.TEXT_PLAIN);
         return new ResponseEntity<byte[]>(FileUtil.toByteArray(file),
                 headers, HttpStatus.CREATED);
     }

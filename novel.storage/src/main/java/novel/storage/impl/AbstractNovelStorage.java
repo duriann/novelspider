@@ -19,7 +19,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 
-
 public abstract class AbstractNovelStorage implements Processor {
     private static final Logger logger = LogManager.getLogger(AbstractNovelStorage.class.getName());
 

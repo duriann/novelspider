@@ -28,11 +28,10 @@ public class FileUtil {
         return  sb.toString();
     }
 
-    public static byte[] toByteArray(String filename) throws IOException {
+    public static byte[] toByteArray(File f) throws IOException {
 
-        File f = new File(filename);
         if (!f.exists()) {
-            throw new FileNotFoundException(filename);
+            throw new FileNotFoundException(f.getAbsolutePath());
         }
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream((int) f.length());

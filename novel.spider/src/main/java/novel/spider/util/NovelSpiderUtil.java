@@ -1,9 +1,12 @@
 package novel.spider.util;
 
 import novel.spider.NovelSiteEnum;
+import novel.spider.impl.download.NovelDownload;
+import org.apache.logging.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.text.ParseException;
@@ -12,6 +15,8 @@ import java.util.*;
 
 public final class NovelSpiderUtil {
 	private static final Map<NovelSiteEnum, Map<String, String>> CONTEXT_MAP = new HashMap<>();
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(NovelDownload.class.getName());
+
 	/*static {
 		init();
 	}*/
@@ -64,8 +69,8 @@ public final class NovelSpiderUtil {
 	 *            2018年4月11日下午10:39:23
 	 */
 	public static void mergeMultiFile(String rootPath, String mergeToFile) {
-		rootPath = rootPath.endsWith("\\") ? rootPath : rootPath + "\\";
-		System.out.println("rootPath:" + rootPath);
+		rootPath = rootPath.endsWith("\\") ? rootPath : rootPath + File.separator;
+		log.info("rootPath:"+rootPath);
 		mergeToFile = mergeToFile == null ? rootPath + "/merge.txt" : mergeToFile;
 		// 获取目录下所有文件,此处简单判断是否是文本
 		File[] files = new File(rootPath).listFiles(new FilenameFilter() {

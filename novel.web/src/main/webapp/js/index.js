@@ -152,7 +152,7 @@ function searchByKeyword(keyword,currentPage,pageSize) {
             + '		<td><a href="./novel/getChapterDetail?url=' + $.base64.encode(novel.lastUpdateChapterUrl) + '&chapterBase64Url='+$.base64.encode(novel.url)+'" target="_blank">' + novel.lastUpdateChapter + '</a></td>'
             + '		<td>' + ((novel.status == 1) ? "连载" : "完结") + '</td>'
             + '	    <td>' + getPlatform(novel.platformId) + '</td>'
-            + '	    <td><a href="./novel/download?base64Url=' + $.base64.encode(novel.url) + '" target="_blank">' + "下载" + '</a></td>'
+            + '	    <td><a href="./novel/download?base64Url=' + $.base64.encode(novel.url)+"&name="+novel.name + '" target="_blank">' + "下载" + '</a></td>'
             + '</tr>';
         return $(trHtml);
     }
