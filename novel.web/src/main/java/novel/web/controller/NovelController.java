@@ -34,7 +34,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,8 +66,9 @@ public class NovelController {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentDispositionFormData("attachment", new String(name.getBytes("utf-8"),"iso-8859-1"));
         headers.setContentType(MediaType.TEXT_PLAIN);
+        //据说这边用HttpStatus.CREATED 电脑端可以下载但是手机端不行，要换成HttpStatus.OK
         return new ResponseEntity<byte[]>(FileUtil.toByteArray(file),
-                headers, HttpStatus.CREATED);
+                headers, HttpStatus.OK);
     }
 
     /**

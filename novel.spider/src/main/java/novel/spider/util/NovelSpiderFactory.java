@@ -5,6 +5,7 @@ import novel.spider.impl.chapter.BxwxChapterSpider;
 import novel.spider.impl.chapter.DefaultChapterDetailSpider;
 import novel.spider.impl.chapter.DefaultChapterSpider;
 import novel.spider.impl.novel.BxwxNovelSpider;
+import novel.spider.impl.novel.DdxsNovelSpider;
 import novel.spider.impl.novel.KanShuZhongNovelSpider;
 import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
@@ -65,6 +66,7 @@ public final class NovelSpiderFactory {
 		switch (novelSiteEnum) {
 		case BXWX : return new BxwxNovelSpider();
 		case KanShuZhong : return new KanShuZhongNovelSpider();
+            case DingDianXiaoShuo:return new DdxsNovelSpider();
 		default : throw new RuntimeException(url + "暂时不被支持");
 		}
 	}

@@ -7,8 +7,8 @@ import novel.spider.NovelSiteEnum;
 import novel.spider.config.Configuration;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.Novel;
-import novel.spider.impl.chapter.BxwxChapterSpider;
 import novel.spider.impl.chapter.DefaultChapterDetailSpider;
+import novel.spider.impl.chapter.DefaultChapterSpider;
 import novel.spider.impl.download.NovelDownload;
 import novel.spider.impl.novel.BxwxNovelSpider;
 import novel.spider.interfaces.IChapterDetailSpider;
@@ -51,15 +51,7 @@ public class Testcase {
 		
 	}
 	
-	//测试小说爬虫
-	@Test
-	public void testNovelSpider(){
-		INovelSpider novelSpider = new BxwxNovelSpider();
-		List<Novel> novels = novelSpider.getsNovel("https://www.bxwx9.org/binitialA/0/1.htm",5);
-		for (Novel novel : novels) {
-			System.out.println(novel);
-		}
-	}
+
 	
 	//测试文件合并
 	@Test
@@ -73,22 +65,32 @@ public class Testcase {
 		INovelDownload download = new NovelDownload();
 		download.download("https://www.bxwx9.org/b/6/6347/index.html", new Configuration("d://1",100));
 	}
-	
+    //测试顶点小说爬虫
+    @Test
+    public void testNovelSpider(){
+        INovelSpider novelSpider = new BxwxNovelSpider();
+        List<Novel> novels = novelSpider.getsNovel("http://www.23wx.cc/quanben/1",5);
+        for (Novel novel : novels) {
+            System.out.println(novel);
+        }
+    }
+
+	//测试顶点小说章节详情爬取
 	@Test
 	public void testGetChapterDetail() {
 		IChapterDetailSpider spider = new DefaultChapterDetailSpider();
-		System.out.println(spider.getChapterDetail("https://www.bxwx9.org/b/26/26363/index.html"));
+		System.out.println(spider.getChapterDetail("http://www.23wx.cc/du/54/54407/298727.html"));
 	}
-	
+
+	//测试顶点小说网章节爬取
 	@Test
 	public void testGetChapterSpider(){
-		IChapterSpider spider = new BxwxChapterSpider();
-		List<Chapter> chapters2 = spider.getsChapter("https://www.bxwx9.org/b/6/6347/index.html");
-		for(int i = 0;i<chapters2.size();i++){
-			System.out.println("i:"+i+"--"+chapters2.get(i));
+		IChapterSpider spider = new DefaultChapterSpider();
+		List<Chapter> chapters = spider.getsChapter("http://www.23wx.cc/du/54/54407/");
+		for(int i = 0;i<chapters.size();i++){
+			System.out.println("i:"+i+"--"+chapters.get(i));
 		}
-		
-		
+
 	}
 	
 	@Test

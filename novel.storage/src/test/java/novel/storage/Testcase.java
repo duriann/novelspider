@@ -1,6 +1,7 @@
 package novel.storage;
 
 import novel.storage.impl.BxwxNovelStorageImpl;
+import novel.storage.impl.DdxsNovelStorageImpl;
 import novel.storage.impl.KanShuZhongNovelStorageImpl;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -33,6 +34,15 @@ public class Testcase {
 		processor.process(insert,5);
 	}
 
+    /**
+     * 抓取顶点小说
+     * @throws FileNotFoundException
+     */
+    @Test
+    public void testDdxsProcess() throws FileNotFoundException {
+        Processor processor = new DdxsNovelStorageImpl();
+        processor.process(insert,5);
+    }
     /**
      * 抓取笔下文学小说
      * @throws FileNotFoundException

@@ -48,7 +48,7 @@ public abstract class AbstractNovelStorage implements Processor {
 			final String value = entry.getValue();
 			futures.add(service.submit(new Callable<String> () {
 				@Override
-				public String call() throws Exception {
+				public synchronized String call() throws Exception {
 					INovelSpider spider = NovelSpiderFactory.getNovelSpider(value);
 					Iterator<List<Novel>> iterator = spider.iterator(value, 10);
 					while (iterator.hasNext()) {
@@ -89,7 +89,7 @@ public abstract class AbstractNovelStorage implements Processor {
 							}
 						}catch (Exception e){
 							e.printStackTrace();
-							logger.error(key+"尝试了"+i+"/"+maxTry+"次都失败了~");
+							logger.error(value+"尝试了"+i+"/"+maxTry+"次都失败了~");
 						}
 
 					}
