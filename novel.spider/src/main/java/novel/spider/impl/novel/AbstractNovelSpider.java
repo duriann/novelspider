@@ -5,6 +5,8 @@ import novel.spider.entitys.Novel;
 import novel.spider.impl.AbstractSpider;
 import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.NovelSpiderUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,7 +20,10 @@ import java.util.Map;
  * 一个抽象的小说列表抓取，已经实现了解析tr元素的方法
  */
 public abstract class AbstractNovelSpider extends AbstractSpider implements INovelSpider {
-	protected Element nextPageElement;
+    private static final Logger logger = LogManager.getLogger(AbstractNovelSpider.class.getName());
+
+
+    protected Element nextPageElement;
 	/** 下一页的url */
 	protected String nextPage;
 	/**
@@ -38,6 +43,7 @@ public abstract class AbstractNovelSpider extends AbstractSpider implements INov
 	 * @throws Exception
 	 */
 	protected Elements getsTr(String url, Integer maxTryTimes) throws Exception {
+        logger.info("开始解析:"+url);
 		maxTryTimes = maxTryTimes == null ? INovelSpider.MAX_TRY_TIMES : maxTryTimes;
 		Elements trs = null;
 		for (int i = 0; i < maxTryTimes ; i++) {

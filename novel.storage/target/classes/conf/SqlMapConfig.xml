@@ -15,7 +15,7 @@
 				<property name="poolPingEnabled" value="true" />
                 <!--防止Error accessing PooledConnection. Connection is invalid-->
                 <property name="poolMaximumActiveConnections" value="100"/>
-                <property name="poolMaximumIdleConnections" value="20"/>
+                <property name="poolMaximumIdleConnections" value="0"/>
 			</dataSource>
 		</environment>
 	</environments>

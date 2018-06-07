@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.Map.Entry;
@@ -22,12 +22,12 @@ import java.util.concurrent.Future;
 public abstract class AbstractNovelStorage implements Processor {
     private static final Logger logger = LogManager.getLogger(AbstractNovelStorage.class.getName());
 
-    protected SqlSessionFactory sqlSessionFactory;
+    protected static SqlSessionFactory sqlSessionFactory;
 	protected Map<String, String> tasks = new TreeMap<>();
 	private static List<String> list;
 	private static HashSet<String> urls ;
 	public AbstractNovelStorage() throws FileNotFoundException {
-		sqlSessionFactory = new SqlSessionFactoryBuilder().build(new FileInputStream("conf/SqlMapConfig.xml"));
+		sqlSessionFactory = new SqlSessionFactoryBuilder().build(getClass().getClassLoader().getResourceAsStream("conf/SqlMapConfig.xml"));
         list = sqlSessionFactory.openSession(true).selectList("selectUrl");
         urls = new HashSet<>(list);
 	}
@@ -48,7 +48,7 @@ public abstract class AbstractNovelStorage implements Processor {
 			final String value = entry.getValue();
 			futures.add(service.submit(new Callable<String> () {
 				@Override
-				public synchronized String call() throws Exception {
+				public  String call() throws Exception {
 					INovelSpider spider = NovelSpiderFactory.getNovelSpider(value);
 					Iterator<List<Novel>> iterator = spider.iterator(value, 10);
 					while (iterator.hasNext()) {
@@ -78,6 +78,7 @@ public abstract class AbstractNovelStorage implements Processor {
                                         }
                                     }
                                     System.out.println("novels = " + novels.size());
+                                    logger.info("novels:"+novels);
                                     if(novels.size()>0){
                                         session.update(action,novels);
                                     }

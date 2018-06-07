@@ -7,7 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Testcase {
@@ -20,7 +19,7 @@ public class Testcase {
      */
     @Test
 	public void testMybatisConnection () throws Exception {
-		SqlSession session = new SqlSessionFactoryBuilder().build(new FileInputStream("conf/SqlMapConfig.xml")).openSession();
+		SqlSession session = new SqlSessionFactoryBuilder().build(getClass().getClassLoader().getResourceAsStream("conf/SqlMapConfig.xml")).openSession();
 		System.out.println(session);
 	}
 
@@ -73,4 +72,13 @@ public class Testcase {
         processor.process(update,5);
     }
 
+    /**
+     * 更新顶点小说
+     * @throws FileNotFoundException
+     */
+    @Test
+    public void updateDdxs() throws FileNotFoundException {
+        Processor processor = new DdxsNovelStorageImpl();
+        processor.process(update,5);
+    }
 }

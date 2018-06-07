@@ -35,7 +35,7 @@
   </select>
     <select id="searchLikeByKey" resultType="string" parameterType="string">
     select
-    name
+    distinct name
     from tbl_novel
     where (name like #{keyword} or author like #{keyword}) ORDER BY LENGTH(name)-LENGTH(#{keyword})
     LIMIT 0,10

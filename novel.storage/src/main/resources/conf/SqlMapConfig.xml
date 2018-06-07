@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN" 
+	"http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+<configuration>
+	<environments default="environment">
+		<environment id="environment">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/db_novel?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
+				<property name="username" value="root" />
+				<property name="password" value="000000" />
+                <!--防止org.apache.ibatis.exceptions.PersistenceException-->
+				<property name="poolPingQuery" value="SELECT 1" />
+				<property name="poolPingEnabled" value="true" />
+                <!--防止Error accessing PooledConnection. Connection is invalid-->
+                <property name="poolMaximumActiveConnections" value="100"/>
+                <property name="poolMaximumIdleConnections" value="0"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 指定映射文件的位置 -->
+	<mappers>
+		<mapper resource="novel/storage/entitys/NovelMapper.xml" />
+	</mappers>
+</configuration> 
