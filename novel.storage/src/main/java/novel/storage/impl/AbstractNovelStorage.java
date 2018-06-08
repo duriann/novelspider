@@ -4,6 +4,7 @@ import novel.spider.entitys.Novel;
 import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.NovelSpiderFactory;
 import novel.storage.Processor;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -78,7 +79,7 @@ public abstract class AbstractNovelStorage implements Processor {
                                         }
                                     }
                                     System.out.println("update novels = " + novels.size());
-                                    logger.info("novels:"+novels);
+                                    logger.info("novels:"+ StringUtils.abbreviate(novels.toString(),10));
                                     if(novels.size()>0){
                                         session.update(action,novels);
                                     }

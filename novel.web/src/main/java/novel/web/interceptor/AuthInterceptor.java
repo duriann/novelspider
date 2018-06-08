@@ -27,7 +27,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("Auth拦截器...");
-        //如果不是映射到方法直接通过
+        //如果不是映射到方法直接通过,比如随便输入一个/admin/dadasdas
         if (!(handler instanceof HandlerMethod)) {
             System.out.println("不是映射到方法:"+handler);
             return true;

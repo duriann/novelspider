@@ -58,6 +58,7 @@ public class NovelServiceImpl implements NovelService {
     }
 
     @Override
+    @SysLog(module = "getChapters",methods = "查看章节列表")
     public List<Chapter> getChapters(String base64Url) {
         String srcUrl = Base64Util.decode(base64Url);
         List<Chapter> chapters = NovelSpiderFactory.getChapterSpider(srcUrl).getsChapter(srcUrl);
@@ -65,6 +66,7 @@ public class NovelServiceImpl implements NovelService {
     }
 
     @Override
+    @SysLog(module = "getChapterDetail",methods = "阅读章节详情")
     public ChapterDetail getChapterDetail(String url) {
         ChapterDetail chapterDetail = NovelSpiderFactory.getChapterDetailSpider(url).getChapterDetail(url);
         //将AbstractChapterDetailSpider里替换的换行符换回来

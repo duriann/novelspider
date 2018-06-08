@@ -9,7 +9,6 @@ import novel.web.entitys.Page;
 import novel.web.entitys.Token;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
-import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisTokenManager;
 import novel.web.utils.RedisUtil;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -72,25 +71,10 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    @Auth
     public ModelAndView logout(HttpServletRequest request,HttpServletResponse response){
         ModelAndView view = new ModelAndView();
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
-        if (user!=null){
-            request.getSession().removeAttribute(Constants.CURRENT_USER);
-            redisUtil.del(user.getId()+"");
-            Cookie[] cookies = request.getCookies();
-            if (CookieUtil.isNotEmptyCookie(cookies)){
-                Cookie token = CookieUtil.getCookie(cookies,"token");
-                    if (null!=token){
-                        token.setValue(null);
-                        token.setMaxAge(0);// 立即销毁cookie
-                        token.setPath("/");
-                        response.addCookie(token);
-                    }
-
-            }
-        }
+        userService.logout(user);
         view.setViewName("index");
         return view;
     }

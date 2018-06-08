@@ -16,6 +16,6 @@ public interface UserService {
     void delete(User user);
     User getUserById(long id);
     Page<User> getAllUser(int page, int limit);
-
+    void logout(User user);
     void update(User user);
 }
