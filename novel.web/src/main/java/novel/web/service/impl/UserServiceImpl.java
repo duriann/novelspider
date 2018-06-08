@@ -6,12 +6,14 @@ import novel.web.entitys.User;
 import novel.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired

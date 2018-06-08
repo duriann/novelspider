@@ -4,12 +4,14 @@ import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
 import novel.spider.util.NovelSpiderFactory;
+import novel.web.annotation.SysLog;
 import novel.web.dao.NovelDao;
 import novel.web.entitys.Page;
 import novel.web.service.NovelService;
 import novel.web.utils.Base64Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional
 public class NovelServiceImpl implements NovelService {
     @Autowired
     private NovelDao novelDao;
@@ -37,6 +40,7 @@ public class NovelServiceImpl implements NovelService {
     }
 
     @Override
+    @SysLog(module = "getNovelByPage", methods = "搜索小说")
     public Page<Novel> getNovelByPage(String keyword, int currentPage, int pageSize) {
         Map<String, Object> map = new HashMap<>();
         keyword = "%" + keyword + "%";

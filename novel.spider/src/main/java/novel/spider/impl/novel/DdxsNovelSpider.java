@@ -32,7 +32,8 @@ public class DdxsNovelSpider extends AbstractNovelSpider {
 				Elements tds = tr.getElementsByTag("td");
 				Novel novel = new Novel();
 				novel.setName(tds.first().text());
-				String novelUrl = tds.first().getElementsByTag("a").first().absUrl("href").replace(".htm", "/").replace("/binfo/", "/b/");
+				String novelUrl = tds.first().getElementsByTag("a").first().absUrl("href");
+                logger.info("novelUrl = " + novelUrl);
 				novel.setUrl(novelUrl);
 				novel.setLastUpdateChapter(tds.get(1).text());
                 novel.setLastUpdateChapterUrl(tds.get(1).getElementsByTag("a").first().absUrl("href"));
@@ -41,8 +42,10 @@ public class DdxsNovelSpider extends AbstractNovelSpider {
                     String lastUpdateChapterUrl = tds.get(1).getElementsByTag("a").first().absUrl("href");
                     //获取当前小说章节列表
                     List<Chapter> chapters = NovelSpiderFactory.getChapterSpider(url).getsChapter(lastUpdateChapterUrl);
-                    //获取章节列表最后一个章节的url并且设置
-                    novel.setLastUpdateChapterUrl(chapters.get(chapters.size()-1).getUrl());
+                    if (chapters.size()>0){
+                        //获取章节列表最后一个章节的url并且设置
+                        novel.setLastUpdateChapterUrl(chapters.get(chapters.size()-1).getUrl());
+                    }
                 }
 				novel.setAuthor(tds.get(2).text());
 				novel.setLastUpdateTime(NovelSpiderUtil.getDate(tds.get(4).text(), "yy-MM-dd"));//2016-10-14 yyyy-MM-dd

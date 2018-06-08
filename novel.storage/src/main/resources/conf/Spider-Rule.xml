@@ -39,7 +39,9 @@
 		<chapter-detail-prev-selector>.bottem2 a,1</chapter-detail-prev-selector>
 		<chapter-detail-next-selector>.bottem2 a,3</chapter-detail-next-selector>
 		<novel-selector>.grid tr</novel-selector>
-	</site>
+        <novel-nextpage-selector>#pagelink .next</novel-nextpage-selector>
+
+    </site>
 	
 	<site>
 		<title>笔趣阁</title>

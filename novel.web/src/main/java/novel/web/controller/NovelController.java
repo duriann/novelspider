@@ -17,6 +17,8 @@ import novel.web.service.UserService;
 import novel.web.utils.Base64Util;
 import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,6 +42,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("novel")
 public class NovelController {
+    private Logger logger = LoggerFactory.getLogger(NovelController.class.getName());
 
     @Autowired
     NovelService novelService;
@@ -154,6 +157,7 @@ public class NovelController {
         //将前台传来的章节详情url解码
         url = Base64Util.decode(url);
         try {
+            logger.info("url = " + url);
             chapterDetail = novelService.getChapterDetail(url);
             chapterDetail.setPrev(Base64Util.encode(chapterDetail.getPrev()));
             chapterDetail.setNext(Base64Util.encode(chapterDetail.getNext()));

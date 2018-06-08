@@ -25,6 +25,8 @@
     <context:property-placeholder location="classpath:/conf/download.properties" ignore-unresolvable="true"/>
 	<!-- 配置HandlerMapping -->
 	<mvc:annotation-driven />
+    <!---aop自动代理-->
+    <aop:aspectj-autoproxy/>
 
     <mvc:default-servlet-handler/>
     <!-- 配置freeMarker视图解析器 -->

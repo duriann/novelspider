@@ -66,7 +66,7 @@ public abstract class AbstractNovelStorage implements Processor {
                                         }
 										item.setFirstLetter(key.charAt(0));//设置小说的名字的首字母
 									}
-                                    System.out.println("novels = " + novels.size());
+                                    System.out.println("insert novels = " + novels.size());
 									if(novels.size()>0){
                                         session.insert(action, novels);
                                     }
@@ -77,7 +77,7 @@ public abstract class AbstractNovelStorage implements Processor {
                                             novels.remove(item);
                                         }
                                     }
-                                    System.out.println("novels = " + novels.size());
+                                    System.out.println("update novels = " + novels.size());
                                     logger.info("novels:"+novels);
                                     if(novels.size()>0){
                                         session.update(action,novels);
@@ -86,11 +86,11 @@ public abstract class AbstractNovelStorage implements Processor {
 								}
 								session.commit();
 								session.close();
-								Thread.sleep(1_000);
+								//Thread.sleep(1_000);
 							}
 						}catch (Exception e){
 							e.printStackTrace();
-							logger.error(value+"尝试了"+i+"/"+maxTry+"次都失败了~");
+							logger.error(iterator.next().get(i)+"尝试了"+i+"/"+maxTry+"次都失败了~");
 						}
 
 					}

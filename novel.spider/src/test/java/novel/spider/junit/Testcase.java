@@ -6,6 +6,7 @@ import net.sf.json.xml.XMLSerializer;
 import novel.spider.NovelSiteEnum;
 import novel.spider.config.Configuration;
 import novel.spider.entitys.Chapter;
+import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
 import novel.spider.impl.chapter.DefaultChapterDetailSpider;
 import novel.spider.impl.chapter.DefaultChapterSpider;
@@ -50,9 +51,7 @@ public class Testcase {
 		
 		
 	}
-	
 
-	
 	//测试文件合并
 	@Test
 	public void testMergeMutilFile(){
@@ -90,6 +89,24 @@ public class Testcase {
 		for(int i = 0;i<chapters.size();i++){
 			System.out.println("i:"+i+"--"+chapters.get(i));
 		}
+
+	}
+	//测试笔趣阁网章节爬取
+	@Test
+	public void testBQGChapterSpider(){
+		IChapterSpider spider = new DefaultChapterSpider();
+		List<Chapter> chapters = spider.getsChapter("https://www.xs.la/0_233333/");
+		for(int i = 0;i<chapters.size();i++){
+			System.out.println("i:"+i+"--"+chapters.get(i));
+		}
+
+	}//测试笔趣阁网章节详情爬取
+	@Test
+	public void testBQGChapterDetailSpider(){
+		IChapterDetailSpider spider = new DefaultChapterDetailSpider();
+		ChapterDetail detail = spider.getChapterDetail("https://www.xs.la/233_233333/1269793.html");
+
+			System.out.println(detail);
 
 	}
 	
