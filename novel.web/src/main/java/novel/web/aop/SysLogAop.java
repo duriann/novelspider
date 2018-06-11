@@ -9,6 +9,7 @@ import novel.web.entitys.SystemLog;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
 import novel.web.utils.HttpHeaderUtil;
+import novel.web.utils.RequestHolder;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -21,9 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -52,9 +50,7 @@ public class SysLogAop {
 
     @AfterThrowing(pointcut = "LogAspect()", throwing = "e")
     public void doAfterThrowing(JoinPoint point, Throwable e) throws Exception {
-        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
-        ServletRequestAttributes sra = (ServletRequestAttributes)ra;
-        HttpServletRequest request = sra.getRequest();
+        HttpServletRequest request = RequestHolder.getRequest();
         SystemLog systemLog = new SystemLog();
         Map<String, Object> map = this.getMethodDescription(point);
         systemLog.setModule(map.get("module").toString());
@@ -71,9 +67,7 @@ public class SysLogAop {
 
     @Around("LogAspect()")
     public Object doAround(ProceedingJoinPoint point) {
-        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
-        ServletRequestAttributes sra = (ServletRequestAttributes)ra;
-        HttpServletRequest request = sra.getRequest();
+        HttpServletRequest request = RequestHolder.getRequest();
         Object result = null;
         try {
             result = point.proceed();
@@ -83,8 +77,9 @@ public class SysLogAop {
             systemLog.setMethod(map.get("methods").toString());
             systemLog.setStatusDesc(map.get("description").toString());
             systemLog.setArgs(map.get("args").toString());
-            systemLog.setUserId(((User)request.getSession().getAttribute(Constants.CURRENT_USER )).getId());
-            systemLog.setUserNickname(((User)request.getSession().getAttribute(Constants.CURRENT_USER )).getRealName());
+            User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER );
+            systemLog.setUserId(user==null?-1:user.getId());
+            systemLog.setUserNickname(user==null?"no user":user.getRealName());
             systemLog.setIp(HttpHeaderUtil.getIpAddress(request));
             systemLog.setCreateTime(new Date());
             systemLogDao.insert(systemLog);

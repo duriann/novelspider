@@ -59,7 +59,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <!-- 拦截所有URL中包含/admin/的请求 -->
-            <mvc:mapping path="/admin/**"/>
+            <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/admin/toLogin"/>
             <mvc:exclude-mapping path="/admin/login"/>
             <bean class="novel.web.interceptor.AuthInterceptor"></bean>

@@ -11,7 +11,7 @@
     <result column="last_update_chapter_url" property="lastUpdateChapterUrl" jdbcType="VARCHAR" />
     <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="first_letter" property="firstLetter" jdbcType="CHAR" />
+    <result column="first_letter" property="firstLetter" jdbcType="VARCHAR" />
     <result column="platform_id" property="platformId" jdbcType="INTEGER" />
     <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
   </resultMap>
