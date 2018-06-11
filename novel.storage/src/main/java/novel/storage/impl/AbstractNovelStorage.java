@@ -76,10 +76,10 @@ public abstract class AbstractNovelStorage implements Processor {
                                         Novel item = novels.get(n);
                                         if (!urls.contains(item.getUrl())){
                                             novels.remove(item);
+                                            session.insert("insert",item);
                                         }
                                     }
-                                    System.out.println("update novels = " + novels.size());
-                                    logger.info("novels:"+ StringUtils.abbreviate(novels.toString(),10));
+                                    logger.info("novels:"+ StringUtils.abbreviate(novels.toString(),50));
                                     if(novels.size()>0){
                                         session.update(action,novels);
                                     }

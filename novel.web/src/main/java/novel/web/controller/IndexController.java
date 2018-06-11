@@ -35,7 +35,6 @@ public class IndexController {
      * @return
      */
     @RequestMapping(value = "/")
-    @Auth
     public ModelAndView index(HttpServletRequest request){
         ModelAndView view = new ModelAndView();
         Cookie[] cookies = request.getCookies();
@@ -87,7 +86,6 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/admin/toLogin")
-    @Auth
     public ModelAndView toLogin(){
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/login");

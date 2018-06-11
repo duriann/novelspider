@@ -31,8 +31,6 @@ public class AdminController {
     @Autowired
     private RedisTokenManager tokenManager;
 
-    @Autowired
-    private RedisUtil redisUtil;
     /**
      * 登录
      * @param request

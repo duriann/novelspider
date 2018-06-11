@@ -7,12 +7,10 @@ import novel.web.entitys.User;
 import novel.web.service.UserService;
 import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisUtil;
+import novel.web.utils.RequestHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +54,6 @@ public class UserServiceImpl implements UserService {
         map.put("currentPage", page);
         map.put("pageSize", limit);
         List<User> users = userDao.getAllUserByPage(map);
-        System.out.println("users = " + users);
         int totalCount = userDao.getAllUserTotalCount();
         Page<User> pages = new Page<User>();
         pages.setCurrentPage(page);
@@ -68,10 +65,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void logout(User user) {
-        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
-        ServletRequestAttributes sra = (ServletRequestAttributes)ra;
-        HttpServletRequest request = sra.getRequest();
-        HttpServletResponse response = sra.getResponse();
+        HttpServletRequest request = RequestHolder.getRequest();
+        HttpServletResponse response = RequestHolder.getResponse();
         if (user!=null){
             request.getSession().removeAttribute(Constants.CURRENT_USER);
             redisUtil.del(user.getId()+"");

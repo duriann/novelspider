@@ -81,7 +81,6 @@ public class NovelController {
      */
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     @ResponseBody
-    @Auth
     public JSONResponse search(String keyword) {
         List<Novel> novels = novelService.getsNovelByKeyword(keyword);
         return JSONResponse.success(novels);
@@ -94,8 +93,8 @@ public class NovelController {
      */
     @RequestMapping(value = "/searchByPage", method = RequestMethod.POST)
     @ResponseBody
-    @Auth
     public JSONResponse searchByPage(String keyword,int currentPage,int pageSize) {
+        logger.info("keyword:"+keyword);
         Page<Novel> page = novelService.getNovelByPage(keyword,currentPage,pageSize);
         return JSONResponse.success(page);
     }
@@ -109,7 +108,6 @@ public class NovelController {
      */
     @RequestMapping(value = "/getAllNovelByPage", method = RequestMethod.GET)
     @ResponseBody
-    @Auth
     public JSONResponse getAllNovelByPage(int page, int limit) {
         Page<Novel> pages = novelService.getAllNovelByPage(page,limit);
         return JSONResponse.success(pages.getPages(),pages.getTotalCount());
@@ -122,7 +120,6 @@ public class NovelController {
      * @return
      */
     @RequestMapping(value = "/getChapters", method = RequestMethod.GET)
-    @Auth
     public ModelAndView getChapters(String base64Url) {
         List<Chapter> chapters = null;
         boolean isSuccess = false;
@@ -150,7 +147,6 @@ public class NovelController {
      * @return
      */
     @RequestMapping("getChapterDetail")
-    @Auth
     public ModelAndView getChapterDetail(HttpServletRequest request,HttpServletResponse response, String url, String chapterBase64Url) {
         boolean isSuccess = false;
         ChapterDetail chapterDetail = null;
@@ -233,7 +229,6 @@ public class NovelController {
      */
     @RequestMapping(value = "/searchLikeByKey",method = RequestMethod.POST)
     @ResponseBody
-    @Auth
     public JSONResponse searchLikeByKey (@RequestParam("keyword") String keyword){
         List<Object> objects =  redisUtil.lGet(keyword, 0, redisUtil.lGetListSize(keyword));
         if (objects==null||objects.size()==0){
