@@ -21,4 +21,5 @@ public interface UserService {
     void logout(User user);
     void update(User user);
     Set<String> getRoleByName(String username);
+    Set<String> getPermissionByName(String username);
 }

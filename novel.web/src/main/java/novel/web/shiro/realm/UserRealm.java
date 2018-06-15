@@ -13,6 +13,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Set;
+
 public class UserRealm extends AuthorizingRealm{
 
     @Autowired
@@ -26,8 +28,12 @@ public class UserRealm extends AuthorizingRealm{
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         User user  = (User)principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        simpleAuthorizationInfo.addRoles(userService.getRoleByName(user.getName()));
-        System.out.println("userService.getRoleByName(user.getName()) = " + userService.getRoleByName(user.getName()));
+        Set<String> role = userService.getRoleByName(user.getName());
+        simpleAuthorizationInfo.addRoles(role);
+        System.out.println("role = " + role);
+        Set<String> permission = userService.getPermissionByName(user.getName());
+        simpleAuthorizationInfo.addStringPermissions(permission);
+        System.out.println("permission = " + permission);
         return simpleAuthorizationInfo;
     }
 

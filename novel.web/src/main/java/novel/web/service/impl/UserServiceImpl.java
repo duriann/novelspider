@@ -94,4 +94,9 @@ public class UserServiceImpl implements UserService {
     public Set<String> getRoleByName(String username) {
         return userDao.getRoleByName(username);
     }
+
+    @Override
+    public Set<String> getPermissionByName(String username) {
+        return userDao.getPermissionByName(username);
+    }
 }
