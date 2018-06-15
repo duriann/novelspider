@@ -10,8 +10,10 @@ import novel.web.entitys.Token;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
 import novel.web.utils.RedisTokenManager;
-import novel.web.utils.RedisUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -42,25 +44,29 @@ public class AdminController {
     public JSONResponse login(HttpServletRequest request, HttpServletResponse response,@RequestBody String param){
         Map obj = (Map)JSON.parse(param);
         User user = new User();
-        user.setRealName((String)obj.get("username"));
-        String md5Name = DigestUtils.md5Hex((String) obj.get("username"));
         String md5Pwd = DigestUtils.md5Hex((String) obj.get("password")+(String) obj.get("username"));
-        user.setName(md5Name);
+        user.setName((String)obj.get("username"));
         user.setPassword(md5Pwd);
-        User check = userService.check(user);
-        if(check!=null){
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getName(), user.getPassword());
+        try {
+            subject.login(usernamePasswordToken);
             request.getSession().setAttribute(Constants.CURRENT_USER,user);
             String isRemember = obj.get("rememberMe")==null?"false":(String) obj.get("rememberMe");
             if (isRemember.equalsIgnoreCase("true")){
-                Token token = tokenManager.createToken(check.getId());
+                User u = (User) subject.getPrincipal();
+                System.out.println("u = " + u);
+                Token token = tokenManager.createToken(u.getId());
                 Cookie tk = new Cookie("token", token.getToken());
                 tk.setPath("/");
                 tk.setMaxAge(Constants.DEFAULT_EXPIRES_HOUR);
                 response.addCookie(tk);
             }
             return JSONResponse.success(user,0);
+        }catch (Exception e){
+            return JSONResponse.error("登录失败");
         }
-        return JSONResponse.error("登录失败");
+
     }
 
     /**

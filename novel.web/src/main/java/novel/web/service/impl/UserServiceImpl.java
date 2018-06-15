@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -87,5 +88,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User user) {
        userDao.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public Set<String> getRoleByName(String username) {
+        return userDao.getRoleByName(username);
     }
 }

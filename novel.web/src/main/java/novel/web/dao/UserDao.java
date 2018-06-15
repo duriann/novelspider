@@ -4,6 +4,7 @@ import novel.web.entitys.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface UserDao {
     public int deleteByPrimaryKey(Long id);
@@ -25,4 +26,6 @@ public interface UserDao {
 
     void deleteUserById(long id);
     int getAllUserTotalCount();
+
+    public Set<String> getRoleByName(String username);
 }

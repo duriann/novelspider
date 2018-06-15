@@ -54,12 +54,13 @@ public class Testcase {
 
     /**
      * 更新笔下文学小说 20180428 15:30 好像网站挂了 更新失败
+     * 20180612 10:50 被网站屏蔽了
      * @throws FileNotFoundException
      */
     @Test
 	public void updateBxwxProcess() throws FileNotFoundException {
 	    Processor processor = new BxwxNovelStorageImpl();
-	    processor.process(update);
+	    processor.process(update,5);
     }
 
     /**

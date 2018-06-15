@@ -9,7 +9,7 @@
 	</sql>
 	
     <insert id="insert" parameterType="SystemLog">
-    	insert into system_log (<include refid="allKey"/>)
+    	insert into tbl_system_log (<include refid="allKey"/>)
     	values (#{module}, #{method}, #{statusDesc}, #{args}, #{userId}, #{userNickname}, #{ip}, #{createTime})
     </insert>
 

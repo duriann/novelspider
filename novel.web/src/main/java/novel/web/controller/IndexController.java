@@ -9,6 +9,8 @@ import novel.web.utils.Base64Util;
 import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisTokenManager;
 import novel.web.utils.RedisUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +58,7 @@ public class IndexController {
         if(manager.checkToken(model)){
             User user = userService.getUserById(model.getUser_id());
             if (user!=null){
+                SecurityUtils.getSubject().login(new UsernamePasswordToken(user.getName(),user.getPassword()));
                 request.getSession().setAttribute(Constants.CURRENT_USER,user);
                 view.addObject("user",user);
             }

@@ -6,11 +6,16 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
+
     <parent>
         <artifactId>spider</artifactId>
         <groupId>spider</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <properties>
+        <shiro.version>1.2.4</shiro.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>novel</groupId>
@@ -18,8 +23,34 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-
-
+        <!-- shiro -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-ehcache</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <!-- freemarker + shiro（标签） begin -->
+        <dependency>
+            <groupId>net.mingsoft</groupId>
+            <artifactId>shiro-freemarker-tags</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <!-- freemarker + shiro（标签） begin -->
         <!--SpringMVC相关-->
         <dependency>
             <groupId>org.springframework</groupId>

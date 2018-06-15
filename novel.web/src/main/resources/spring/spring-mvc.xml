@@ -20,24 +20,38 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 	<!-- 开启包自动扫描 -->
-	<context:component-scan base-package="novel.web.service.impl" />
-    <!-- 加载文件 -->
-    <context:property-placeholder location="classpath:/conf/download.properties" ignore-unresolvable="true"/>
+	<context:component-scan base-package="novel.web.controller" />
 	<!-- 配置HandlerMapping -->
 	<mvc:annotation-driven />
     <!---aop自动代理-->
     <aop:aspectj-autoproxy/>
 
-    <bean id="config" class="novel.spider.config.Configuration">
-        <property name="path" value="${downloadpath}"></property>
-        <property name="tryTimes" value="${tryTimes}"></property>
-        <property name="size" value="${size}"></property>
+    <mvc:default-servlet-handler/>
+    <!-- 配置freeMarker视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+        <property name="contentType" value="text/html; charset=utf-8" />
+        <property name="suffix" value=".html" />
+        <property name="order" value="0" />
     </bean>
 
-    <bean id="configContext" class="novel.spider.util.DownloadConfigContext">
-        <property name="configuration" ref="config"/>
+    <!-- FreeMarker模板路径 -->
+    <bean id="freemarkerConfig"
+          class="novel.web.freemarker.FreeMarkerConfigExtend">
+        <!-- 模板根目录 -->
+        <property name="templateLoaderPaths" value="/WEB-INF/" />
+        <!-- 编码格式 -->
+        <property name="defaultEncoding" value="utf-8" />
     </bean>
-    <import resource="spring-mybatis.xml"/>
-    <import resource="spring-redis.xml"/>
-    <import resource="spring-shiro.xml"/>
+    <!--配置登录拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有URL中包含/admin/的请求 -->
+            <mvc:mapping path="/admin/**"/>
+            <mvc:exclude-mapping path="/admin/toLogin"/>
+            <mvc:exclude-mapping path="/admin/login"/>
+            <bean class="novel.web.interceptor.AuthInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

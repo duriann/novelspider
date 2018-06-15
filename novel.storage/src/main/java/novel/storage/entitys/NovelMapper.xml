@@ -182,7 +182,8 @@
         <foreach collection="list" index="index" item="item" separator=";">
           update tbl_novel set
             last_update_chapter = #{item.lastUpdateChapter},
-            last_update_chapter_url = #{item.lastUpdateChapterUrl}
+            last_update_chapter_url = #{item.lastUpdateChapterUrl},
+            last_update_time = #{item.lastUpdateTime}
           where url = #{item.url}
 
         </foreach>

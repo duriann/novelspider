@@ -47,7 +47,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                 return true;
             }
             //如果验证token失败，并且方法注明了Authorization，返回401错误
-            if (method.getAnnotation(Auth.class) != null) {
+            Auth auth = method.getAnnotation(Auth.class);
+            if (auth != null) {
                 response.sendRedirect("/admin/toLogin");
                 return false;
             }

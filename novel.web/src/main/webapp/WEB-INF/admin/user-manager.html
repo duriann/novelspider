@@ -1,4 +1,5 @@
 <!DOCTYPE HTML>
+
 <html>
   <head>
 	<meta charset="utf-8">
@@ -15,19 +16,21 @@
 
   <body>
 
-  <table  class="layui-table" lay-data="{width: 'full', height:'full', url:'/admin/getAllUser',limit:30,currentPage:1,page:true, id:'idTest'}" lay-filter="demo">
-      <thead>
-      <tr>
-          <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
-          <th lay-data="{field:'id', width:80, sort: true, fixed: true}">ID</th>
-          <th lay-data="{field:'realName', width:100, edit: 'text'}">真实名称</th>
-          <th lay-data="{field:'name', width:300}">用户名</th>
-          <th lay-data="{field:'password', width:300}">密码</th>
+  <shiro:hasAnyRoles name="admin">
+      <table  class="layui-table" lay-data="{width: 'full', height:'full', url:'/admin/getAllUser',limit:30,currentPage:1,page:true, id:'idTest'}" lay-filter="demo">
+          <thead>
+          <tr>
+              <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
+              <th lay-data="{field:'id', width:80, sort: true, fixed: true}">ID</th>
+              <th lay-data="{field:'realName', width:100, edit: 'text'}">真实名称</th>
+              <th lay-data="{field:'name', width:300}">用户名</th>
+              <th lay-data="{field:'password', width:300}">密码</th>
 
-          <th lay-data="{fixed:'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
-      </tr>
-      </thead>
-  </table>
+              <th lay-data="{fixed:'right', width:178, align:'center', toolbar: '#barDemo'}"></th>
+          </tr>
+          </thead>
+      </table>
+  </shiro:hasAnyRoles>
   <!--<div class="layui-btn-group demoTable">
 	  <button class="layui-btn" data-type="getCheckData">获取选中行数据</button>
 	  <button class="layui-btn" data-type="getCheckLength">获取选中数目</button>

@@ -4,15 +4,8 @@ public class User {
     private long id;
     private String name;
     private String password;
-    private String realName;
     private String lastReadChapterDetailUrl;
-    public String getRealName() {
-        return realName;
-    }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
 
     public String getLastReadChapterDetailUrl() {
         return lastReadChapterDetailUrl;
@@ -49,7 +42,6 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
-                ", realName='" + realName + '\'' +
                 ", lastReadChapterDetailUrl='" + lastReadChapterDetailUrl + '\'' +
                 '}';
     }
