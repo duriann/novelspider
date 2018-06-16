@@ -1,9 +1,9 @@
 package novel.spider.entitys;
 
-import java.net.URI;
-
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
+
+import java.net.URI;
 
 public class NovelHttpGet extends HttpGet {
 
@@ -25,5 +25,6 @@ public class NovelHttpGet extends HttpGet {
 				.setConnectTimeout(50000)
 				.setConnectionRequestTimeout(5000)
 				.build());
+		this.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0");
 	}
 }

@@ -8,6 +8,7 @@ import novel.spider.config.Configuration;
 import novel.spider.entitys.Chapter;
 import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
+import novel.spider.impl.chapter.BxwxChapterSpider;
 import novel.spider.impl.chapter.DefaultChapterDetailSpider;
 import novel.spider.impl.chapter.DefaultChapterSpider;
 import novel.spider.impl.download.NovelDownload;
@@ -20,14 +21,25 @@ import novel.spider.util.FileUtil;
 import novel.spider.util.NovelSpiderUtil;
 import org.junit.Test;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 public class Testcase {
 
+    @Test
+    public void testSameTime() throws ParseException {
+        String date1 = "06-11";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = NovelSpiderUtil.getDate(date1, "MM-dd");
+        Date date2 = new Date();
+
+        Date parse = sdf.parse(sdf.format(date2));
+
+        System.out.println("date = " + date.compareTo(parse));
+
+    }
 
 	@Test
 	public void testXML2Json() throws Exception {
@@ -64,7 +76,7 @@ public class Testcase {
 		INovelDownload download = new NovelDownload();
 		download.download("https://www.bxwx9.org/b/6/6347/index.html", new Configuration("d://1",100));
 	}
-    //测试顶点小说爬虫
+    //测试笔下文学小说爬虫
     @Test
     public void testNovelSpider(){
         INovelSpider novelSpider = new BxwxNovelSpider();
@@ -96,6 +108,16 @@ public class Testcase {
 	public void testBQGChapterSpider(){
 		IChapterSpider spider = new DefaultChapterSpider();
 		List<Chapter> chapters = spider.getsChapter("https://www.xs.la/0_233333/");
+		for(int i = 0;i<chapters.size();i++){
+			System.out.println("i:"+i+"--"+chapters.get(i));
+		}
+
+	}
+	//测试笔下文学章节爬取
+	@Test
+	public void testBXWXChapterSpider(){
+		IChapterSpider spider = new BxwxChapterSpider();
+		List<Chapter> chapters = spider.getsChapter("https://www.bxwx9.org/b/204/204731/");
 		for(int i = 0;i<chapters.size();i++){
 			System.out.println("i:"+i+"--"+chapters.get(i));
 		}

@@ -54,12 +54,12 @@ public class SysLogAop {
         SystemLog systemLog = new SystemLog();
         Map<String, Object> map = this.getMethodDescription(point);
         systemLog.setModule(map.get("module").toString());
-        systemLog.setMethod("<font color=\"red\">执行方法异常:-->" + map.get("methods").toString() + "</font>");
-        systemLog.setStatusDesc("<font color=\"red\">执行方法异常:-->" + e + "</font>");
+        systemLog.setMethod("执行方法异常:" + map.get("methods").toString());
+        systemLog.setStatusDesc("执行方法异常:" + e);
         systemLog.setArgs(map.get("args").toString());
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER );
         systemLog.setUserId(user==null?-1:user.getId());
-        systemLog.setUserNickname(user==null?"no user":user.getRealName());
+        systemLog.setUsername(user==null?"no user":user.getName());
         systemLog.setIp(HttpHeaderUtil.getIpAddress(request));
         systemLog.setCreateTime(new Date());
         systemLogDao.insert(systemLog);
@@ -79,7 +79,7 @@ public class SysLogAop {
             systemLog.setArgs(map.get("args").toString());
             User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER );
             systemLog.setUserId(user==null?-1:user.getId());
-            systemLog.setUserNickname(user==null?"no user":user.getRealName());
+            systemLog.setUsername(user==null?"no user":user.getName());
             systemLog.setIp(HttpHeaderUtil.getIpAddress(request));
             systemLog.setCreateTime(new Date());
             systemLogDao.insert(systemLog);

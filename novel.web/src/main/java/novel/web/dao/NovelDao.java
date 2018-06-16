@@ -1,10 +1,10 @@
 package novel.web.dao;
 
 import novel.spider.entitys.Novel;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
-
 public interface NovelDao {
 	public int deleteByPrimaryKey(Long id);
 

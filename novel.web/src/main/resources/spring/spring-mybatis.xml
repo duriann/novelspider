@@ -67,6 +67,10 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
         <!-- 给出需要扫描Dao接口包 -->
+        <!--如果在spring-mybatis的配置文件中对每个mapper接口都进行的扫描注入，或者统一注入的话，dao层可以不用 @repository注解 ；
+            如果你不想在配置文件中定义 dao的bean 那么可以直接在 mapper接口上使用@repository 来实现自动注入。
+            记得在配置文件开启自动扫描 即:
+        < context: component-scan base-package="自己的mapper所在包的全路径-->
         <property name="basePackage" value="novel.web.dao"/>
     </bean>
 

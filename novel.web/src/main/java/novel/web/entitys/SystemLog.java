@@ -10,9 +10,18 @@ public class SystemLog {
 	private String statusDesc;
 	private String args;
 	private long userId;
-	private String userNickname;
+	private String username;
 	private String ip;
-	private Date createTime;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private Date createTime;
 
 	public long getId() {
 		return id;
@@ -62,19 +71,27 @@ public class SystemLog {
 		this.userId = userId;
 	}
 
-	public String getUserNickname() {
-		return userNickname;
-	}
-
-	public void setUserNickname(String userNickname) {
-		this.userNickname = userNickname;
-	}
 
 	public String getIp() {
 		return ip;
 	}
 
-	public void setIp(String ip) {
+    @Override
+    public String toString() {
+        return "SystemLog{" +
+                "id=" + id +
+                ", module='" + module + '\'' +
+                ", method='" + method + '\'' +
+                ", statusDesc='" + statusDesc + '\'' +
+                ", args='" + args + '\'' +
+                ", userId=" + userId +
+                ", username='" + username + '\'' +
+                ", ip='" + ip + '\'' +
+                ", createTime=" + createTime +
+                '}';
+    }
+
+    public void setIp(String ip) {
 		this.ip = ip;
 	}
 
@@ -86,12 +103,6 @@ public class SystemLog {
 		this.createTime = createTime;
 	}
 
-	@Override
-	public String toString() {
-		return "SystemLog [id=" + id + ", module=" + module + ", method="
-				+ method + ", desc=" + statusDesc + ", args=" + args + ", userId=" + userId + ", userNickname="
-				+ userNickname + ", createTime=" + createTime
-				+ "]";
-	}
+
 
 }
