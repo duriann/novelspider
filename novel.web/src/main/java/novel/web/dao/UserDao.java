@@ -28,4 +28,5 @@ public interface UserDao {
     int getAllUserTotalCount();
 
     public Set<String> getRoleByName(String username);
+    public Set<String> getPermissionByName(String username);
 }

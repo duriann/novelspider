@@ -13,8 +13,14 @@
 
   <body>
 
-
-  <table class="layui-table" lay-data="{width: 'full', height:'full', url:'/novel/getAllNovelByPage',limit:10,currentPage:1,page:true, id:'idTest'}" lay-filter="demo">
+  <div class="demoTable">
+      搜索:
+      <div class="layui-inline">
+          <input class="layui-input" name="id" id="searchkey" autocomplete="off">
+      </div>
+      <button class="layui-btn layui-btn-sm" data-type="reload" id="search">搜索</button>
+  </div>
+  <table class="layui-table" lay-data="{width: 'full', height:'full', url:'/novel/getAllNovelByPage',limit:10,currentPage:1,page:true, id:'novel'}" lay-filter="demo">
 	  <thead>
 	  <tr>
 		  <th lay-data="{type:'checkbox', fixed: 'left'}"></th>
@@ -114,7 +120,21 @@
               });
 
           });
+          $("#search").click(function () {
+              var key = $("#searchkey").val();
+              if(key.trim()==""||key==undefined){
+                  layer.msg("请输入要搜索的内容!");
+                  return;
+              }
+              table.reload('novel',{
+                  url: '/novel/getAllNovelByPage',
+                  where:{
+                     keyword:key
+                 }
+              });
 
+
+          }) ;
           /*  //监听表格复选框选择
          table.on('checkbox(demo)', function(obj){
              console.log(obj)
@@ -143,6 +163,10 @@
           });*/
       });
   </script>
+  <script>
+      $(function () {
 
+      });
+  </script>
   </body>
 </html>

@@ -1,0 +1,1 @@
+delete from tbl_novel where platform_id = 1 and TO_DAYS(add_time)=TO_DAYS(NOW()) and STATUS=2

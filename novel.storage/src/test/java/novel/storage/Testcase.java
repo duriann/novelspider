@@ -3,15 +3,41 @@ package novel.storage;
 import novel.storage.impl.BxwxNovelStorageImpl;
 import novel.storage.impl.DdxsNovelStorageImpl;
 import novel.storage.impl.KanShuZhongNovelStorageImpl;
+import novel.storage.utils.Constants;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Testcase {
     public String insert = "batchInsert";
     public String update = "batchUpdate";
+
+    @Test
+    public void testNovelList(){
+        List<String> novels = new ArrayList<>();
+        novels.add("http://www.kanshuzhong.com/book/119978/");
+        String s1 = "http://www.kanshuzhong.com/book/119978/";
+        System.out.println("novels.contains(n2) = " + novels.contains(s1));
+    }
+    
+    @Test
+    public void testSelectByPlatformAndStatus () throws Exception {
+        SqlSession session = new SqlSessionFactoryBuilder().build(getClass().getClassLoader().getResourceAsStream("conf/SqlMapConfig.xml")).openSession();
+        Map<String,String> params = new HashMap<>();
+        params.put("platformId","4");
+        List<String> list = session.selectList("selectByPlatformAndStatus", params);
+        System.out.println("list.subList(0,10) = " + list.subList(0,10));
+
+        System.out.println("list.contains(novel) = " + list.contains("http://www.kanshuzhong.com/book/119978/"));
+    }
+
+
 
     /**
      * 测试mybatis连接是否正常
@@ -55,6 +81,7 @@ public class Testcase {
     /**
      * 更新笔下文学小说 20180428 15:30 好像网站挂了 更新失败
      * 20180612 10:50 被网站屏蔽了
+     * 20180619 15.02 发现又能访问了
      * @throws FileNotFoundException
      */
     @Test
@@ -70,7 +97,7 @@ public class Testcase {
     @Test
     public void updateKanShuZhongProcess() throws FileNotFoundException {
         Processor processor = new KanShuZhongNovelStorageImpl();
-        processor.process(update,5);
+        processor.process(Constants.update,5);
     }
 
     /**

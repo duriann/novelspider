@@ -2,6 +2,7 @@ package novel.spider.entitys;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 小说实体
@@ -34,7 +35,24 @@ public class Novel implements Serializable {
 	private String lastUpdateChapterUrl;
 	/** 小说最后更新的时间 */
 	private Date lastUpdateTime;
-	/** 小说的状态：1 连载 2 完结 */
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Novel novel = (Novel) o;
+        return Objects.equals(name, novel.name) &&
+                Objects.equals(url, novel.url);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, url);
+    }
+
+    /** 小说的状态：1 连载 2 完结 */
+
 	private int status;
 	/** 书名的首字母 */
 	private char firstLetter;

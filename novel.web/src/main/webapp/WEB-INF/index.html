@@ -54,26 +54,17 @@
                 <li><a href="../../">主页</a></li>
                 <li><a href="#" id="about">关于</a></li>
                 <#if user??>
-                <li class="header-bar-nav">
-                    <a href="javascript:;">${user.name}<i class="icon-font" style="margin-left:5px;">&#xe60c;</i></a>
-                    <ul class="header-dropdown-menu">
-                        <li><a href="/admin/index">个人信息</a></li>
-                        <li><a href="/admin/toLogin">切换账户</a></li>
-                        <li><a href="/admin/logout">退出</a></li>
-                    </ul>
-                </li>
+                    <li class="header-bar-nav">
+                        <a href="javascript:;">${user.name}<i class="icon-font" style="margin-left:5px;">&#xe60c;</i></a>
+                        <ul class="header-dropdown-menu">
+                            <li><a href="/admin/index">个人信息</a></li>
+                            <li><a href="/admin/toLogin">切换账户</a></li>
+                            <li><a href="/admin/logout">退出</a></li>
+                        </ul>
+                    </li>
                 <#else>
-                <li><a href="/admin/toLogin">登录</a></li>
+                    <li><a href="/admin/toLogin">登录</a></li>
                 </#if>
-               <!-- <li class="dropdown"><a href="javascript:void(0);"
-                                        class="dropdown-toggle" data-toggle="dropdown">我的项目<b
-                        class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">教务查询</a></li>
-                        <li><a href="#">铁通查询</a></li>
-                        <li><a href="#">尔雅题库</a></li>
-                    </ul>
-                </li>-->
             </ul>
         </div>
         <!--/.navbar-collapse -->
@@ -120,29 +111,28 @@
         </thead>
         <tbody id="list">
         </tbody>
-            <tr id="page" style="display: none">
-                <td colspan="5">
-                    <div class="btn-group" style="float: right;">
-                        <button type="button" class="btn btn-default" id="currentPage">第1/100页</button>
-                        <button type="button" class="btn btn-default" id="firstPage">首页</button>
-                        <button type="button" class="btn btn-default" id="previousPage">上一页</button>
-                        <button type="button" class="btn btn-default" id="nextPage">下一页</button>
-                        <button type="button" class="btn btn-default" id="lastPage">尾页</button>
-                        <button type="button" class="btn btn-default" id="gotoPage">跳转</button>
-                        <input type="text" class="form-control" id="gotopage_text"
-                            style="width: 80px; display: inline-block" placeholder="页码">
-                        <input type="hidden" id="hidetxt" value="" />
-                    </div>
-                </td>
-            </tr>
-        </tfoot>
     </table>
+    <div id="page" style="display: none">
+        <td colspan="5">
+            <div class="btn-group" style="float: right;">
+                <button type="button" class="btn btn-default" id="currentPage">第1/100页</button>
+                <button type="button" class="btn btn-default" id="firstPage">首页</button>
+                <button type="button" class="btn btn-default" id="previousPage">上一页</button>
+                <button type="button" class="btn btn-default" id="nextPage">下一页</button>
+                <button type="button" class="btn btn-default" id="lastPage">尾页</button>
+                <button type="button" class="btn btn-default" id="gotoPage">跳转</button>
+                <input type="text" class="form-control" id="gotopage_text"
+                       style="width: 80px; display: inline-block" placeholder="页码">
+                <input type="hidden" id="hidetxt" value="" />
+            </div>
+        </td>
+    </div>
 </div>
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../lib/jquery.min.js"></script>
-<script src="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"/>
+<script src="../lib/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script src="../lib/bootstrap.min.js"></script>
 <script src="../lib/jquery.base64.js"></script>
 <script src="../lib/pagination.js"></script>

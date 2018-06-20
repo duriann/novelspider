@@ -19,7 +19,14 @@
 			<span class="header-logo">小说爬虫后台管理</span>
 			<a class="header-menu-btn" href="javascript:;"><i class="icon-font">&#xe600;</i></a>
 			<ul class="header-bar">
-				<li class="header-bar-role"><a href="javascript:;">超级管理员</a></li>
+				<li class="header-bar-role"><a href="javascript:;">
+                    <@shiro.hasRole name="admin">
+                       超级管理员
+                    </@shiro.hasRole>
+                    <@shiro.lacksRole name="admin">
+                    普通用户
+                </@shiro.lacksRole>
+                </a></li>
 				<li class="header-bar-nav">
 					<a href="javascript:;">${(user.name)!}<i class="icon-font" style="margin-left:5px;">&#xe60c;</i></a>
 					<ul class="header-dropdown-menu">
@@ -45,7 +52,6 @@
 
                 </ul>
             </@shiro.hasRole>
-
         </aside>
 		
 		<div class="layout-side-arrow"><div class="layout-side-arrow-icon"><i class="icon-font">&#xe60d;</i></div></div>

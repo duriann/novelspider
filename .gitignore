@@ -34,3 +34,10 @@ pom.properties
 /out
 /spider.iml
 /novel.storage/target/maven-status/maven-compiler-plugin/compile/default-compile
+/novel.storage/*.log
+/novel.storage/logs
+/novel.spider/logs/info
+/novel.spider/logs/error
+/novel.spider/logs/warn
+/novel.storage/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile
+/novel.storage/target

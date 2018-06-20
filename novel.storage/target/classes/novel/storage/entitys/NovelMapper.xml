@@ -19,6 +19,15 @@
     id, name, author, url, type, last_update_chapter, last_update_chapter_url, last_update_time, 
     status, first_letter, platform_id, add_time
   </sql>
+    <select id="selectByPlatformAndStatus" parameterType="map" resultType="string">
+        select url from tbl_novel
+        where platform_id = #{platformId}
+        <if test="status != null" >
+            and status = #{status};
+        </if>
+
+    </select>
+    
     <select id="selectUrl" resultType="string">
         select url from tbl_novel
     </select>

@@ -47,8 +47,7 @@ public class IndexController {
                 String readToken = readCookie.getValue();
                 //从redis中获取对应token数据
                 List<Object> list = redisUtil.lGet(readToken, 0, redisUtil.lGetListSize(readToken));
-                if(null!=list&&!list.isEmpty()){
-                    view.addObject("lastReadChapterDetailUrl",list.get(0));
+                if(null!=list&&!list.isEmpty()){                    view.addObject("lastReadChapterDetailUrl",list.get(0));
                     view.addObject("lastReadChapterTitle",list.get(1));
                 }
             }
