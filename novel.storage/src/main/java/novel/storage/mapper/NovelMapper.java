@@ -3,6 +3,7 @@ package novel.storage.mapper;
 import novel.spider.entitys.Novel;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NovelMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,4 +23,5 @@ public interface NovelMapper {
     void batchUpdate(List<Novel> novels);
 
     List<String> selectUrl();
+    List<String> selectByPlatformAndStatus(Map<String,String> map);
 }

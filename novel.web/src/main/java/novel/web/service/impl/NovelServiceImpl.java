@@ -5,10 +5,12 @@ import novel.spider.entitys.ChapterDetail;
 import novel.spider.entitys.Novel;
 import novel.spider.util.NovelSpiderFactory;
 import novel.web.annotation.SysLog;
+import novel.web.constants.Constants;
 import novel.web.dao.NovelDao;
 import novel.web.entitys.Page;
 import novel.web.service.NovelService;
 import novel.web.utils.Base64Util;
+import novel.web.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,17 +26,18 @@ import java.util.Map;
 public class NovelServiceImpl implements NovelService {
     @Autowired
     private NovelDao novelDao;
-
+    @Autowired
+    RedisUtil redisUtil;
     @Override
     public List<Novel> getsNovelByKeyword(String keyword) {
-        keyword = "%" + keyword + "%";
+        keyword = keyword + "%";
         return novelDao.getsNovelByKeyword(keyword);
     }
 
     @Override
     public List<Novel> getsNovelByKeyword(String keyword, int platformId) {
         Map<String, String> map = new HashMap<>();
-        map.put("keyword", "%" + keyword + "%");
+        map.put("keyword", keyword + "%");
         map.put("platformId", platformId + "");
         return novelDao.getsNovelByKeyword2(map);
     }
@@ -43,12 +46,13 @@ public class NovelServiceImpl implements NovelService {
     @SysLog(module = "getNovelByPage", methods = "搜索小说")
     public Page<Novel> getNovelByPage(String keyword, int currentPage, int pageSize) {
         Map<String, Object> map = new HashMap<>();
-        keyword = "%" + keyword + "%";
+        keyword = keyword + "%";
         map.put("keyword", keyword);
         map.put("currentPage", currentPage);
         map.put("pageSize", pageSize);
         List<Novel> novels = novelDao.getNovelByPage(map);
         int totalCount = novelDao.getNovelTotalCount(keyword);
+
         Page<Novel> page = new Page<Novel>();
         page.setCurrentPage(currentPage);
         page.setPageSize(pageSize);
@@ -76,12 +80,24 @@ public class NovelServiceImpl implements NovelService {
 
 
     @Override
-    public Page<Novel> getAllNovelByPage(int page, int limit) {
+    public Page<Novel> getAllNovelByPage(String keyword,int page, int limit) {
         Map<String, Object> map = new HashMap<>();
+        Integer totalCount = 0;
+        if (keyword!=null){
+            keyword = keyword+"%";
+            map.put("keyword",keyword);
+            totalCount = (Integer) redisUtil.get(keyword);
+            if (totalCount==null){
+                totalCount = novelDao.getNovelTotalCount(keyword);
+                redisUtil.set(keyword,totalCount, Constants.DEFAULT_EXPIRES_HOUR);
+            }
+        }else {
+            totalCount = novelDao.getAllNovelTotalCount();
+        }
+        System.out.println("totalCount = " + totalCount);
         map.put("currentPage", page);
         map.put("pageSize", limit);
         List<Novel> novels = novelDao.getAllNovelByPage(map);
-        int totalCount = novelDao.getAllNovelTotalCount();
         Page<Novel> pages = new Page<Novel>();
         pages.setCurrentPage(page);
         pages.setPageSize(limit);
@@ -112,7 +128,7 @@ public class NovelServiceImpl implements NovelService {
 
     @Override
     public List<String> searchLikeByKey(String keyword) {
-        keyword = "%" + keyword + "%";
+        keyword = keyword + "%";
         return novelDao.searchLikeByKey(keyword);
     }
 

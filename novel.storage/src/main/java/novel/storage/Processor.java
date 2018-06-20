@@ -10,7 +10,5 @@ public interface Processor {
 
     public void process(String action,int maxTry);
 
-	public void process(String action);
-
 
 }

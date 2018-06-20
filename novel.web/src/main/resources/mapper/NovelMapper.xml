@@ -59,7 +59,11 @@
     select
     <include refid="Base_Column_List" />
     from tbl_novel
-    where 1=1 ORDER BY platform_id
+    where 1=1
+    <if test="keyword!=null">
+       and (name like #{keyword} or author like #{keyword})
+    </if>
+    ORDER BY platform_id
     LIMIT ${(currentPage-1)*pageSize},${pageSize}
   </select>
 

@@ -5,7 +5,6 @@ import novel.spider.entitys.Novel;
 import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.NovelSpiderFactory;
 import novel.storage.Processor;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -23,27 +22,43 @@ import java.util.concurrent.Future;
 
 
 public abstract class AbstractNovelStorage implements Processor {
+
+
     private static final Logger logger = LogManager.getLogger(AbstractNovelStorage.class.getName());
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     protected static SqlSessionFactory sqlSessionFactory;
 	protected Map<String, String> tasks = new TreeMap<>();
 	private static List<String> list;
-	private static HashSet<String> urls ;
 	public AbstractNovelStorage() throws FileNotFoundException {
-		sqlSessionFactory = new SqlSessionFactoryBuilder().build(getClass().getClassLoader().getResourceAsStream("conf/SqlMapConfig.xml"));
-        list = sqlSessionFactory.openSession(true).selectList("selectUrl");
-        urls = new HashSet<>(list);
-	}
-
-    @Override
-    public void process(String action) {
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(getClass().getClassLoader().getResourceAsStream("conf/SqlMapConfig.xml"));
 
     }
-
+    private String getfirstMapValue(Map<String,String> map){
+        for (Entry<String, String> stringEntry : map.entrySet()) {
+            return stringEntry.getValue();
+        }
+        return null;
+    }
     /**
      * 根据action处理任务
      */
 	public void process(String action,int maxTry) {
+
+        String url = getfirstMapValue(tasks);
+        if (url!=null){
+
+            NovelSiteEnum novelSiteEnum = NovelSiteEnum.getEnumByUrl(url);
+            Map<String,Integer> params = new HashMap<>();
+            params.put("platformId",novelSiteEnum.getId());
+            /*//如果是插入数据 就需要获取到全部小说(好像看书中网站有问题 以前完本的突然又变成连载)
+            if (action.equals(Constants.update)&&novelSiteEnum.getId()!=4){
+                //1 连载 2 完结
+                params.put("status",1);
+            }*/
+            SqlSession sqlSession = sqlSessionFactory.openSession(true);
+            list = sqlSession.selectList("selectByPlatformAndStatus",params);
+
+        }
 		ExecutorService service = Executors.newFixedThreadPool(tasks.size());
 		List<Future<String>> futures = new ArrayList<>(tasks.size());
 		for (Entry<String, String> entry : tasks.entrySet()) {
@@ -51,7 +66,7 @@ public abstract class AbstractNovelStorage implements Processor {
 			final String value = entry.getValue();
             NovelSiteEnum novelSiteEnum = NovelSiteEnum.getEnumByUrl(value);
             //判断是否是笔下文学
-            boolean flag = NovelSiteEnum.BXWX.equals(novelSiteEnum);
+            boolean flag = NovelSiteEnum.BXWX.equals(novelSiteEnum)||NovelSiteEnum.KanShuZhong.equals(novelSiteEnum);
 
             futures.add(service.submit(new Callable<String> () {
 				@Override
@@ -64,33 +79,32 @@ public abstract class AbstractNovelStorage implements Processor {
 						try {
 							for (;i<maxTry;i++){
 								List<Novel> novels = iterator.next();
-								SqlSession session = sqlSessionFactory.openSession();
-								if(action.equalsIgnoreCase("batchUpdate")){
+                                SqlSession sqlSession = sqlSessionFactory.openSession(true);
+								if(action.equals("batchUpdate")){
                                     for (int n=novels.size()-1;n>=0;n--) {
                                         Novel item = novels.get(n);
                                         Date lastUpdateTime = item.getLastUpdateTime();
                                         Date today = new Date();
-
-                                        if (!urls.contains(item.getUrl())){
+                                        logger.info("list.contains(item) "+ list.contains(item));
+                                        if (!list.contains(item.getUrl())){
                                             novels.remove(item);
                                             if(flag){
                                                 item.setFirstLetter(key.charAt(0));//设置小说的名字的首字母
                                             }
-                                            session.insert("insert",item);
+                                            sqlSession.insert("insert",item);
                                         }
-                                        System.out.println(item.getName()+" lastUpdateTime.compareTo(sdf.parse(sdf.format(today))) = " + lastUpdateTime.compareTo(sdf.parse(sdf.format(today))));
                                         if (lastUpdateTime.compareTo(sdf.parse(sdf.format(today)))!=0){
                                             novels.remove(item);
                                         }
                                     }
                                     logger.info("novels:"+novels.toString());
                                     if(novels.size()>0){
-                                        session.update(action,novels);
+                                        sqlSession.update(action,novels);
                                     }
 
 								}
-								session.commit();
-								session.close();
+                                sqlSession.commit();
+                                sqlSession.close();
 								//Thread.sleep(1_000);
 							}
 						}catch (Exception e){

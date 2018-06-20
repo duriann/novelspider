@@ -51,7 +51,7 @@ public interface NovelService {
 	 * @param limit
 	 * @return
 	 */
-	public Page<Novel> getAllNovelByPage(int page, int limit);
+	public Page<Novel> getAllNovelByPage(String keyword,int page, int limit);
 
     /**
      * 根据小说id删除对应的小说

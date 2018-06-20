@@ -2,6 +2,7 @@ package novel.storage.entitys;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 小说实体
@@ -108,6 +109,21 @@ public class Novel implements Serializable {
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Novel novel = (Novel) o;
+        return Objects.equals(name, novel.name) &&
+                Objects.equals(url, novel.url);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, url);
+    }
 
     @Override
     public String toString() {

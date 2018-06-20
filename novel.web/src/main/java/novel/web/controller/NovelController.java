@@ -108,8 +108,8 @@ public class NovelController {
      */
     @RequestMapping(value = "/getAllNovelByPage", method = RequestMethod.GET)
     @ResponseBody
-    public JSONResponse getAllNovelByPage(int page, int limit) {
-        Page<Novel> pages = novelService.getAllNovelByPage(page,limit);
+    public JSONResponse getAllNovelByPage(String keyword,int page, int limit) {
+        Page<Novel> pages = novelService.getAllNovelByPage(keyword,page,limit);
         return JSONResponse.success(pages.getPages(),pages.getTotalCount());
     }
 
