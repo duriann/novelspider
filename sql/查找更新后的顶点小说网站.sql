@@ -1,0 +1,1 @@
+select count(*) from tbl_novel where platform_id=1 and last_update_chapter_url is null

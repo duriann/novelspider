@@ -1,0 +1,1 @@
+select  * from tbl_novel where platform_id = 4 and status = 1 and TO_DAYS(last_update_time)=TO_DAYS(NOW());

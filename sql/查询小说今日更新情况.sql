@@ -1,0 +1,1 @@
+select count(*) from tbl_novel where TO_DAYS(last_update_time)=TO_DAYS(NOW());

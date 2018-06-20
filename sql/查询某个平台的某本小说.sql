@@ -1,0 +1,1 @@
+select * from tbl_novel where name = "超级鉴宝师" and platform_id = 1
