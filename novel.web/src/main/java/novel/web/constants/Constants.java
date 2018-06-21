@@ -14,6 +14,10 @@ public final class Constants {
     public static final long TOKEN_EXPIRES_HOUR = 3600*24*7;
 
     /**
+     * 热搜过期时间
+     */
+    public static final long HOTNOVEL_EXPIRES_HOUR = 3600*24;
+    /**
      * redis默认过期时间
      */
     public static final int DEFAULT_EXPIRES_HOUR = 3600*24*30;

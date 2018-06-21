@@ -98,10 +98,8 @@ function search() {
         keyword = "http://" + keyword;	//协议补全
     }
     if (keyword.indexOf("http") == 0) {
-        console.log(keyword + "\t是一个网页，直接跳转");
         searchByUrl(keyword);
     } else {
-        console.log(keyword + "\t是普通关键词，去搜索");
         searchByKeyword(keyword,currentPage,pageSize);
     }
 }

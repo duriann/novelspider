@@ -63,4 +63,10 @@ public interface NovelService {
     public int updateNovelById(long id,String field,String value);
 
     public List<String> searchLikeByKey(String keyword);
+
+    /**
+     * 获取热搜词
+     * @return
+     */
+    public List<Novel> getHotNovel();
 }

@@ -26,7 +26,6 @@ public class Token {
     }
 
     public Token(long user_id, String token) {
-
         this.user_id = user_id;
         this.token = token;
     }

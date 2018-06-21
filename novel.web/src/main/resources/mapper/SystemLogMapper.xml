@@ -5,12 +5,12 @@
 <mapper namespace="novel.web.dao.SystemLogDao">
 
 	<sql id="allKey">
-		module, method, status_desc, args, user_id, user_nickname, ip, create_time
+		module, method, status_desc, args, user_id, ip, create_time
 	</sql>
 	
     <insert id="insert" parameterType="SystemLog">
     	insert into tbl_system_log (<include refid="allKey"/>)
-    	values (#{module}, #{method}, #{statusDesc}, #{args}, #{userId}, #{userNickname}, #{ip}, #{createTime})
+    	values (#{module}, #{method}, #{statusDesc}, #{args}, #{userId}, #{ip}, #{createTime})
     </insert>
 
 </mapper>

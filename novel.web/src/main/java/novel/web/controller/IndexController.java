@@ -1,9 +1,11 @@
 package novel.web.controller;
 
+import novel.spider.entitys.Novel;
 import novel.web.annotation.Auth;
 import novel.web.constants.Constants;
 import novel.web.entitys.Token;
 import novel.web.entitys.User;
+import novel.web.service.NovelService;
 import novel.web.service.UserService;
 import novel.web.utils.Base64Util;
 import novel.web.utils.CookieUtil;
@@ -31,6 +33,8 @@ public class IndexController {
     private UserService userService;
     @Autowired
     private RedisUtil redisUtil;
+    @Autowired
+    private NovelService novelService;
     /**
      * 首页
      * @param request
@@ -63,8 +67,15 @@ public class IndexController {
                 view.addObject("user",user);
             }
         }
+
+        List<Novel> hotNovel = (List<Novel>) redisUtil.get("hotNovel");
+        if (hotNovel==null){
+            hotNovel = novelService.getHotNovel();
+            redisUtil.set("hotNovel",hotNovel,Constants.HOTNOVEL_EXPIRES_HOUR);
+        }
         //为了freemarker能调用base64util加密方法
         view.addObject("Base64Util", new Base64Util());
+        view.addObject("hotNovel",hotNovel);
         view.setViewName("index");
         return view;
     }

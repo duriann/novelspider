@@ -29,7 +29,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.*;
 
-@Order(2)
+@Order(3)
 @Aspect
 @Component
 public class SysLogAop {
@@ -59,7 +59,6 @@ public class SysLogAop {
         systemLog.setArgs(map.get("args").toString());
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER );
         systemLog.setUserId(user==null?-1:user.getId());
-        systemLog.setUsername(user==null?"no user":user.getName());
         systemLog.setIp(HttpHeaderUtil.getIpAddress(request));
         systemLog.setCreateTime(new Date());
         systemLogDao.insert(systemLog);
@@ -79,7 +78,6 @@ public class SysLogAop {
             systemLog.setArgs(map.get("args").toString());
             User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER );
             systemLog.setUserId(user==null?-1:user.getId());
-            systemLog.setUsername(user==null?"no user":user.getName());
             systemLog.setIp(HttpHeaderUtil.getIpAddress(request));
             systemLog.setCreateTime(new Date());
             systemLogDao.insert(systemLog);

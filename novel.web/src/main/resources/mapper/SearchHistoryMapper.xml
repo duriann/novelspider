@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="novel.web.dao.SearchHistoryDao">
+
+	<sql id="allKey">
+		keyword,count,ip,create_time
+	</sql>
+	
+    <insert id="insert" parameterType="SearchHistory">
+    	insert into tbl_search_history (<include refid="allKey"/>)
+    	values (#{keyword}, #{count}, #{ip},#{createDate})
+    </insert>
+
+    <select id="getByKeyword" parameterType="string" resultType="SearchHistory">
+        select <include refid="allKey"/>
+        from tbl_search_history
+        where keyword = #{keyword}
+    </select>
+    <select id="getHotKeyword" resultType="SearchHistory">
+        select keyword
+        from tbl_search_history
+        ORDER BY count desc
+        limit 0,50
+    </select>
+    <update id="updateByKeyword" parameterType="string">
+        update tbl_search_history
+        set count=count+1
+        where keyword = #{keyword}
+    </update>
+
+</mapper>

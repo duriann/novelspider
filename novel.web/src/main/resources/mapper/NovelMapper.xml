@@ -19,6 +19,13 @@
     id, name, author, url, type, last_update_chapter, last_update_chapter_url, last_update_time, 
     status, first_letter, platform_id, add_time
   </sql>
+    <select id="getHotNovel" resultMap="BaseResultMap">
+        select name,author,url,last_update_chapter,last_update_chapter_url,STATUS,platform_id
+        from (select keyword
+        from tbl_search_history
+        ORDER BY count desc
+        limit 0,10) sh left JOIN tbl_novel n on sh.keyword=n.name
+    </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
