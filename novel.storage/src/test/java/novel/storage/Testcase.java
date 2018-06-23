@@ -1,8 +1,6 @@
 package novel.storage;
 
-import novel.storage.impl.BxwxNovelStorageImpl;
-import novel.storage.impl.DdxsNovelStorageImpl;
-import novel.storage.impl.KanShuZhongNovelStorageImpl;
+import novel.storage.impl.*;
 import novel.storage.utils.Constants;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -107,6 +105,26 @@ public class Testcase {
     @Test
     public void updateDdxs() throws FileNotFoundException {
         Processor processor = new DdxsNovelStorageImpl();
+        processor.process(update,5);
+    }
+
+    /**
+     * 更新小说58
+     * @throws FileNotFoundException
+     */
+    @Test
+    public void updateXiaoShuo58() throws FileNotFoundException {
+        Processor processor = new XiaoShuo58NovelStorageImpl();
+        processor.process(update,5);
+    }
+
+    /**
+     * 更新吞噬小说
+     * @throws FileNotFoundException
+     */
+    @Test
+    public void 更新吞噬小说() throws FileNotFoundException {
+        Processor processor = new TunShiNovelStorageImpl();
         processor.process(update,5);
     }
 }

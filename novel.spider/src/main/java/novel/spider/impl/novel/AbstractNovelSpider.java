@@ -104,8 +104,13 @@ public abstract class AbstractNovelSpider extends AbstractSpider implements INov
 		}
 		@Override
 		public List<Novel> next() {
-			List<Novel> novels = getsNovel(nextPage, maxTryTimes);
-			return novels;
+            List<Novel> novels = null;
+            try {
+                novels = getsNovel(nextPage, maxTryTimes);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return novels;
 		}
 	}
 }

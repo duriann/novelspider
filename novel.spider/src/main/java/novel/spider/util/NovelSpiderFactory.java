@@ -4,9 +4,7 @@ import novel.spider.NovelSiteEnum;
 import novel.spider.impl.chapter.BxwxChapterSpider;
 import novel.spider.impl.chapter.DefaultChapterDetailSpider;
 import novel.spider.impl.chapter.DefaultChapterSpider;
-import novel.spider.impl.novel.BxwxNovelSpider;
-import novel.spider.impl.novel.DdxsNovelSpider;
-import novel.spider.impl.novel.KanShuZhongNovelSpider;
+import novel.spider.impl.novel.*;
 import novel.spider.interfaces.IChapterDetailSpider;
 import novel.spider.interfaces.IChapterSpider;
 import novel.spider.interfaces.INovelSpider;
@@ -67,6 +65,8 @@ public final class NovelSpiderFactory {
 		case BXWX : return new BxwxNovelSpider();
 		case KanShuZhong : return new KanShuZhongNovelSpider();
             case DingDianXiaoShuo:return new DdxsNovelSpider();
+            case XiaoShuo58:return new XiaoShuo58NovelSpider();
+            case TunShiXiaoShuo:return  new TunShiXiaoShuoNovelSpider();
 		default : throw new RuntimeException(url + "暂时不被支持");
 		}
 	}

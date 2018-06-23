@@ -18,6 +18,7 @@ import novel.spider.interfaces.IChapterSpider;
 import novel.spider.interfaces.INovelDownload;
 import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.FileUtil;
+import novel.spider.util.NovelSpiderFactory;
 import novel.spider.util.NovelSpiderUtil;
 import org.junit.Test;
 
@@ -78,7 +79,7 @@ public class Testcase {
 	}
     //测试笔下文学小说爬虫
     @Test
-    public void testNovelSpider(){
+    public void testNovelSpider() throws Exception {
         INovelSpider novelSpider = new BxwxNovelSpider();
         List<Novel> novels = novelSpider.getsNovel("http://www.23wx.cc/quanben/1",5);
         for (Novel novel : novels) {
@@ -142,4 +143,22 @@ public class Testcase {
 			System.out.println("name:"+name+",value:"+value);
 		}
 	}
+
+	@Test
+	public void test58Xiaoshuo() throws Exception {
+        /*IChapterSpider chapterSpider = new DefaultChapterSpider();
+        List<Chapter> chapters = chapterSpider.getsChapter("http://www.5858xs.com/html/290/290355/index.html");
+        System.out.println("chapters = " + chapters);
+        IChapterDetailSpider chapterDetailSpider = new DefaultChapterDetailSpider();
+        ChapterDetail chapterDetail = chapterDetailSpider.getChapterDetail(chapters.get(30).getUrl());
+        System.out.println("chapterDetail = " + chapterDetail);
+        INovelSpider novelSpider = new XiaoShuo58NovelSpider();*/
+        INovelSpider spider = NovelSpiderFactory.getNovelSpider("http://www.tsxsw.com/paihang/lastupdate/100/");
+        Iterator<List<Novel>> iterator = spider.iterator("http://www.tsxsw.com/paihang/lastupdate/100/", 10);
+        /*while (iterator.hasNext()){
+            System.out.println("iterator = " + iterator.next());
+        }*/
+        System.out.println("spider = " + iterator.next());
+
+    }
 }

@@ -2,7 +2,6 @@ package novel.spider.util;
 
 import novel.spider.NovelSiteEnum;
 import novel.spider.impl.download.NovelDownload;
-import org.apache.logging.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
