@@ -21,6 +21,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 	<!-- 开启包自动扫描 -->
 	<context:component-scan base-package="novel.web.service.impl" />
+	<context:component-scan base-package="novel.web.aop" />
     <!-- 加载文件 -->
     <context:property-placeholder location="classpath:/conf/download.properties" ignore-unresolvable="true"/>
 	<!-- 配置HandlerMapping -->

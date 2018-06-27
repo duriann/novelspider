@@ -133,6 +133,11 @@ public class NovelServiceImpl implements NovelService {
     }
 
     @Override
+    public List<Novel> getHotNovel() {
+        return novelDao.getHotNovel();
+    }
+
+    @Override
     public int deleteNovelById(long id) {
         return novelDao.deleteByPrimaryKey(id);
     }

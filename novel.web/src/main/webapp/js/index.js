@@ -98,10 +98,8 @@ function search() {
         keyword = "http://" + keyword;	//协议补全
     }
     if (keyword.indexOf("http") == 0) {
-        console.log(keyword + "\t是一个网页，直接跳转");
         searchByUrl(keyword);
     } else {
-        console.log(keyword + "\t是普通关键词，去搜索");
         searchByKeyword(keyword,currentPage,pageSize);
     }
 }
@@ -164,8 +162,8 @@ function searchByKeyword(keyword,currentPage,pageSize) {
     function getPlatform(platformId) {
         if (platformId == 1) {
             return "顶点小说";
-        } else if (platformId == 2) {
-            return "笔趣阁";
+        } else if (platformId == 5) {
+            return "58小说";
         } else if (platformId == 4) {
             return "看书中";
         } else if (platformId == 3) {

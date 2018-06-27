@@ -41,14 +41,30 @@
         <novel-nextpage-selector>#pagelink .next</novel-nextpage-selector>
 	</site>
 	
-	<site id="4">
-		<title>笔趣阁</title>
-		<charset>UTF-8</charset>
-		<url>http://www.xs.la</url>
-		<chapter-list-selector>#list dd a</chapter-list-selector>
-		<chapter-detail-title-selector>.bookname h1</chapter-detail-title-selector>
-		<chapter-detail-content-selector>#content</chapter-detail-content-selector>
-		<chapter-detail-prev-selector>#pager_prev</chapter-detail-prev-selector>
-		<chapter-detail-next-selector>#pager_next</chapter-detail-next-selector>
-	</site>
+    <site id="5">
+        <title>58小说</title>
+        <charset>gbk</charset>
+        <url>http://www.5858xs.com</url>
+        <chapter-list-selector>table tr a</chapter-list-selector>
+        <chapter-detail-title-selector>h1</chapter-detail-title-selector>
+        <chapter-detail-content-selector>#content</chapter-detail-content-selector>
+        <chapter-detail-prev-selector>#footlink a,0</chapter-detail-prev-selector>
+        <chapter-detail-next-selector>#footlink a,2</chapter-detail-next-selector>
+        <novel-selector>.grid tr</novel-selector>
+        <novel-nextpage-selector>.pages tr td a,13</novel-nextpage-selector>
+    </site>
+
+    <site id="6">
+        <!--每次更新前100页即可http://www.tsxsw.com/paihang/lastupdate/100/-->
+        <title>吞噬小说</title>
+        <charset>gbk</charset>
+        <url>http://www.tsxsw.com</url>
+        <chapter-list-selector>.chapterlist ul li</chapter-list-selector>
+        <chapter-detail-title-selector>#c1 h1</chapter-detail-title-selector>
+        <chapter-detail-content-selector>#content</chapter-detail-content-selector>
+        <chapter-detail-prev-selector>.chapterpage ul li,0</chapter-detail-prev-selector>
+        <chapter-detail-next-selector>.chapterpage ul li,2</chapter-detail-next-selector>
+        <novel-selector>.lists li</novel-selector>
+        <novel-nextpage-selector>.pages a,11</novel-nextpage-selector>
+    </site>
 </sites>

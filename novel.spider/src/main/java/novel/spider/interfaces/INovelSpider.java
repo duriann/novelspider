@@ -17,7 +17,7 @@ public interface INovelSpider {
 	 * @param maxTryTimes 网页下载的最大次数（允许失败重试的次数）
 	 * @return
 	 */
-	public List<Novel> getsNovel(String url, Integer maxTryTimes);
+	public List<Novel> getsNovel(String url, Integer maxTryTimes) throws Exception;
 	
 	public boolean hasNext();
 	public String next();

@@ -5,9 +5,8 @@ import novel.spider.entitys.Novel;
 import novel.spider.interfaces.INovelSpider;
 import novel.spider.util.NovelSpiderFactory;
 import novel.storage.Processor;
+import novel.storage.utils.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,11 +25,9 @@ public abstract class AbstractNovelStorage implements Processor {
 
     private static final Logger logger = LogManager.getLogger(AbstractNovelStorage.class.getName());
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    protected static SqlSessionFactory sqlSessionFactory;
 	protected Map<String, String> tasks = new TreeMap<>();
 	private static List<String> list;
 	public AbstractNovelStorage() throws FileNotFoundException {
-        sqlSessionFactory = new SqlSessionFactoryBuilder().build(getClass().getClassLoader().getResourceAsStream("conf/SqlMapConfig.xml"));
 
     }
     private String getfirstMapValue(Map<String,String> map){
@@ -55,7 +52,7 @@ public abstract class AbstractNovelStorage implements Processor {
                 //1 连载 2 完结
                 params.put("status",1);
             }*/
-            SqlSession sqlSession = sqlSessionFactory.openSession(true);
+            SqlSession sqlSession = MybatisUtil.getSqlSession();
             list = sqlSession.selectList("selectByPlatformAndStatus",params);
 
         }
@@ -79,7 +76,7 @@ public abstract class AbstractNovelStorage implements Processor {
 						try {
 							for (;i<maxTry;i++){
 								List<Novel> novels = iterator.next();
-                                SqlSession sqlSession = sqlSessionFactory.openSession(true);
+                                SqlSession sqlSession = MybatisUtil.getSqlSession();
 								if(action.equals("batchUpdate")){
                                     for (int n=novels.size()-1;n>=0;n--) {
                                         Novel item = novels.get(n);
@@ -104,7 +101,7 @@ public abstract class AbstractNovelStorage implements Processor {
 
 								}
                                 sqlSession.commit();
-                                sqlSession.close();
+                                MybatisUtil.closeSqlSession();
 								//Thread.sleep(1_000);
 							}
 						}catch (Exception e){

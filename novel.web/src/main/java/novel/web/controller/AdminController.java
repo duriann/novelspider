@@ -79,7 +79,7 @@ public class AdminController {
         ModelAndView view = new ModelAndView();
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
         userService.logout(user);
-        view.setViewName("index");
+        view.setViewName("redirect:/");
         return view;
     }
 

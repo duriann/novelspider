@@ -10,18 +10,10 @@ public class SystemLog {
 	private String statusDesc;
 	private String args;
 	private long userId;
-	private String username;
 	private String ip;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     private Date createTime;
+
+
 
 	public long getId() {
 		return id;
@@ -85,7 +77,6 @@ public class SystemLog {
                 ", statusDesc='" + statusDesc + '\'' +
                 ", args='" + args + '\'' +
                 ", userId=" + userId +
-                ", username='" + username + '\'' +
                 ", ip='" + ip + '\'' +
                 ", createTime=" + createTime +
                 '}';
