@@ -17,8 +17,9 @@ import novel.web.service.UserService;
 import novel.web.utils.Base64Util;
 import novel.web.utils.CookieUtil;
 import novel.web.utils.RedisUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,9 +43,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("novel")
 public class NovelController {
-    private Logger logger = LoggerFactory.getLogger(NovelController.class.getName());
-
-    @Autowired
+    private org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(this.getClass());    @Autowired
     NovelService novelService;
 
     @Autowired
