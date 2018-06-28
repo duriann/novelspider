@@ -24,12 +24,7 @@ CREATE TABLE `tbl_search_history` (
   `keyword` varchar(30) DEFAULT '' COMMENT '搜索关键词',
   `count` int(9) DEFAULT NULL,
   `ip` varchar(15) DEFAULT NULL,
-  `create_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_time` datetime NOT NULL ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of tbl_search_history
--- ----------------------------
-INSERT INTO `tbl_search_history` VALUES ('1', '盘龙', '13', '0:0:0:0:0:0:0:1', '2018-06-21 11:55:41');
-INSERT INTO `tbl_search_history` VALUES ('2', '明茧', '1', '0:0:0:0:0:0:0:1', '2018-06-21 13:42:29');

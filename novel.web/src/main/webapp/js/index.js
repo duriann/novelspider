@@ -5,7 +5,7 @@ $(function () {
     });
 
     $("#about").click(function (e) {
-       layer.msg("为了毕设而存在。")
+       layer.msg("自由 民主。")
     });
     $("#keyword").keydown(function (e) {
         if (e.keyCode == 13) {
@@ -21,12 +21,15 @@ $(function () {
                 dataType : "json",
                 data : {"keyword":$("#keyword").val()},
                 success: function( data ) {
-                    console.log(data);
-                    response( $.map( data.data, function( item ) {
-                        return {
-                            value: item
-                        }
-                    }));
+                    //console.log(data);
+                    if(data.code==0){
+                        response( $.map( data.data, function( item ) {
+                            return {
+                                value: item
+                            }
+                        }));
+                    }
+
                 }
             });
         },

@@ -269,11 +269,12 @@ function closePage() {
 
 /*循环菜单*/
 function initMenu(menu,parent){
-	for(var i=0; i<menu.length; i++){   
+	for(var i=0; i<menu.length; i++){
 		var item = menu[i];
 		var str = "";
 		try{
 			if(item.isHeader == "1"){
+
 				str = "<li class='menu-header'>"+item.name+"</li>";
 				$(parent).append(str);
 				if(item.childMenus != ""){
@@ -285,7 +286,9 @@ function initMenu(menu,parent){
 					str = "<li><a href='"+item.url+"'><i class='icon-font'>"+item.icon+"</i><span>"+item.name+"</span></a></li>";
 					$(parent).append(str);
 				}else{
+
 					str = "<li><a href='"+item.url+"'><i class='icon-font '>"+item.icon+"</i><span>"+item.name+"</span><i class='icon-font icon-right'>&#xe60b;</i></a>";
+
 					str +="<ul class='menu-item-child' id='menu-child-"+item.id+"'></ul></li>";
 					$(parent).append(str);
 					var childParent = $("#menu-child-"+item.id);
@@ -395,10 +398,12 @@ $(function(){
 
 	/*菜单json*/
 	var menu = [{"id":"1","name":"主菜单","parentId":"0","url":"","icon":"","order":"1","isHeader":"1","childMenus":[
+
 					{"id":"3","name":"小说管理","parentId":"1","url":"","icon":"&#xe604;","order":"1","isHeader":"0","childMenus":[
 						{"id":"4","name":"小说管理","parentId":"3","url":"/admin/novelManager","icon":"","order":"1","isHeader":"0","childMenus":""},
 						{"id":"5","name":"用户管理","parentId":"3","url":"/admin/userManager","icon":"","order":"1","isHeader":"0","childMenus":""}
 					]},
+
 					{"id":"6","name":"爬虫管理","parentId":"1","url":"","icon":"&#xe602;","order":"1","isHeader":"0","childMenus":[
 						{"id":"7","name":"规则管理","parentId":"6","url":"/admin/spiderManager","icon":"","order":"1","isHeader":"0","childMenus":""},
 						{"id":"8","name":"暂无","parentId":"6","url":"home.html","icon":"","order":"1","isHeader":"0","childMenus":""}
@@ -406,6 +411,7 @@ $(function(){
 					]
 				}];
 	initMenu(menu,$(".side-menu"));
+
 	$(".side-menu > li").addClass("menu-item");
 	
 	/*获取菜单icon随机色*/
