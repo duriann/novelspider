@@ -5,13 +5,22 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="last_read_chapter_detail_url" property="lastReadChapterDetailUrl" jdbcType="VARCHAR" />
-    <result column="last_read_chapter_detail_title" property="lastReadChapterTitle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, password,last_read_chapter_detail_url,last_read_chapter_detail_title
+    id, name, password
   </sql>
-
+    <select id="getAllHistoryTotalCountByUser"  resultType="int" parameterType="long">
+        select
+        count(id)
+        from tbl_system_log
+        where user_id = #{id} and method = "阅读章节详情"
+    </select>
+    <select id="getReadHistory" resultType="ReadHistory" parameterType="map">
+        select args url,create_time date from tbl_system_log
+        where user_id = #{id} and method = "阅读章节详情"
+        order by id desc
+        limit ${(currentPage-1)*pageSize},${pageSize}
+    </select>
     <select id="getPermissionByName" resultType="string" parameterType="string">
        select
        p.name
@@ -49,7 +58,7 @@
     </select>
   <select id="getAllUserTotalCount"  resultType="int" >
     select
-    count(*)
+    count(id)
     from tbl_user
   </select>
     <insert id="insert" parameterType="novel.web.entitys.User" >

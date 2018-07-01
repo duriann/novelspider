@@ -46,7 +46,7 @@ public abstract class AbstractChapterDetailSpider extends AbstractSpider impleme
 			splits = nextSelector.split("\\,");
 			splits = parseSelector(splits);
 			detail.setNext(doc.select(splits[0]).get(Integer.parseInt(splits[1])).absUrl("href"));
-			
+			detail.setUrl(url);
 			return detail;
 		} catch (Exception e) {
 			throw new RuntimeException(e);

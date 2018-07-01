@@ -1,8 +1,14 @@
 package novel.web.service.impl;
 
+import novel.spider.NovelSiteEnum;
+import novel.spider.entitys.ChapterDetail;
+import novel.spider.interfaces.IChapterDetailSpider;
+import novel.spider.util.NovelSpiderFactory;
+import novel.spider.util.NovelSpiderUtil;
 import novel.web.constants.Constants;
 import novel.web.dao.UserDao;
 import novel.web.entitys.Page;
+import novel.web.entitys.ReadHistory;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
 import novel.web.utils.CookieUtil;
@@ -15,10 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -98,5 +101,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<String> getPermissionByName(String username) {
         return userDao.getPermissionByName(username);
+    }
+
+    @Override
+    public Page<ReadHistory> getReadHistory(User user, int page, int limit) {
+        Page pages = new Page();
+        Map<String, Object> map = new HashMap<>();
+        map.put("currentPage", page);
+        map.put("pageSize", limit);
+        map.put("id",user.getId());
+        List<ReadHistory> readHistories = userDao.getReadHistory(map);
+        int tocalCount = userDao.getAllHistoryTotalCountByUser(user.getId());
+        List<ReadHistory> readHistoryList = new ArrayList<>();
+        for (ReadHistory readHistory : readHistories) {
+            String arg = readHistory.getUrl();
+            arg = arg.substring(5,arg.length()-1);
+            ChapterDetail chapterDetail = NovelSpiderFactory.getChapterDetailSpider(arg).getChapterDetail(arg);
+            readHistory.setTitle(chapterDetail.getTitle());
+            readHistory.setUrl(chapterDetail.getUrl());
+            readHistoryList.add(readHistory);
+        }
+        pages.setPages(readHistoryList);
+        pages.setTotalCount(tocalCount);
+        return pages;
     }
 }

@@ -39,6 +39,9 @@
             <value>
                 /admin/toLogin = anon
                 /admin/login = anon
+                /admin/novelManager = roles[admin]
+                /admin/userManager = roles[admin]
+                /admin/spiderManager = roles[admin]
                 /admin/** = authc
                 /** = anon
             </value>

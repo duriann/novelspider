@@ -112,7 +112,7 @@ public class NovelController {
 
 
     /**
-     *
+     * 分页获取所有小说
      * @param page 页码
      * @param limit 每页显示条数
      * @return
@@ -186,8 +186,9 @@ public class NovelController {
             redisUtil.lSet(readToken,Base64Util.encode(chapterDetail.getTitle()),Constants.DEFAULT_EXPIRES_HOUR);
             User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
             if (user!=null){
-                user.setLastReadChapterDetailUrl(url);
-                user.setLastReadChapterTitle(chapterDetail.getTitle());
+                //2018 0630 注释 不需要这个字段
+                //user.setLastReadChapterDetailUrl(url);
+                //user.setLastReadChapterTitle(chapterDetail.getTitle());
                 userService.update(user);
             }
             isSuccess = true;

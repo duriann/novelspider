@@ -267,37 +267,7 @@ function closePage() {
 }
 
 
-/*循环菜单*/
-function initMenu(menu,parent){
-	for(var i=0; i<menu.length; i++){
-		var item = menu[i];
-		var str = "";
-		try{
-			if(item.isHeader == "1"){
 
-				str = "<li class='menu-header'>"+item.name+"</li>";
-				$(parent).append(str);
-				if(item.childMenus != ""){
-					initMenu(item.childMenus,parent);
-				}
-			}else{
-				item.icon == "" ? item.icon = "&#xe610" : item.icon = item.icon;
-				if(item.childMenus == ""){
-					str = "<li><a href='"+item.url+"'><i class='icon-font'>"+item.icon+"</i><span>"+item.name+"</span></a></li>";
-					$(parent).append(str);
-				}else{
-
-					str = "<li><a href='"+item.url+"'><i class='icon-font '>"+item.icon+"</i><span>"+item.name+"</span><i class='icon-font icon-right'>&#xe60b;</i></a>";
-
-					str +="<ul class='menu-item-child' id='menu-child-"+item.id+"'></ul></li>";
-					$(parent).append(str);
-					var childParent = $("#menu-child-"+item.id);
-					initMenu(item.childMenus,childParent);
-				}
-			}
-		}catch(e){}
-	}
-}
 
 
 
@@ -389,6 +359,38 @@ function getMathColor(){
 	}
 }
 
+
+/*循环菜单*/
+function initMenu(menu,parent){
+    for(var i=0; i<menu.length; i++){
+        var item = menu[i];
+        var str = "";
+        try{
+            if(item.isHeader == "1"){
+
+                str = "<li class='menu-header'>"+item.name+"</li>";
+                $(parent).append(str);
+                if(item.childMenus != ""){
+                    initMenu(item.childMenus,parent);
+                }
+            }else{
+                item.icon == "" ? item.icon = "&#xe610" : item.icon = item.icon;
+                if(item.childMenus == ""){
+                    str = "<li><a href='"+item.url+"'><i class='icon-font'>"+item.icon+"</i><span>"+item.name+"</span></a></li>";
+                    $(parent).append(str);
+                }else{
+
+                    str = "<li><a href='"+item.url+"'><i class='icon-font '>"+item.icon+"</i><span>"+item.name+"</span><i class='icon-font icon-right'>&#xe60b;</i></a>";
+
+                    str +="<ul class='menu-item-child' id='menu-child-"+item.id+"'></ul></li>";
+                    $(parent).append(str);
+                    var childParent = $("#menu-child-"+item.id);
+                    initMenu(item.childMenus,childParent);
+                }
+            }
+        }catch(e){}
+    }
+}
 /*
   初始化加载
 */
@@ -397,7 +399,7 @@ $(function(){
 	//getSkinByCookie();
 
 	/*菜单json*/
-	var menu = [{"id":"1","name":"主菜单","parentId":"0","url":"","icon":"","order":"1","isHeader":"1","childMenus":[
+	/*var menu = [{"id":"1","name":"主菜单","parentId":"0","url":"","icon":"","order":"1","isHeader":"1","childMenus":[
 
 					{"id":"3","name":"小说管理","parentId":"1","url":"","icon":"&#xe604;","order":"1","isHeader":"0","childMenus":[
 						{"id":"4","name":"小说管理","parentId":"3","url":"/admin/novelManager","icon":"","order":"1","isHeader":"0","childMenus":""},
@@ -410,7 +412,7 @@ $(function(){
 					]}
 					]
 				}];
-	initMenu(menu,$(".side-menu"));
+	initMenu(menu,$(".side-menu"));*/
 
 	$(".side-menu > li").addClass("menu-item");
 	

@@ -86,6 +86,11 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.23</version>
         </dependency>
+        <dependency>
+            <groupId>novel</groupId>
+            <artifactId>novel.storage</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
     <build>

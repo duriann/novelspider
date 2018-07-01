@@ -9,7 +9,8 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-	xsi:schemaLocation="
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
@@ -18,16 +19,21 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task.xsd">
 	<!-- 开启包自动扫描 -->
 	<context:component-scan base-package="novel.web.service.impl" />
 	<context:component-scan base-package="novel.web.aop" />
+	<context:component-scan base-package="novel.web.task" />
     <!-- 加载文件 -->
     <context:property-placeholder location="classpath:/conf/download.properties" ignore-unresolvable="true"/>
 	<!-- 配置HandlerMapping -->
 	<mvc:annotation-driven />
     <!---aop自动代理-->
     <aop:aspectj-autoproxy/>
+	<!--定时任务-->
+	<task:annotation-driven/>
 
     <bean id="config" class="novel.spider.config.Configuration">
         <property name="path" value="${downloadpath}"></property>

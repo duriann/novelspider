@@ -50,7 +50,7 @@ public class IndexController {
             if (readCookie!=null){
                 String readToken = readCookie.getValue();
                 //从redis中获取对应token数据
-                List<Object> list = redisUtil.lGet(readToken, 0, redisUtil.lGetListSize(readToken));
+                List<Object> list = redisUtil.lGet(readToken, 0, 2);
                 if(null!=list&&!list.isEmpty()){                    view.addObject("lastReadChapterDetailUrl",list.get(0));
                     view.addObject("lastReadChapterTitle",list.get(1));
                 }
@@ -102,6 +102,14 @@ public class IndexController {
     public ModelAndView toLogin(){
         ModelAndView view = new ModelAndView();
         view.setViewName("admin/login");
+        return view;
+
+    }
+    @RequestMapping(value = "/admin/historyManager")
+    @Auth
+    public ModelAndView historyManager(){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("admin/history-manager");
         return view;
 
     }

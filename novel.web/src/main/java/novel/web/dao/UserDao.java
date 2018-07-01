@@ -1,7 +1,9 @@
 package novel.web.dao;
 
+import novel.web.entitys.ReadHistory;
 import novel.web.entitys.User;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,4 +31,7 @@ public interface UserDao {
 
     public Set<String> getRoleByName(String username);
     public Set<String> getPermissionByName(String username);
+
+    List<ReadHistory> getReadHistory(Map<String, Object> map);
+    int getAllHistoryTotalCountByUser(long id);
 }

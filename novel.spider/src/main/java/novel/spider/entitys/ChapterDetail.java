@@ -10,6 +10,16 @@ import java.io.Serializable;
 public class ChapterDetail implements Serializable {
     private static final long serialVersionUID = -7303060644500661569L;
     private String title;
+    private String url;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     private String content;
     private String prev;
     private String next;

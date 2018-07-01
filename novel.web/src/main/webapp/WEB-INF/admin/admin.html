@@ -48,7 +48,71 @@
 		</header>
 		<aside class="layout-side">
                 <ul class="side-menu">
+					<li class="menu-header">
+						主菜单
+					</li>
+					<@shiro.hasRole name="admin">
+						<li>
+							<a href="">
+								<i class='icon-font'>&#xe610</i>
+									<span>小说管理</span>
+								<i class='icon-font icon-right'>&#xe60b;</i>
+							</a>
+							<ul class="menu-item-child" id="menu-4">
+								<li>
+									<a href="/admin/novelManager">
+										<i class='icon-font'>&#xe610</i>
+										<span>小说管理</span>
+									</a>
 
+								</li>
+
+								<li>
+									<a href="/admin/userManager">
+										<i class='icon-font'>&#xe610</i>
+										<span>用户管理</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="">
+								<i class='icon-font'>&#xe610</i>
+								<span>爬虫管理</span>
+								<i class='icon-font icon-right'>&#xe60b;</i>
+							</a>
+							<ul class="menu-item-child" >
+								<li>
+									<a href="/admin/spiderManager">
+										<i class='icon-font'>&#xe610</i>
+										<span>规则管理</span>
+									</a>
+
+								</li>
+
+							</ul>
+						</li>
+					</@shiro.hasRole>
+                    <@shiro.hasRole name="normal">
+                        <li>
+                            <a href="">
+                                <i class='icon-font'>&#xe610</i>
+                                <span>个人信息</span>
+                                <i class='icon-font icon-right'>&#xe60b;</i>
+                            </a>
+                            <ul class="menu-item-child" >
+                                <li>
+                                    <a href="/admin/historyManager">
+                                        <i class='icon-font'>&#xe610</i>
+                                        <span>浏览历史</span>
+                                    </a>
+
+                                </li>
+
+                            </ul>
+                        </li>
+                    </@shiro.hasRole>
                 </ul>
         </aside>
 		

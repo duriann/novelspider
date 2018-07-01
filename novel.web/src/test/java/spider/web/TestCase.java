@@ -22,6 +22,13 @@ import javax.xml.xpath.XPathFactory;
  **/
 public class TestCase {
     @Test
+    public void getChapterDetailUrl(){
+        String arg = "{url:https://www.bxwx9.org/b/5/5132/5264146.html}";
+        System.out.println("arg.substring(5,arg.length()-1) = " + arg.substring(5, arg.length() - 1));
+    }
+
+
+    @Test
     public void testXml(){
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {

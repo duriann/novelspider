@@ -1,8 +1,11 @@
 package novel.web.service;
 
+import novel.spider.entitys.ChapterDetail;
 import novel.web.entitys.Page;
+import novel.web.entitys.ReadHistory;
 import novel.web.entitys.User;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserService {
@@ -22,4 +25,5 @@ public interface UserService {
     void update(User user);
     Set<String> getRoleByName(String username);
     Set<String> getPermissionByName(String username);
+    Page<ReadHistory> getReadHistory(User user, int page, int limit);
 }

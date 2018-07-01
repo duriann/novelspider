@@ -4,16 +4,6 @@ public class User {
     private long id;
     private String name;
     private String password;
-    private String lastReadChapterDetailUrl;
-
-
-    public String getLastReadChapterDetailUrl() {
-        return lastReadChapterDetailUrl;
-    }
-
-    public void setLastReadChapterDetailUrl(String lastReadChapterDetailUrl) {
-        this.lastReadChapterDetailUrl = lastReadChapterDetailUrl;
-    }
 
     public User(long id, String name, String password) {
         this.id = id;
@@ -42,7 +32,6 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", password='" + password + '\'' +
-                ", lastReadChapterDetailUrl='" + lastReadChapterDetailUrl + '\'' +
                 '}';
     }
 
@@ -62,13 +51,5 @@ public class User {
         this.name = name;
     }
 
-    private String lastReadChapterTitle;
 
-    public String getLastReadChapterTitle() {
-        return lastReadChapterTitle;
-    }
-
-    public void setLastReadChapterTitle(String lastReadChapterTitle) {
-        this.lastReadChapterTitle = lastReadChapterTitle;
-    }
 }
