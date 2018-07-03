@@ -27,4 +27,7 @@ public class MyAnnoJob {
         processor = new BxwxNovelStorageImpl();
         processor.process("batchUpdate",5);
     }
+    public static void main(String[] args) throws Exception {
+        new MyAnnoJob().test();
+    }
 }

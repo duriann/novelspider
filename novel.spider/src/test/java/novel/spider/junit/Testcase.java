@@ -144,6 +144,10 @@ public class Testcase {
 		}
 	}
 
+	/**
+	 * 综合测试58小时网
+	 * @throws Exception
+	 */
 	@Test
 	public void test58Xiaoshuo() throws Exception {
         /*IChapterSpider chapterSpider = new DefaultChapterSpider();
@@ -153,12 +157,52 @@ public class Testcase {
         ChapterDetail chapterDetail = chapterDetailSpider.getChapterDetail(chapters.get(30).getUrl());
         System.out.println("chapterDetail = " + chapterDetail);
         INovelSpider novelSpider = new XiaoShuo58NovelSpider();*/
-        INovelSpider spider = NovelSpiderFactory.getNovelSpider("http://www.tsxsw.com/paihang/lastupdate/100/");
-        Iterator<List<Novel>> iterator = spider.iterator("http://www.tsxsw.com/paihang/lastupdate/100/", 10);
-        /*while (iterator.hasNext()){
+        INovelSpider spider = NovelSpiderFactory.getNovelSpider("http://www.5858xs.com/xiaoshuotoplastupdate/0/0/1.html");
+        Iterator<List<Novel>> iterator = spider.iterator("http://www.5858xs.com/xiaoshuotoplastupdate/0/0/1.html", 10);
+        while (iterator.hasNext()){
             System.out.println("iterator = " + iterator.next());
-        }*/
+        }
         System.out.println("spider = " + iterator.next());
 
     }
+
+	/**
+	 * 综合测试吞噬小说
+	 * @throws Exception
+	 */
+	@Test
+	public void 测试吞噬小说() throws Exception {
+        /*IChapterSpider chapterSpider = new DefaultChapterSpider();
+        List<Chapter> chapters = chapterSpider.getsChapter("http://www.5858xs.com/html/290/290355/index.html");
+        System.out.println("chapters = " + chapters);
+        IChapterDetailSpider chapterDetailSpider = new DefaultChapterDetailSpider();
+        ChapterDetail chapterDetail = chapterDetailSpider.getChapterDetail(chapters.get(30).getUrl());
+        System.out.println("chapterDetail = " + chapterDetail);
+        INovelSpider novelSpider = new XiaoShuo58NovelSpider();*/
+		INovelSpider spider = NovelSpiderFactory.getNovelSpider("http://www.tsxsw.com/paihang/lastupdate/1/");
+		Iterator<List<Novel>> iterator = spider.iterator("http://www.tsxsw.com/paihang/lastupdate/1/", 10);
+		while (iterator.hasNext()){
+			System.out.println("iterator = " + iterator.next());
+		}
+		System.out.println("spider = " + iterator.next());
+
+	}
+
+	@Test
+	public void 测试笔下文学() throws Exception {
+        /*IChapterSpider chapterSpider = new DefaultChapterSpider();
+        List<Chapter> chapters = chapterSpider.getsChapter("http://www.5858xs.com/html/290/290355/index.html");
+        System.out.println("chapters = " + chapters);
+        IChapterDetailSpider chapterDetailSpider = new DefaultChapterDetailSpider();
+        ChapterDetail chapterDetail = chapterDetailSpider.getChapterDetail(chapters.get(30).getUrl());
+        System.out.println("chapterDetail = " + chapterDetail);
+        INovelSpider novelSpider = new XiaoShuo58NovelSpider();*/
+		INovelSpider spider = NovelSpiderFactory.getNovelSpider("http://www.bxwx9.org/binitial1/0/1.htm");
+		Iterator<List<Novel>> iterator = spider.iterator("http://www.bxwx9.org/binitial1/0/1.htm", 10);
+		while (iterator.hasNext()){
+			System.out.println("iterator = " + iterator.next());
+		}
+		System.out.println("spider = " + iterator.next());
+
+	}
 }

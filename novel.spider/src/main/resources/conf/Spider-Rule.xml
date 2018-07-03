@@ -65,6 +65,6 @@
         <chapter-detail-prev-selector>.chapterpage ul li,0</chapter-detail-prev-selector>
         <chapter-detail-next-selector>.chapterpage ul li,2</chapter-detail-next-selector>
         <novel-selector>.lists li</novel-selector>
-        <novel-nextpage-selector>.pages a,11</novel-nextpage-selector>
+        <novel-nextpage-selector>.pages .next</novel-nextpage-selector>
     </site>
 </sites>

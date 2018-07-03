@@ -57,9 +57,21 @@ public abstract class AbstractNovelSpider extends AbstractSpider implements INov
 				trs = doc.select(novelSelector);
 				
 				String nextPageSelector = context.get("novel-nextpage-selector");
+				Elements nextPageElements = null;
 				if (nextPageSelector != null) {
-					Elements nextPageElements = doc.select(nextPageSelector);
-					nextPageElement = nextPageElements == null ? null : nextPageElements.first();
+
+					if (nextPageSelector.contains(",")){
+						String[] nexts = nextPageSelector.split(",");
+						if (url.equals("http://www.5858xs.com/xiaoshuotoplastupdate/0/0/1.html")){
+							nexts[1] = "12";
+						}
+
+						nextPageElement = doc.select(nexts[0]).get(Integer.parseInt(nexts[1]));
+					}else {
+						nextPageElements = doc.select(nextPageSelector);
+						nextPageElement = nextPageElements == null ? null : nextPageElements.first();
+					}
+
 					
 					if (nextPageElement != null) {
 						nextPage = nextPageElement.absUrl("href");
