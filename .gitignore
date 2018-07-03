@@ -41,3 +41,7 @@ pom.properties
 /novel.spider/logs/warn
 /novel.storage/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile
 /novel.storage/target
+/logs/error/*.log
+/logs/*.log
+/logs/info/*.log
+/logs/warn/*.log
