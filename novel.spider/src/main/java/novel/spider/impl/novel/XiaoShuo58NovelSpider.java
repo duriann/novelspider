@@ -13,6 +13,7 @@ import java.util.List;
 public class XiaoShuo58NovelSpider extends AbstractNovelSpider {
     @Override
     public List<Novel> getsNovel(String url, Integer maxTryTimes) throws Exception {
+
         List<Novel> novels = new ArrayList<>();
         try {
             Elements trs = super.getsTr(url, maxTryTimes);

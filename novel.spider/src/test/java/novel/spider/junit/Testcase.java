@@ -157,8 +157,8 @@ public class Testcase {
         ChapterDetail chapterDetail = chapterDetailSpider.getChapterDetail(chapters.get(30).getUrl());
         System.out.println("chapterDetail = " + chapterDetail);
         INovelSpider novelSpider = new XiaoShuo58NovelSpider();*/
-        INovelSpider spider = NovelSpiderFactory.getNovelSpider("http://www.5858xs.com/xiaoshuotoplastupdate/0/0/1.html");
-        Iterator<List<Novel>> iterator = spider.iterator("http://www.5858xs.com/xiaoshuotoplastupdate/0/0/1.html", 10);
+        INovelSpider spider = NovelSpiderFactory.getNovelSpider("http://www.5858xs.com/xiaoshuotoplastupdate/0/3/3392.html");
+        Iterator<List<Novel>> iterator = spider.iterator("http://www.5858xs.com/xiaoshuotoplastupdate/0/3/3392.html", 10);
         while (iterator.hasNext()){
             System.out.println("iterator = " + iterator.next());
         }

@@ -44,6 +44,10 @@ public abstract class AbstractNovelSpider extends AbstractSpider implements INov
 	 */
 	protected Elements getsTr(String url, Integer maxTryTimes) throws Exception {
         logger.info("开始解析:"+url);
+		if(url.equals("http://www.5858xs.com/xiaoshuotoplastupdate/0/3/3393.html")){
+			nextPage = "";
+			return null;
+		}
 		maxTryTimes = maxTryTimes == null ? INovelSpider.MAX_TRY_TIMES : maxTryTimes;
 		Elements trs = null;
 		for (int i = 0; i < maxTryTimes ; i++) {
