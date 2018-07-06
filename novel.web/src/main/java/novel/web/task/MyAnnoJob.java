@@ -16,16 +16,16 @@ public class MyAnnoJob {
     @Scheduled(cron = "0 0 5 1/1 * ?")
     // 每天凌晨五点执行一次
     public void test() throws Exception {
-        Processor processor = new TunShiNovelStorageImpl();
-        processor.process("batchUpdate",5);
-        processor = new XiaoShuo58NovelStorageImpl();
-        processor.process("batchUpdate",5);
-        processor = new DdxsNovelStorageImpl();
-        processor.process("batchUpdate",5);
-        processor = new KanShuZhongNovelStorageImpl();
-        processor.process("batchUpdate",5);
-        processor = new BxwxNovelStorageImpl();
-        processor.process("batchUpdate",5);
+        Processor ts = new TunShiNovelStorageImpl();
+        ts.process("batchUpdate",5);
+        Processor xs58 = new XiaoShuo58NovelStorageImpl();
+        xs58.process("batchUpdate",5);
+        Processor ddxs = new DdxsNovelStorageImpl();
+        ddxs.process("batchUpdate",5);
+        Processor ksz = new KanShuZhongNovelStorageImpl();
+        ksz.process("batchUpdate",5);
+        Processor bxwx = new BxwxNovelStorageImpl();
+        bxwx.process("batchUpdate",5);
     }
     public static void main(String[] args) throws Exception {
         new MyAnnoJob().test();
