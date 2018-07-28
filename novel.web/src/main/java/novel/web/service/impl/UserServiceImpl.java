@@ -115,10 +115,11 @@ public class UserServiceImpl implements UserService {
         List<ReadHistory> readHistoryList = new ArrayList<>();
         for (ReadHistory readHistory : readHistories) {
             String arg = readHistory.getUrl();
+            readHistory.setUrl(arg);
             arg = arg.substring(5,arg.length()-1);
-            ChapterDetail chapterDetail = NovelSpiderFactory.getChapterDetailSpider(arg).getChapterDetail(arg);
+           /* ChapterDetail chapterDetail = NovelSpiderFactory.getChapterDetailSpider(arg).getChapterDetail(arg);
             readHistory.setTitle(chapterDetail.getTitle());
-            readHistory.setUrl(chapterDetail.getUrl());
+            readHistory.setUrl(chapterDetail.getUrl());*/
             readHistoryList.add(readHistory);
         }
         pages.setPages(readHistoryList);

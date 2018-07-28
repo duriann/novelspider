@@ -52,7 +52,6 @@ public class NovelServiceImpl implements NovelService {
         map.put("pageSize", pageSize);
         List<Novel> novels = novelDao.getNovelByPage(map);
         int totalCount = novelDao.getNovelTotalCount(keyword);
-
         Page<Novel> page = new Page<Novel>();
         page.setCurrentPage(currentPage);
         page.setPageSize(pageSize);

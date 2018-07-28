@@ -129,7 +129,8 @@ public class AdminController {
         long id = obj.getLong("id");
         String name = obj.getString("name");
         String password = obj.getString("password");
-        User user = new User(id,name,password);
+        
+        User user = new User(id,name,DigestUtils.md5Hex(password+name));
         try {
             userService.update(user);
         }catch (Exception e){

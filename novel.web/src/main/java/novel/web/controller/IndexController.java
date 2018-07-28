@@ -66,8 +66,13 @@ public class IndexController {
                 view.addObject("user",user);
             }
         }
-
-        List<Novel> hotNovel = (List<Novel>) redisUtil.get("hotNovel");
+    
+        List<Novel> hotNovel = null;
+        try {
+            hotNovel = (List<Novel>) redisUtil.get("hotNovel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (hotNovel==null){
             hotNovel = novelService.getHotNovel();
             redisUtil.set("hotNovel",hotNovel,Constants.HOTNOVEL_EXPIRES_HOUR);

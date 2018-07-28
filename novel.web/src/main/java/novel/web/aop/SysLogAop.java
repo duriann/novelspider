@@ -55,7 +55,8 @@ public class SysLogAop {
         Map<String, Object> map = this.getMethodDescription(point);
         systemLog.setModule(map.get("module").toString());
         systemLog.setMethod("执行方法异常:" + map.get("methods").toString());
-        systemLog.setStatusDesc("执行方法异常:" + e);
+        System.out.println("e:------------------"+e);
+        systemLog.setStatusDesc("执行方法异常:");
         systemLog.setArgs(map.get("args").toString());
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER );
         systemLog.setUserId(user==null?-1:user.getId());
