@@ -82,7 +82,7 @@ public abstract class AbstractNovelStorage implements Processor {
                                         Novel item = novels.get(n);
                                         Date lastUpdateTime = item.getLastUpdateTime();
                                         Date today = new Date();
-                                        logger.info("list.contains(item) "+ list.contains(item));
+                                        logger.debug("list.contains(item) "+ list.contains(item));
                                         if (!list.contains(item.getUrl())){
                                             novels.remove(item);
                                             if(flag){
@@ -94,7 +94,7 @@ public abstract class AbstractNovelStorage implements Processor {
                                             novels.remove(item);
                                         }
                                     }
-                                    logger.info("novels:"+novels.toString());
+                                    logger.debug("novels:"+novels.toString());
                                     if(novels.size()>0){
                                         sqlSession.update(action,novels);
                                     }

@@ -1,4 +1,4 @@
-/*左侧菜单点击*/
+ /*左侧菜单点击*/
 $(".side-menu").on('click', 'li a', function(e) {
 	var animationSpeed = 300;
 	var $this = $(this);

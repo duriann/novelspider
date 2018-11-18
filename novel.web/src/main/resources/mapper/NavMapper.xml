@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="novel.web.dao.NavDao" >
+  <resultMap id="BaseResultMap" type="novel.web.entitys.index.Nav" >
+    <id column="id" property="id" jdbcType="int" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="parent" property="parent" jdbcType="int" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+    <sql id="Base_Column_List" >
+        id, name, parent,url
+    </sql>
+   <select id="list" resultMap="BaseResultMap">
+       select
+        <include refid="Base_Column_List"/>
+       from tbl_nav
+   </select>
+</mapper>

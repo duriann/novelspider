@@ -18,10 +18,11 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
-    td{
-       text-align:center !important;
-        vertical-align:middle !important;
+    td {
+        text-align: center !important;
+        vertical-align: middle !important;
     }
+
     /**
      *删除自动提示帮助信息
      */
@@ -54,17 +55,17 @@
                 <li><a href="../../">主页</a></li>
                 <li><a href="#" id="about">关于</a></li>
                 <#if user??>
-                    <li class="header-bar-nav">
-                        <a href="javascript:;">${user.name}<i class="icon-font" style="margin-left:5px;">&#xe60c;</i></a>
-                        <ul class="header-dropdown-menu">
-                            <li><a href="/admin/index">个人信息</a></li>
-                            <li><a href="/admin/toLogin">切换账户</a></li>
-                            <li><a href="/admin/logout">退出</a></li>
-                        </ul>
-                    </li>
+                <li class="header-bar-nav">
+                    <a href="javascript:;">${user.name}<i class="icon-font" style="margin-left:5px;">&#xe60c;</i></a>
+                    <ul class="header-dropdown-menu">
+                        <li><a href="/admin/index">个人信息</a></li>
+                        <li><a href="/admin/toLogin">切换账户</a></li>
+                        <li><a href="/admin/logout">退出</a></li>
+                    </ul>
+                </li>
                 <#else>
-                    <li><a href="/admin/toLogin">登录</a></li>
-                </#if>
+                <li><a href="/admin/toLogin">登录</a></li>
+            </#if>
             </ul>
         </div>
         <!--/.navbar-collapse -->
@@ -82,19 +83,19 @@
                 </div>
 
                 <div class="input-group" style="padding-top: 20px">
-                    <span >
+                    <span>
                         <#if lastReadChapterTitle??>
                             <#assign chaptertitle=Base64Util.decode(lastReadChapterTitle)>
                              您上一次阅读到,${chaptertitle}
                         </#if>
-                        <#if lastReadChapterDetailUrl??>
-                            <a href="/novel/getChapterDetail?url=${lastReadChapterDetailUrl}">继续阅读</a>
-                        </#if>
-						</span>
-                </div>
+                    <#if lastReadChapterDetailUrl??>
+                    <a href="/novel/getChapterDetail?url=${lastReadChapterDetailUrl}">继续阅读</a>
+                </#if>
+                </span>
             </div>
         </div>
     </div>
+</div>
 </div>
 <div class="container no-table-responsive">
     <h4><a href="/" style="color: gray">热门搜索</a></h4>
@@ -112,27 +113,28 @@
         </thead>
         <tbody id="list">
 
-                <#list hotNovel as novel>
-                    <#if novel??>
-                <tr>
-                        <td>${novel_index}</td>
-                    <#assign chapterurl=Base64Util.encode(novel.url)>
-                    <td><a href="/novel/getChapters?base64Url=${chapterurl}" target="_blank">${novel.name}</a></td>
-                        <td>${novel.author}</td>
-                    <#assign chapterdetailurl=Base64Util.encode(novel.lastUpdateChapterUrl)>
-                    <td><a href="/novel/getChapterDetail?url=${chapterdetailurl}" target="_blank">${novel.lastUpdateChapter}</a></td>
-                        <td>
-                            <#if novel.status==1>
-                                连载
-                            <#else>
-                                完结
-                            </#if>
-                        </td>
-                        <td>${novel.platformId}</td>
-                        <td><a href="./novel/download?base64Url=${chapterurl}&name=${novel.name}" target="_blank">下载</a></td>
-                    </#if>
-                </tr>
-                </#list>
+        <#list hotNovel as novel>
+        <#if novel??>
+        <tr>
+            <td>${novel_index}</td>
+            <#assign chapterurl=Base64Util.encode(novel.url)>
+            <td><a href="/novel/getChapters?base64Url=${chapterurl}" target="_blank">${novel.name}</a></td>
+            <td>${novel.author}</td>
+            <#assign chapterdetailurl=Base64Util.encode(novel.lastUpdateChapterUrl)>
+            <td><a href="/novel/getChapterDetail?url=${chapterdetailurl}" target="_blank">${novel.lastUpdateChapter}</a>
+            </td>
+            <td>
+                <#if novel.status==1>
+                连载
+                <#else>
+                完结
+            </#if>
+            </td>
+            <td>${novel.platformId}</td>
+            <td><a href="./novel/download?base64Url=${chapterurl}&name=${novel.name}" target="_blank">下载</a></td>
+        </#if>
+        </tr>
+        </#list>
 
         </tbody>
     </table>
@@ -147,7 +149,7 @@
                 <button type="button" class="btn btn-default" id="gotoPage">跳转</button>
                 <input type="text" class="form-control" id="gotopage_text"
                        style="width: 80px; display: inline-block" placeholder="页码">
-                <input type="hidden" id="hidetxt" value="" />
+                <input type="hidden" id="hidetxt" value=""/>
             </div>
         </td>
     </div>
