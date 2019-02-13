@@ -100,6 +100,7 @@
                              name :input[1].value,
                              password :input[2].value
                          }
+                         console.log(JSON.stringify(param));
                          //console.log("JSON.stringify(param):"+JSON.stringify(param));
                          $.ajax({
                              url:"/admin/updateUser",

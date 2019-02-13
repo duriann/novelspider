@@ -123,7 +123,7 @@ public class AdminController {
     @RequestMapping(value = "/updateUser",method = RequestMethod.POST)
     @ResponseBody
     @Auth
-    public JSONResponse updateUser(@RequestParam("param")String param){
+    public JSONResponse updateUser(@RequestBody String param){
         System.out.println("param = " + param);
         JSONObject obj = JSONObject.parseObject(param);
         long id = obj.getLong("id");

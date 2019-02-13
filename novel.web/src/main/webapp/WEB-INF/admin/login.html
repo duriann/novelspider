@@ -81,7 +81,7 @@
                 }
             });
             form.on('submit(login)', function (data) {
-                console.log(data.field);
+                alert(JSON.stringify(data.field));
                 $.ajax({
                     url: "/admin/login",
                     type: "post",
