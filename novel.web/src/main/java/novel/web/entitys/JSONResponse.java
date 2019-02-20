@@ -21,6 +21,13 @@ public class JSONResponse {
         response.setMsg("");
         return response;
     }
+    public static JSONResponse success(Object data,String msg) {
+        JSONResponse response = new JSONResponse();
+        response.setCode(0);
+        response.setData(data);
+        response.setMsg(msg);
+        return response;
+    }
     public static JSONResponse error(String msg) {
         JSONResponse response = new JSONResponse();
         response.setCode(1);
