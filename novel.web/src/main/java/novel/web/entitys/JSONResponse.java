@@ -1,7 +1,7 @@
 package novel.web.entitys;
 
 public class JSONResponse {
-	private int code;
+	private int code;//0 成功 1失败 -1 没有权限
 	private String msg;
 	private Object data;
     private int count;//据总数的字段名称
@@ -31,6 +31,12 @@ public class JSONResponse {
     public static JSONResponse error(String msg) {
         JSONResponse response = new JSONResponse();
         response.setCode(1);
+        response.setMsg(msg);
+        return response;
+    }
+    public static JSONResponse error(int code,String msg) {
+        JSONResponse response = new JSONResponse();
+        response.setCode(code);
         response.setMsg(msg);
         return response;
     }

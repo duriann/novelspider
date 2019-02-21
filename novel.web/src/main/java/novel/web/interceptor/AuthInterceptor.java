@@ -1,7 +1,10 @@
 package novel.web.interceptor;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import novel.web.annotation.Auth;
 import novel.web.constants.Constants;
+import novel.web.entitys.JSONResponse;
 import novel.web.entitys.Token;
 import novel.web.entitys.User;
 import novel.web.service.UserService;
@@ -49,7 +52,9 @@ public class AuthInterceptor implements HandlerInterceptor {
             //如果验证token失败，并且方法注明了Authorization，返回401错误
             Auth auth = method.getAnnotation(Auth.class);
             if (auth != null) {
-                response.sendRedirect("/admin/toLogin");
+                response.setCharacterEncoding("utf-8");
+                response.setContentType("application/json; charset=utf-8");
+                response.getWriter().print(JSON.toJSONString(JSONResponse.error(-1,"没有权限!")));
                 return false;
             }
         }

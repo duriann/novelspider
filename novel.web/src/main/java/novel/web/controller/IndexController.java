@@ -3,6 +3,7 @@ package novel.web.controller;
 import novel.spider.entitys.Novel;
 import novel.web.annotation.Auth;
 import novel.web.constants.Constants;
+import novel.web.entitys.JSONResponse;
 import novel.web.entitys.Token;
 import novel.web.entitys.User;
 import novel.web.service.NovelService;
@@ -16,6 +17,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
@@ -103,11 +105,18 @@ public class IndexController {
 
     }
 
+//    @RequestMapping(value = "/admin/toLogin")
+//    public ModelAndView toLogin(){
+//        ModelAndView view = new ModelAndView();
+//        view.setViewName("admin/login");
+//        return view;
+//
+//    }
     @RequestMapping(value = "/admin/toLogin")
-    public ModelAndView toLogin(){
-        ModelAndView view = new ModelAndView();
-        view.setViewName("admin/login");
-        return view;
+    @ResponseBody
+    public JSONResponse toLogin(){
+
+        return JSONResponse.success(new Object(),"登录成功!");
 
     }
     @RequestMapping(value = "/admin/historyManager")
