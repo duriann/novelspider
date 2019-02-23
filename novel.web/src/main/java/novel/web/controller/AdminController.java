@@ -62,7 +62,7 @@ public class AdminController {
                 tk.setMaxAge(Constants.DEFAULT_EXPIRES_HOUR);
                 response.addCookie(tk);
             }
-            return JSONResponse.success(user,0);
+            return JSONResponse.success(user,"登录成功!");
         }catch (Exception e){
             return JSONResponse.error("登录失败");
         }
@@ -74,13 +74,17 @@ public class AdminController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    public ModelAndView logout(HttpServletRequest request,HttpServletResponse response){
-        ModelAndView view = new ModelAndView();
+    @RequestMapping(value = "/logout",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONResponse logout(HttpServletRequest request,HttpServletResponse response){
         User user = (User)request.getSession().getAttribute(Constants.CURRENT_USER);
-        userService.logout(user);
-        view.setViewName("redirect:/");
-        return view;
+        try{
+            userService.logout(user);
+            return JSONResponse.success(null,"退出成功!");
+        }catch (Exception e){
+            return JSONResponse.error("退出失败");
+        }
+
     }
 
     /**
